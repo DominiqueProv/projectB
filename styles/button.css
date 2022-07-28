@@ -1,0 +1,3 @@
+._button-auth {
+  @apply bg-indigo-800 text-white rounded-lg px-4 py-2;
+}

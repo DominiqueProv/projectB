@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { database, storage } from "../../lib/firebase";
+import { database, storage } from "../lib/firebase";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import {
   ref,
@@ -106,7 +106,7 @@ export default function NoteOperations() {
   return (
     <>
       <div className="">
-        <button onClick={inputToggle} className="">
+        <button className="_button-auth" onClick={inputToggle}>
           Add a New Note
         </button>
       </div>
@@ -137,21 +137,27 @@ export default function NoteOperations() {
           );
         })}
       </div>
-
-      <div>
+      <hr className="my-10" />
+      <div className="space-x-3">
         <input type="file" onChange={handleChange} accept="/image/*" />
-        <button onClick={handleUpload}>Upload to Firebase</button>
+        <button className="_button-auth" onClick={handleUpload}>
+          Upload to Firebase
+        </button>
         <p>{`${percent}% done`}</p>
       </div>
-      <div className="grid grid-cols-3 w-full gap-2">
+      <div className="grid grid-cols-3 w-full gap-6">
         {imgUrl ? (
           imgUrl.map((img, i) => {
             return (
-              <div key={i}>
-                <Image width={100} height={100} src={img} alt="something" />
-                <button className="bg-red-600 py-2 px-4 rounded-xl text-white">
-                  Delete
-                </button>
+              <div key={i} className="flex flex-col space-y-3">
+                <Image
+                  width={300}
+                  height={200}
+                  src={img}
+                  alt="something"
+                  className="rounded-md"
+                />
+                <button className="_button-auth self-start">Delete</button>
               </div>
             );
           })
