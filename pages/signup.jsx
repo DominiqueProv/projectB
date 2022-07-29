@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import ButtonPrimary from "../components/buttons/ButtonPrimary";
 
 const SignUp = () => {
   const { user, signup } = useAuth();
@@ -74,7 +75,7 @@ const SignUp = () => {
             placeholder="Password"
           />
         </div>
-        <button className="p-1">Sign Up</button>
+        <ButtonPrimary label={"Sign Up"} type={"submit"} />
       </form>
     </div>
   );

@@ -10,6 +10,7 @@ import {
   deleteObject,
 } from "firebase/storage";
 import Image from "next/image";
+import { Loader } from "./Loader";
 
 const dbInstance = collection(database, "notes");
 const listRef = ref(storage, "files/");
@@ -143,8 +144,8 @@ export default function NoteOperations() {
         <button className="_button-auth" onClick={handleUpload}>
           Upload to Firebase
         </button>
-        <p>{`${percent}% done`}</p>
       </div>
+      <Loader percent={percent} />
       <div className="grid grid-cols-3 w-full gap-6">
         {imgUrl ? (
           imgUrl.map((img, i) => {

@@ -52,10 +52,6 @@
     @apply bg-slate-200 p-2;
   }
 
-  button {
-    @apply bg-blue-500 text-white rounded-md p-1;
-  }
-
   h2 {
     @apply text-2xl font-bold;
   }

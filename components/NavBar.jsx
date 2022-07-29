@@ -1,43 +1,40 @@
 import React from "react";
 import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
+import LinkPrimary from "./buttons/LinkPrimary";
+import ButtonPrimary from "./buttons/ButtonPrimary";
 import { useRouter } from "next/router";
 
-const NavbarComp = () => {
+const Navbar = () => {
   const { user, logout } = useAuth();
   const router = useRouter();
-
   return (
-    <nav className="bg-indigo-500 p-4">
-      <div className="flex justify-between items-center">
-        <Link href="/" passHref>
-          <a className="font-bold text-xl text-blue-100">Babies Journal</a>
-        </Link>
+    <nav className="bg-indigo-500 p-4 flex justify-between items-center">
+      <Link href="/" passHref>
+        <a className="font-bold text-xl text-blue-100">Babies Journal</a>
+      </Link>
+      <div className="space-x-3 flex">
         {user ? (
-          <div>
-            <button
-              className="_button-auth"
-              onClick={() => {
+          <>
+            <LinkPrimary url="/dashboard" label="Dashboard" />
+            <ButtonPrimary
+              label={"Logout"}
+              type={"button"}
+              handleClick={() => {
                 logout();
-                router.push("/login");
+                router.push("/");
               }}
-            >
-              Logout
-            </button>
-          </div>
+            />
+          </>
         ) : (
-          <div className="space-x-3">
-            <Link href="/signup" passHref>
-              <a className="_button-auth">Signup</a>
-            </Link>
-            <Link href="/login" passHref>
-              <a className="_button-auth">Login</a>
-            </Link>
-          </div>
+          <>
+            <LinkPrimary url="/signup" label="Signup" />
+            <LinkPrimary url="/login" label="Login" />
+          </>
         )}
       </div>
     </nav>
   );
 };
 
-export default NavbarComp;
+export default Navbar;

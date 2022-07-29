@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import Link from "next/link";
-
+import LinkSecondary from "../components/buttons/LinkSecondary";
+import ButtonPrimary from "../components/buttons/ButtonPrimary";
 const Login = () => {
   const router = useRouter();
   const { user, login } = useAuth();
@@ -61,14 +61,10 @@ const Login = () => {
               placeholder="Password"
             />
           </div>
-          <button>Login</button>
+          <ButtonPrimary label={"Login"} type={"submit"} />
           <div className="flex flex-col">
             <h3 className="">No account?</h3>
-            <Link href="/signup" passHref>
-              <a className="bg-blue-100 py-1 px-3 text-blue-500 rounded-md self-start">
-                Create one
-              </a>
-            </Link>
+            <LinkSecondary url={"/signup"} label={"Create one"} />
           </div>
         </form>
       </div>
