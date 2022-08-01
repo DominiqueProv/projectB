@@ -4,7 +4,6 @@ import {
   ref,
   uploadBytesResumable,
   getDownloadURL,
-  getMetadata,
   listAll,
   deleteObject,
 } from "firebase/storage";
@@ -28,7 +27,6 @@ export default function NoteOperations() {
   }, []);
   const handleChange = (event) => {
     const chosenFiles = Array.from(event.target.files);
-    console.log(chosenFiles);
     const uploaded = [...files];
     chosenFiles.some((file) => {
       if (uploaded.findIndex((f) => f.name === file.name) === -1) {
@@ -39,7 +37,6 @@ export default function NoteOperations() {
   };
 
   const putStorageItem = (item) => {
-    console.log(item);
     // the return value will be a Promise
     const storageRef = ref(storage, `/files/${item.name}`);
     const uploadTaskRef = uploadBytesResumable(storageRef, item);
@@ -53,13 +50,9 @@ export default function NoteOperations() {
         );
         setPercent(percent);
       },
-      (err) => console.log(err),
+      (err) => console.error(err),
       () => {
-        getMetadata(uploadTaskRef.snapshot.ref).then((data) => {
-          console.log(data);
-        });
         getDownloadURL(uploadTaskRef.snapshot.ref).then((url) => {
-          console.log(url);
           setImgUrl((prev) => [...prev, url]);
         });
         inputFileRef.current.value = "";
@@ -75,10 +68,7 @@ export default function NoteOperations() {
       return;
     }
 
-    Promise.all(
-      // Array of "Promises"
-      files.map((item) => putStorageItem(item))
-    )
+    Promise.all(files.map((item) => putStorageItem(item)))
       .then((url) => {
         console.log(url, `All success`);
       })
@@ -126,6 +116,9 @@ export default function NoteOperations() {
 
   return (
     <>
+      <h2 className="mb-5">
+        {files ? "Add memories to your story" : "Start by adding some memories"}
+      </h2>
       <div className="space-x-3">
         <input
           type="file"
