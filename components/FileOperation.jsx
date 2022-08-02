@@ -4,6 +4,7 @@ import {
   ref,
   uploadBytesResumable,
   getDownloadURL,
+  getMetadata,
   listAll,
   deleteObject,
 } from "firebase/storage";
@@ -16,15 +17,16 @@ const listRef = ref(storage, "files/");
 
 export default function NoteOperations() {
   const inputFileRef = useRef();
-  const [files, setFile] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [filesData, setFilesData] = useState([]);
   const [uploadTask, setUploadTask] = useState({});
-  const [imgUrl, setImgUrl] = useState([]);
-  const [percent, setPercent] = useState(0);
   const [isUpload, setIsUpload] = useState(false);
+  const [percent, setPercent] = useState(0);
 
   useEffect(() => {
     getFiles();
   }, []);
+
   const handleChange = (event) => {
     const chosenFiles = Array.from(event.target.files);
     const uploaded = [...files];
@@ -33,11 +35,11 @@ export default function NoteOperations() {
         uploaded.push(file);
       }
     });
-    setFile(uploaded);
+    setFiles(uploaded);
   };
 
   const putStorageItem = (item) => {
-    // the return value will be a Promise
+    console.log(item);
     const storageRef = ref(storage, `/files/${item.name}`);
     const uploadTaskRef = uploadBytesResumable(storageRef, item);
     setUploadTask(uploadTaskRef);
@@ -50,27 +52,35 @@ export default function NoteOperations() {
         );
         setPercent(percent);
       },
-      (err) => console.error(err),
+      (err) => console.error(err.message),
       () => {
+        const data = {};
         getDownloadURL(uploadTaskRef.snapshot.ref).then((url) => {
-          setImgUrl((prev) => [...prev, url]);
+          data.url = url;
         });
+        getMetadata(storageRef)
+          .then((metadata) => {
+            data.metadata = metadata;
+            setFilesData((prev) => [...prev, data]);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
         inputFileRef.current.value = "";
-        setFile("");
+        setFiles([]);
         setIsUpload(false);
       }
     );
   };
 
   const handleUpload = () => {
-    if (!files) {
+    if (!files.length) {
       alert("Please choose a file first!");
       return;
     }
-
     Promise.all(files.map((item) => putStorageItem(item)))
-      .then((url) => {
-        console.log(url, `All success`);
+      .then(() => {
+        console.log(`All success`);
       })
       .catch((error) => {
         console.log(`Some failed: `, error.message);
@@ -82,32 +92,41 @@ export default function NoteOperations() {
     inputFileRef.current.value = "";
     setIsUpload(false);
     setPercent(0);
-    setFile("");
+    setFiles([]);
   };
 
   const getFiles = () => {
-    // Find all the prefixes and items.
     listAll(listRef)
       .then((res) => {
         res.items.forEach((itemRef) => {
+          const data = {};
           getDownloadURL(itemRef).then((url) => {
-            setImgUrl((prev) => [...prev, url]);
+            data.url = url;
           });
-          // All the items under listRef.
+          getMetadata(itemRef)
+            .then((metadata) => {
+              data.metadata = metadata;
+              setFilesData((prev) => [...prev, data]);
+            })
+            .catch((error) => {
+              console.error(error.message);
+            });
         });
       })
       .catch((error) => {
-        // Uh-oh, an error occurred!
+        console.error(error.message);
       });
   };
 
-  const deleteFile = (img) => {
-    const name = decodeURIComponent(img.split("files%2F").pop().split("?")[0]);
+  const deleteFile = (file) => {
+    const name = decodeURIComponent(
+      file.url.split("files%2F").pop().split("?")[0]
+    );
     const fileRef = ref(storage, `files/${name}`);
     deleteObject(fileRef)
       .then(() => {
-        const url = imgUrl.filter((el) => el !== img);
-        setImgUrl(url);
+        const files = filesData.filter((el) => el.url !== file.url);
+        setFilesData(files);
       })
       .catch((error) => {
         // Uh-oh, an error occurred!
@@ -117,7 +136,9 @@ export default function NoteOperations() {
   return (
     <>
       <h2 className="mb-5">
-        {files ? "Add memories to your story" : "Start by adding some memories"}
+        {filesData.length
+          ? "Add memories to your story"
+          : "Start by adding some memories"}
       </h2>
       <div className="space-x-3">
         <input
@@ -125,7 +146,7 @@ export default function NoteOperations() {
           multiple="multiple"
           ref={inputFileRef}
           onChange={handleChange}
-          accept="/image/*"
+          accept=".png, .jpeg, video/*"
         />
         <ButtonPrimary
           handleClick={handleUpload}
@@ -144,21 +165,26 @@ export default function NoteOperations() {
       </div>
       <Loader percent={percent} />
       <div className="grid grid-cols-3 w-full gap-6 mt-10">
-        {imgUrl ? (
-          imgUrl.map((img, i) => {
+        {filesData.length ? (
+          filesData.map((file, i) => {
             return (
               <div key={i} className="flex flex-col space-y-3">
                 <div className="w-full aspect-video relative">
                   <Image
                     layout="fill"
                     objectFit="cover"
-                    src={img}
+                    src={file.url}
                     alt="something"
                     className="rounded-md"
                   />
                 </div>
+                <ul>
+                  <li>{file.metadata.contentType}</li>
+                  <li>{file.metadata.size}</li>
+                  <li>{file.metadata.timeCreated}</li>
+                </ul>
                 <ButtonSecondary
-                  handleClick={() => deleteFile(img)}
+                  handleClick={() => deleteFile(file)}
                   label={"Delete"}
                 />
               </div>
