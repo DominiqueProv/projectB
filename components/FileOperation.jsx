@@ -9,6 +9,7 @@ import {
   deleteObject,
 } from "firebase/storage";
 import Image from "next/image";
+import Medias from "./Medias";
 import { Loader } from "./Loader";
 import ButtonPrimary from "./buttons/ButtonPrimary";
 import ButtonSecondary from "./buttons/ButtonSecondary";
@@ -167,20 +168,13 @@ export default function NoteOperations() {
       <div className="grid grid-cols-3 w-full gap-6 mt-10">
         {filesData.length ? (
           filesData.map((file, i) => {
+            console.log(file);
             return (
               <div key={i} className="flex flex-col space-y-3">
-                <div className="w-full aspect-video relative">
-                  <Image
-                    layout="fill"
-                    objectFit="cover"
-                    src={file.url}
-                    alt="something"
-                    className="rounded-md"
-                  />
+                <div className="w-full aspect-video relative rounded-md overflow-hidden">
+                  <Medias file={file} />
                 </div>
                 <ul>
-                  <li>{file.metadata.contentType}</li>
-                  <li>{file.metadata.size}</li>
                   <li>{file.metadata.timeCreated}</li>
                 </ul>
                 <ButtonSecondary
