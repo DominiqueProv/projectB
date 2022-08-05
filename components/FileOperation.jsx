@@ -5,14 +5,16 @@ import {
   uploadBytesResumable,
   getDownloadURL,
   getMetadata,
+  updateMetadata,
   listAll,
   deleteObject,
 } from "firebase/storage";
-import Image from "next/image";
 import Medias from "./Medias";
 import { Loader } from "./Loader";
 import ButtonPrimary from "./buttons/ButtonPrimary";
 import ButtonSecondary from "./buttons/ButtonSecondary";
+import Timeline from "./Timeline";
+import { formatDate } from "../utils/date";
 
 const listRef = ref(storage, "files/");
 
@@ -41,6 +43,11 @@ export default function NoteOperations() {
 
   const putStorageItem = (item) => {
     console.log(item);
+    const metadata = {
+      customMetadata: {
+        originalDate: `${item.lastModified.toString()}`,
+      },
+    };
     const storageRef = ref(storage, `/files/${item.name}`);
     const uploadTaskRef = uploadBytesResumable(storageRef, item);
     setUploadTask(uploadTaskRef);
@@ -59,6 +66,9 @@ export default function NoteOperations() {
         getDownloadURL(uploadTaskRef.snapshot.ref).then((url) => {
           data.url = url;
         });
+        updateMetadata(storageRef, metadata)
+          .then((metadata) => {})
+          .catch((error) => {});
         getMetadata(storageRef)
           .then((metadata) => {
             data.metadata = metadata;
@@ -165,17 +175,19 @@ export default function NoteOperations() {
         )}
       </div>
       <Loader percent={percent} />
-      <div className="grid grid-cols-3 w-full gap-6 mt-10">
+      <div className="grid grid-cols-2 lg:grid-cols-4 w-full gap-6 mt-10 relative">
+        {filesData.length && <Timeline files={filesData} />}
         {filesData.length ? (
           filesData.map((file, i) => {
-            console.log(file);
             return (
               <div key={i} className="flex flex-col space-y-3">
                 <div className="w-full aspect-video relative rounded-md overflow-hidden">
                   <Medias file={file} />
                 </div>
                 <ul>
-                  <li>{file.metadata.timeCreated}</li>
+                  <li>
+                    {formatDate(file.metadata.customMetadata.originalDate)}
+                  </li>
                 </ul>
                 <ButtonSecondary
                   handleClick={() => deleteFile(file)}
