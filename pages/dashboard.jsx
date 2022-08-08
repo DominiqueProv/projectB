@@ -2,7 +2,6 @@ import NoteOperation from "../components/NoteOperation";
 import FileOperation from "../components/FileOperation";
 import LayoutDefault from "../components/layouts/LayoutDefault";
 import { FaPhotoVideo } from "react-icons/fa";
-import { FilesContextProvider } from "../context/FilesContext";
 
 const Dashboard = () => {
   return (
@@ -13,9 +12,7 @@ const Dashboard = () => {
       </header>
       <hr />
       <section className="mt-10">
-        <FilesContextProvider>
-          <FileOperation />
-        </FilesContextProvider>
+        <FileOperation />
       </section>
       <hr className="my-10" />
       <section className="mt-10">
