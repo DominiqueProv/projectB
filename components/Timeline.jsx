@@ -1,18 +1,18 @@
+import { formatDate } from "../utils/date";
+
 const Timeline = ({ files }) => {
-  console.log(files);
   return (
-    <div className="">
+    <div className="hidden sm:block sticky top-0 w-72 h-full rounded-md bg-indigo-100 p-3 font-bold">
       {files.length ? (
-        files.map((file) => {
-          const date = new Date(file.metadata.timeCreated);
-          const currentDayOfMonth = date.getDate();
-          const currentMonth = date.getMonth();
-          const currentYear = date.getFullYear();
-          const dateString = `${currentDayOfMonth}-${
-            currentMonth + 1
-          }-${currentYear};`;
-          console.log(dateString);
-        })
+        <ul className="">
+          {files.map((file, i) => {
+            return (
+              <li key={i}>
+                {formatDate(file.metadata.customMetadata.originalDate)}
+              </li>
+            );
+          })}
+        </ul>
       ) : (
         <></>
       )}

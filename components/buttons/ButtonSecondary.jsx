@@ -1,16 +1,16 @@
-import { FaTimes } from "react-icons/fa";
-
-const ButtonPrimary = ({ label, type, handleClick }) => {
+const ButtonSecondary = ({ label, type, handleClick, children }) => {
   return (
     <button
       onClick={handleClick}
-      className="bg-blue-100 font-bold text-sm py-1 px-2 text-blue-500 rounded-md self-start flex items-center gap-1"
+      className="bg-blue-100 font-bold text-sm py-1 px-1 sm:px-2 text-blue-500 rounded-md self-start flex items-center gap-1"
       type={type}
     >
-      <FaTimes size={15} className="text-blue-500" />
-      {label}
+      <div className="flex space-x-2 items-center">
+        {children}
+        <span className="hidden sm:block">{label}</span>
+      </div>
     </button>
   );
 };
 
-export default ButtonPrimary;
+export default ButtonSecondary;

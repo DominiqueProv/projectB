@@ -9,12 +9,13 @@ import {
   listAll,
   deleteObject,
 } from "firebase/storage";
-import Medias from "./Medias";
 import { Loader } from "./Loader";
 import ButtonPrimary from "./buttons/ButtonPrimary";
-import ButtonSecondary from "./buttons/ButtonSecondary";
+import { CgSpinner } from "react-icons/cg";
 import Timeline from "./Timeline";
-import { formatDate } from "../utils/date";
+import { IoCloudUploadOutline } from "react-icons/io5";
+import { GiCancel } from "react-icons/gi";
+import FileCard from "./cards/FileCard";
 
 const listRef = ref(storage, "files/");
 
@@ -42,7 +43,6 @@ export default function NoteOperations() {
   };
 
   const putStorageItem = (item) => {
-    console.log(item);
     const metadata = {
       customMetadata: {
         originalDate: `${item.lastModified.toString()}`,
@@ -151,7 +151,7 @@ export default function NoteOperations() {
           ? "Add memories to your story"
           : "Start by adding some memories"}
       </h2>
-      <div className="space-x-3">
+      <div className="space-x-3 flex w-full sm:max-w-xl">
         <input
           type="file"
           multiple="multiple"
@@ -163,43 +163,42 @@ export default function NoteOperations() {
           handleClick={handleUpload}
           label={"Upload"}
           type={"button"}
-        />
+        >
+          <IoCloudUploadOutline size={20} />
+        </ButtonPrimary>
         {isUpload ? (
           <ButtonPrimary
             handleClick={handleCancel}
             label={"Cancel"}
             type={"button"}
-          />
+          >
+            <GiCancel size={20} />
+          </ButtonPrimary>
         ) : (
           <></>
         )}
       </div>
       <Loader percent={percent} />
-      <div className="grid grid-cols-2 lg:grid-cols-4 w-full gap-6 mt-10 relative">
-        {filesData.length && <Timeline files={filesData} />}
-        {filesData.length ? (
-          filesData.map((file, i) => {
-            return (
-              <div key={i} className="flex flex-col space-y-3">
-                <div className="w-full aspect-video relative rounded-md overflow-hidden">
-                  <Medias file={file} />
-                </div>
-                <ul>
-                  <li>
-                    {formatDate(file.metadata.customMetadata.originalDate)}
-                  </li>
-                </ul>
-                <ButtonSecondary
-                  handleClick={() => deleteFile(file)}
-                  label={"Delete"}
-                />
-              </div>
-            );
-          })
-        ) : (
-          <></>
-        )}
-      </div>
+      {filesData.length ? (
+        <div className="flex mt-10 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-4 w-full gap-6">
+            {filesData
+              .sort(
+                (a, b) =>
+                  b.metadata.customMetadata.originalDate -
+                  a.metadata.customMetadata.originalDate
+              )
+              .map((file, i) => {
+                return <FileCard file={file} key={i} deleteFile={deleteFile} />;
+              })}
+          </div>
+          <Timeline files={filesData} />
+        </div>
+      ) : (
+        <div className="w-full flex justify-center items-center min-h-300">
+          <CgSpinner className="animate-spin" color={"dodgerblue"} size={40} />
+        </div>
+      )}
     </>
   );
 }

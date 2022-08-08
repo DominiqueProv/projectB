@@ -12,7 +12,14 @@ const Medias = ({ file }) => {
     );
   } else {
     return (
-      <Image layout="fill" objectFit="cover" src={file.url} alt={file.name} />
+      <Image
+        layout="fill"
+        sizes="320"
+        quality={30}
+        objectFit="cover"
+        src={file.url}
+        alt={file.name}
+      />
     );
   }
 };

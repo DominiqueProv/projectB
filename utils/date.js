@@ -25,8 +25,6 @@ const extractValueAndCustomizeDayOfMonth = (part) => {
 };
 
 export const formatDate = (date) => {
-  const milliseconds = date * 1000;
-  const dateObject = new Date(milliseconds);
   return longEnUSFormatter
     .formatToParts(date)
     .map(extractValueAndCustomizeDayOfMonth)
