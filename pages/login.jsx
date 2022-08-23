@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import LinkSecondary from "../components/buttons/LinkSecondary";
 import ButtonPrimary from "../components/buttons/ButtonPrimary";
+import Icon from "../components/buttons/Icon";
 const Login = () => {
   const router = useRouter();
   const { user, login } = useAuth();
@@ -61,7 +62,9 @@ const Login = () => {
               placeholder="Password"
             />
           </div>
-          <ButtonPrimary label={"Login"} type={"submit"} />
+          <ButtonPrimary label={"Login"} type={"submit"}>
+            <Icon icon={"login"} />
+          </ButtonPrimary>
           <div className="flex flex-col">
             <h3 className="">No account?</h3>
             <LinkSecondary url={"/signup"} label={"Create one"} />

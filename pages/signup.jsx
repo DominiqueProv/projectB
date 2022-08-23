@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import ButtonPrimary from "../components/buttons/ButtonPrimary";
-
+import Icon from "../components/buttons/Icon";
 const SignUp = () => {
-  const { user, signup } = useAuth();
-  console.log(user);
+  const { signup } = useAuth();
   const [data, setData] = useState({
     email: "",
     passwordOne: "",
@@ -13,14 +12,13 @@ const SignUp = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    if (passwordOne === passwordTwo) {
+    if (data.passwordOne === data.passwordTwo) {
       try {
-        await signup(data.email, data.password);
+        await signup(data.email, data.passwordOne);
       } catch (err) {
         console.log(err);
       }
     }
-    console.log(data);
   };
 
   return (
@@ -31,12 +29,12 @@ const SignUp = () => {
           <label htmlFor="signUpEmail">Email</label>
           <input
             type="email"
-            onChange={(e) =>
+            onChange={(e) => {
               setData({
                 ...data,
                 email: e.target.value,
-              })
-            }
+              });
+            }}
             value={data.email}
             name="email"
             id="signUpEmail"
@@ -48,12 +46,12 @@ const SignUp = () => {
           <input
             type="password"
             name="passwordOne"
-            onChange={(e) =>
+            onChange={(e) => {
               setData({
                 ...data,
                 passwordOne: e.target.value,
-              })
-            }
+              });
+            }}
             value={data.passwordOne}
             id="signUpPassword"
             placeholder="Password"
@@ -70,12 +68,14 @@ const SignUp = () => {
                 passwordTwo: e.target.value,
               })
             }
-            value={data.passworTwo}
+            value={data.passwordTwo}
             id="signUpPassword2"
             placeholder="Password"
           />
         </div>
-        <ButtonPrimary label={"Sign Up"} type={"submit"} />
+        <ButtonPrimary label={"Sign Up"} type={"submit"}>
+          <Icon icon={"signup"} />
+        </ButtonPrimary>
       </form>
     </div>
   );

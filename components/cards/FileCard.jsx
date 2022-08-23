@@ -2,7 +2,7 @@ import Medias from "../../components/Medias";
 import ButtonSecondary from "../buttons/ButtonSecondary";
 import { formatDate } from "../../utils/date";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import { RiDeleteBack2Line } from "react-icons/ri";
+import Icon from "../buttons/Icon";
 
 const FileCard = ({ file, deleteFile }) => {
   return (
@@ -18,10 +18,7 @@ const FileCard = ({ file, deleteFile }) => {
           </span>
         </div>
         <ButtonSecondary handleClick={() => deleteFile(file)} label={"Delete"}>
-          <RiDeleteBack2Line
-            size={15}
-            className="text-blue-500 flex-shrink-0"
-          />
+          <Icon icon={"delete"} xClass={"text-blue-500"} />
         </ButtonSecondary>
       </div>
     </div>

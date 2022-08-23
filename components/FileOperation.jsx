@@ -14,7 +14,7 @@ import ButtonPrimary from "./buttons/ButtonPrimary";
 import { CgSpinner } from "react-icons/cg";
 import Timeline from "./Timeline";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { GiCancel } from "react-icons/gi";
+import { MdOutlineCancel } from "react-icons/md";
 import FileCard from "./cards/FileCard";
 
 const listRef = ref(storage, "files/");
@@ -140,7 +140,7 @@ export default function NoteOperations() {
         setFilesData(files);
       })
       .catch((error) => {
-        // Uh-oh, an error occurred!
+        console.log(error);
       });
   };
 
@@ -151,8 +151,9 @@ export default function NoteOperations() {
           ? "Add memories to your story"
           : "Start by adding some memories"}
       </h2>
-      <div className="space-x-3 flex w-full sm:max-w-xl">
+      <div className="space-x-3 flex w-full">
         <input
+          className="w-full rounded-md sm:max-w-md"
           type="file"
           multiple="multiple"
           ref={inputFileRef}
@@ -160,19 +161,21 @@ export default function NoteOperations() {
           accept=".png, .jpeg, video/*"
         />
         <ButtonPrimary
+          xClass={"px-4 flex-shrink-0"}
           handleClick={handleUpload}
           label={"Upload"}
           type={"button"}
         >
-          <IoCloudUploadOutline size={20} />
+          <IoCloudUploadOutline size={18} />
         </ButtonPrimary>
         {isUpload ? (
           <ButtonPrimary
+            xClass={"px-4"}
             handleClick={handleCancel}
             label={"Cancel"}
             type={"button"}
           >
-            <GiCancel size={20} />
+            <MdOutlineCancel size={25} />
           </ButtonPrimary>
         ) : (
           <></>

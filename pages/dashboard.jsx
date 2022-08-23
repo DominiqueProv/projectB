@@ -2,6 +2,7 @@ import NoteOperation from "../components/NoteOperation";
 import FileOperation from "../components/FileOperation";
 import LayoutDefault from "../components/layouts/LayoutDefault";
 import { FaPhotoVideo } from "react-icons/fa";
+import UpdateUserModal from "../components/modals/UpdateUser";
 
 const Dashboard = () => {
   return (
@@ -17,6 +18,10 @@ const Dashboard = () => {
       <hr className="my-10" />
       <section className="mt-10">
         <NoteOperation />
+      </section>
+      <hr />
+      <section className="mt-10">
+        <UpdateUserModal />
       </section>
     </LayoutDefault>
   );
