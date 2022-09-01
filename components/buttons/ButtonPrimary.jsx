@@ -1,10 +1,22 @@
 import React from "react";
 
-const ButtonPrimary = ({ label, type, handleClick, children, xClass }) => {
+const ButtonPrimary = ({
+  label,
+  type,
+  handleClick,
+  children,
+  xClass,
+  isDisabled,
+}) => {
+  const disabledClass = isDisabled
+    ? "bg-gray-500 cursor-not-allowed"
+    : "bg-indigo-800";
+  console.log(isDisabled);
   return (
     <button
+      disabled={isDisabled}
       onClick={handleClick}
-      className={`bg-indigo-800 text-white rounded-lg py-2 ${xClass}`}
+      className={` text-white rounded-lg py-2 ${xClass} ${disabledClass}`}
       type={type}
     >
       <div className="flex space-x-2 items-center justify-center">

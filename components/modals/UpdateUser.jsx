@@ -3,56 +3,37 @@ import ButtonPrimary from "../buttons/ButtonPrimary";
 import { useAuth } from "../../context/AuthContext";
 import Icon from "../buttons/Icon";
 import { storage } from "../../lib/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 const UpdateUserModal = () => {
   const inputFileRef = useRef();
-  const { updateUser } = useAuth();
+  const { user, updateUser } = useAuth();
   const [file, setFile] = useState([]);
-  const [data, setData] = useState({
-    displayName: "",
-    photoUrl: "",
-  });
+  const [isUpload, setIsUpload] = useState(false);
+  const [displayName, setData] = useState("");
+  const isDisabled = isUpload || !file?.length;
 
-  const handleChange = (event) => {
-    const chosenFiles = Array.from(event.target.files);
-    const uploaded = [...file];
-    chosenFiles.some((file) => {
-      if (uploaded.findIndex((f) => f.name === file.name) === -1) {
-        uploaded.push(file);
-      }
-    });
-    setFile(uploaded);
+  const handleChange = (e) => {
+    if (e.target.files) {
+      setFile(e.target.files);
+    }
   };
-
-  const putStorageItem = (item) => {
-    const avatarRef = ref(storage, `/userAvatar/${item[0].name}`);
-    //TODO upload whole file problem
-    uploadBytes(avatarRef, item).then((snapshot) => {
-      console.log(snapshot);
-      getDownloadURL(snapshot.ref)
-        .then((url) => {
-          setData({
-            ...data,
-            photoUrl: url,
-          });
-        })
-        .then(() => {
-          updateUser(data.displayName, data.photoUrl);
-        })
-        .catch((error) => {
-          console.log(`Some failed: `, error.message);
-        });
-    });
+  const upload = async (file, user, setIsUpload) => {
+    const fileRef = ref(storage, `userAvatar/${user.uid}.png`);
+    setIsUpload(true);
+    const snapshot = await uploadBytes(fileRef, file[0]);
+    const photoURL = await getDownloadURL(fileRef);
+    updateUser(displayName, photoURL);
+    setIsUpload(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!file.length) {
+    if (!file) {
       alert("Please choose a file first!");
       return;
     }
-    putStorageItem(file);
+    upload(file, user, setIsUpload);
   };
   return (
     <>
@@ -60,15 +41,11 @@ const UpdateUserModal = () => {
         <div className="flex flex-col">
           <label htmlFor="updateUserName">Username</label>
           <input
-            required
             type="text"
             onChange={(e) => {
-              setData({
-                ...data,
-                displayName: e.target.value,
-              });
+              setData(e.target.value);
             }}
-            value={data.displayName}
+            value={displayName}
             name="username"
             id="updateUserName"
             placeholder="John Smith"
@@ -84,8 +61,11 @@ const UpdateUserModal = () => {
             accept=".png, .jpeg"
           />
         </div>
-
-        <ButtonPrimary label={"Update user"} type={"submit"}>
+        <ButtonPrimary
+          label={"Update user"}
+          type={"submit"}
+          isDisabled={isDisabled}
+        >
           <Icon icon={"update"} />
         </ButtonPrimary>
       </form>

@@ -4,11 +4,13 @@ import LinkPrimary from "./buttons/LinkPrimary";
 import ButtonPrimary from "./buttons/ButtonPrimary";
 import { useRouter } from "next/router";
 import { MdOutlineBedroomBaby } from "react-icons/md";
+import { HiOutlineUserCircle } from "react-icons/hi";
 import Icon from "./buttons/Icon";
 import Image from "next/image";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  console.log(user);
   const router = useRouter();
   return (
     <nav className="bg-indigo-500 p-4 flex justify-between items-center">
@@ -20,21 +22,9 @@ const Navbar = () => {
           </span>
         </a>
       </Link>
-      <ul className="space-x-2 flex">
+      <ul className="space-x-2 flex items-center">
         {user ? (
           <>
-            {user.photoUrl ? (
-              <Image
-                src={user.photoUrl}
-                className={"rounded-full overflow-hidden"}
-                width={50}
-                height={50}
-                alt={"user avatar"}
-              />
-            ) : (
-              <></>
-            )}
-
             <LinkPrimary
               url="/dashboard"
               label="Dashboard"
@@ -53,6 +43,26 @@ const Navbar = () => {
             >
               <Icon icon={"signout"} />
             </ButtonPrimary>
+            <div className="bg-indigo-100 rounded-md p-1 flex items-center space-x-1">
+            {user.photoUrl ? (
+              <Image
+                src={user.photoUrl}
+                className={"rounded-full overflow-hidden object-cover"}
+                width={30}
+                height={30}
+                alt={"user avatar"}
+              />
+            ) : (
+              <HiOutlineUserCircle size={25} className="text-blue-500" />
+            )}
+            {user.userName ? (
+              <div className="">
+                {user.userName}
+              </div>
+            ) : (
+              <></>
+            )}
+            </div>
           </>
         ) : (
           <>

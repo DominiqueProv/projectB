@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 const Medias = ({ file }) => {
-  console.log(file.url);
   const type = file.metadata.contentType;
   const regex = new RegExp("video");
   const isVideo = regex.test(type);

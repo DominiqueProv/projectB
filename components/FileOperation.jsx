@@ -26,7 +26,7 @@ export default function NoteOperations() {
   const [uploadTask, setUploadTask] = useState({});
   const [isUpload, setIsUpload] = useState(false);
   const [percent, setPercent] = useState(0);
-
+  const isDisabled = isUpload || !files.length;
   useEffect(() => {
     getFiles();
   }, []);
@@ -161,6 +161,7 @@ export default function NoteOperations() {
           accept=".png, .jpeg, video/*"
         />
         <ButtonPrimary
+          isDisabled={isDisabled}
           xClass={"px-4 flex-shrink-0"}
           handleClick={handleUpload}
           label={"Upload"}

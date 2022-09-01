@@ -18,7 +18,6 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log(user);
       if (user) {
         setUser({
           uid: user.uid,
@@ -39,17 +38,16 @@ export const AuthContextProvider = ({ children }) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const updateUser = (displayName, photoUrl) => {
+  const updateUser = async (displayName, photoURL) => {
     return updateProfile(auth.currentUser, {
-      displayName: displayName,
-      photoURL: photoUrl,
+      displayName,
+      photoURL,
     })
       .then(() => {
         setUser({
           userName: user.displayName,
           photoUrl: user.photoURL,
         });
-        console.log("profile updated");
       })
       .catch((error) => {
         console.error(error);
