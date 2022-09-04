@@ -5,7 +5,7 @@ import Icon from "../buttons/Icon";
 import { storage } from "../../lib/firebase";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
-const UpdateUserModal = () => {
+const UpdateUser = () => {
   const inputFileRef = useRef();
   const { user, updateUser } = useAuth();
   const [file, setFile] = useState([]);
@@ -73,4 +73,4 @@ const UpdateUserModal = () => {
   );
 };
 
-export default UpdateUserModal;
+export default UpdateUser;

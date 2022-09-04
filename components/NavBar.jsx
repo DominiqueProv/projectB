@@ -4,7 +4,7 @@ import MenuModal from "../components/modals/MenuModal";
 
 const Navbar = () => {
   return (
-    <div className="bg-indigo-500 p-4 flex justify-between items-center">
+    <nav className="bg-indigo-500 p-4 flex justify-between items-center w-full">
       <Link href="/" passHref>
         <a className="space-x-3 flex items-center">
           <MdOutlineBedroomBaby size={35} className="text-blue-100" />
@@ -14,7 +14,7 @@ const Navbar = () => {
         </a>
       </Link>
       <MenuModal />
-    </div>
+    </nav>
   );
 };
 

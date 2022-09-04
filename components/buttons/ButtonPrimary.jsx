@@ -19,7 +19,7 @@ const ButtonPrimary = ({
       className={` text-white rounded-lg py-2 ${xClass} ${disabledClass}`}
       type={type}
     >
-      <div className="flex space-x-2 items-center justify-center">
+      <div className="flex items-center sm:space-x-2 justify-center">
         {children}
         <span className="hidden sm:block">{label}</span>
       </div>

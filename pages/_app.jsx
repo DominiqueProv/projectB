@@ -1,5 +1,4 @@
 import "../styles/globals.css";
-import Navbar from "../components/Navbar";
 import { AuthContextProvider } from "../context/AuthContext";
 import { useRouter } from "next/router";
 import ProtectedRoute from "../components/ProtectedRoute";
@@ -11,7 +10,6 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <AuthContextProvider>
-        <Navbar />
         {noAuthRequired.includes(router.pathname) ? (
           <Component {...pageProps} />
         ) : (

@@ -5,14 +5,19 @@ import { FiLogIn } from "react-icons/fi";
 import { BiUserPlus } from "react-icons/bi";
 import { RiDeleteBack2Line } from "react-icons/ri";
 import { FiUserCheck } from "react-icons/fi";
+import { FiChevronRight } from "react-icons/fi";
+import { AiFillEdit } from "react-icons/ai";
+import { MdOutlineBedroomBaby } from "react-icons/md";
 
 const components = {
-  dashboard: GoDashboard,
+  timeline: MdOutlineBedroomBaby,
   signout: VscSignOut,
   login: FiLogIn,
   signup: BiUserPlus,
   delete: RiDeleteBack2Line,
   update: FiUserCheck,
+  arrow: FiChevronRight,
+  edit: AiFillEdit,
 };
 
 const Icon = ({ icon, xClass }) => {

@@ -1,8 +1,11 @@
-import React from "react";
+import Navbar from "../../components/Navbar";
 
 const LayoutDefault = (props) => {
   return (
-    <main className="max-w-[1920px] mx-auto px-4 pt-4">{props.children}</main>
+    <>
+      <Navbar />
+      <main className="max-w-[1920px] mx-auto px-4 pt-4">{props.children}</main>
+    </>
   );
 };
 

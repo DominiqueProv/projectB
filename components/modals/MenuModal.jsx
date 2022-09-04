@@ -29,18 +29,33 @@ const MenuModal = () => {
         )}
       </button>
 
-      {showModal ? (
-        <>
-          <div className="inset-0 absolute bg-black bg-opacity-30 backdrop-blur-sm z-10"></div>
-          <div className="flex justify-end overflow-x-hidden overflow-y-auto p-2 fixed inset-0 z-20 outline-none focus:outline-none">
-            <div className="flex">
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                <div className="flex flex-col items-start justify-between p-5 rounded-t ">
-                  <h3 className="text-3xl font-semibold">Menu</h3>
-                  <nav className="space-x-2 flex items-center pt-3">
-                    {user ? (
-                      <>
-                        <div className="bg-indigo-100 rounded-md p-2 flex items-center space-x-2">
+      <>
+        <div
+          onClick={() => setShowModal(false)}
+          className={`inset-0 absolute bg-black bg-opacity-30 z-10 backdrop-blur-sm ${
+            showModal ? "block" : "hidden"
+          }`}
+        ></div>
+        <div
+          className={`flex justify-end p-2 duration-300 ease-out-expo absolute z-20 right-0 top-0 ${
+            showModal ? "translate-y-0" : "-translate-y-[130px]"
+          }`}
+        >
+          <div className="flex w-full sm:max-w-420">
+            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="flex flex-col items-start p-3 rounded-t ">
+                <h3 className="text-3xl font-semibold">Menu</h3>
+                <nav className="space-x-2 flex justify-between items-center pt-3">
+                  {user ? (
+                    <>
+                      <button
+                        className="relative overflow-hidden group"
+                        onClick={() => {
+                          setShowModal(false);
+                          router.push("/update");
+                        }}
+                      >
+                        <div className="bg-indigo-100 rounded-md p-2 flex items-center space-x-2 group-hover:blur group-hover:opacity-30 duration-150">
                           {user.photoUrl ? (
                             <Image
                               src={user.photoUrl}
@@ -68,50 +83,53 @@ const MenuModal = () => {
                             <></>
                           )}
                         </div>
-                        <LinkPrimary
-                          url="/dashboard"
-                          label="Dashboard"
-                          xClass={"px-2 sm:px-4"}
-                        >
-                          <Icon icon={"dashboard"} />
-                        </LinkPrimary>
-                        <ButtonPrimary
-                          xClass={"px-2 sm:px-4"}
-                          label={"Logout"}
-                          type={"button"}
-                          handleClick={() => {
-                            logout();
-                            router.push("/");
-                          }}
-                        >
-                          <Icon icon={"signout"} />
-                        </ButtonPrimary>
-                      </>
-                    ) : (
-                      <>
-                        <LinkPrimary
-                          url="/signup"
-                          label="Signup"
-                          xClass={"px-2 sm:px-4"}
-                        >
-                          <Icon icon={"signup"} />
-                        </LinkPrimary>
-                        <LinkPrimary
-                          url="/login"
-                          label="Login"
-                          xClass={"px-2 sm:px-4"}
-                        >
-                          <Icon icon={"login"} />
-                        </LinkPrimary>
-                      </>
-                    )}
-                  </nav>
-                </div>
+                        <p className="absolute text-indigo-800 translate-y-1 font-semibold ease-out opacity-0 group-hover:opacity-100 duration-150 top-[50%] left-[50%] -translate-x-[50%] group-hover:-translate-y-[50%]">
+                          EDIT
+                        </p>
+                      </button>
+                      <LinkPrimary
+                        url="/timeline"
+                        label="timeline"
+                        xClass={"px-2 sm:px-4 rounded-md"}
+                      >
+                        <Icon icon={"timeline"} />
+                      </LinkPrimary>
+                      <ButtonPrimary
+                        xClass={"px-2 sm:px-4 sm:gap-2"}
+                        label={"Logout"}
+                        type={"button"}
+                        handleClick={() => {
+                          logout();
+                          router.push("/");
+                        }}
+                      >
+                        <Icon icon={"signout"} />
+                      </ButtonPrimary>
+                    </>
+                  ) : (
+                    <>
+                      <LinkPrimary
+                        url="/signup"
+                        label="Signup"
+                        xClass={"px-2 sm:px-4"}
+                      >
+                        <Icon icon={"signup"} />
+                      </LinkPrimary>
+                      <LinkPrimary
+                        url="/login"
+                        label="Login"
+                        xClass={"px-2 sm:px-4"}
+                      >
+                        <Icon icon={"login"} />
+                      </LinkPrimary>
+                    </>
+                  )}
+                </nav>
               </div>
             </div>
           </div>
-        </>
-      ) : null}
+        </div>
+      </>
     </>
   );
 };
