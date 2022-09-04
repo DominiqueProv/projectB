@@ -1,13 +1,13 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { useAuth } from "../../context/AuthContext";
+import ButtonPrimary from "../buttons/ButtonPrimary";
+import Image from "next/image";
+import Icon from "../buttons/Icon";
+import NavLinkPrimary from "../buttons/NavLinkPrimary";
+import { HiOutlineUserCircle } from "react-icons/hi";
 import { TbMenu2 } from "react-icons/tb";
 import { IoMdClose } from "react-icons/io";
-import { useAuth } from "../../context/AuthContext";
-import LinkPrimary from "../buttons/LinkPrimary";
-import ButtonPrimary from "../buttons/ButtonPrimary";
-import { useRouter } from "next/router";
-import { HiOutlineUserCircle } from "react-icons/hi";
-import Icon from "../buttons/Icon";
-import Image from "next/image";
 
 const MenuModal = () => {
   const [showModal, setShowModal] = useState(false);
@@ -25,7 +25,10 @@ const MenuModal = () => {
         {!showModal ? (
           <TbMenu2 size={25} className="text-indigo-800" />
         ) : (
-          <IoMdClose size={25} className="text-indigo-800" />
+          <IoMdClose
+            size={25}
+            className="text-indigo-800 hover:rotate-[90deg] ease-out-expo duration-200"
+          />
         )}
       </button>
 
@@ -87,13 +90,14 @@ const MenuModal = () => {
                           EDIT
                         </p>
                       </button>
-                      <LinkPrimary
+                      <NavLinkPrimary
+                        exact
                         url="/timeline"
                         label="timeline"
                         xClass={"px-2 sm:px-4 rounded-md"}
                       >
                         <Icon icon={"timeline"} />
-                      </LinkPrimary>
+                      </NavLinkPrimary>
                       <ButtonPrimary
                         xClass={"px-2 sm:px-4 sm:gap-2"}
                         label={"Logout"}
@@ -108,20 +112,22 @@ const MenuModal = () => {
                     </>
                   ) : (
                     <>
-                      <LinkPrimary
+                      <NavLinkPrimary
+                        exact
                         url="/signup"
                         label="Signup"
-                        xClass={"px-2 sm:px-4"}
+                        xClass={"px-2 sm:px-4 rounded-md"}
                       >
                         <Icon icon={"signup"} />
-                      </LinkPrimary>
-                      <LinkPrimary
+                      </NavLinkPrimary>
+                      <NavLinkPrimary
+                        exact
                         url="/login"
                         label="Login"
-                        xClass={"px-2 sm:px-4"}
+                        xClass={"px-2 sm:px-4 rounded-md"}
                       >
                         <Icon icon={"login"} />
-                      </LinkPrimary>
+                      </NavLinkPrimary>
                     </>
                   )}
                 </nav>

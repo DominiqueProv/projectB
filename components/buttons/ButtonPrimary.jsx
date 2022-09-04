@@ -16,7 +16,7 @@ const ButtonPrimary = ({
     <button
       disabled={isDisabled}
       onClick={handleClick}
-      className={` text-white rounded-lg py-2 ${xClass} ${disabledClass}`}
+      className={` text-white rounded-lg py-2 ${xClass} ${disabledClass} hover:bg-blue-500 duration-300 ease-out-expo`}
       type={type}
     >
       <div className="flex items-center sm:space-x-2 justify-center">
