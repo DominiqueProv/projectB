@@ -12,6 +12,13 @@ const SignUp = () => {
     passwordTwo: "",
   });
 
+  const handleChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value.trim(),
+    });
+  };
+
   const handleSignup = async (e) => {
     e.preventDefault();
     if (data.passwordOne === data.passwordTwo) {
@@ -36,12 +43,7 @@ const SignUp = () => {
               <label htmlFor="signUpEmail">Email</label>
               <input
                 type="email"
-                onChange={(e) => {
-                  setData({
-                    ...data,
-                    email: e.target.value,
-                  });
-                }}
+                onChange={handleChange}
                 value={data.email}
                 name="email"
                 id="signUpEmail"
@@ -53,12 +55,7 @@ const SignUp = () => {
               <input
                 type="password"
                 name="passwordOne"
-                onChange={(e) => {
-                  setData({
-                    ...data,
-                    passwordOne: e.target.value,
-                  });
-                }}
+                onChange={handleChange}
                 value={data.passwordOne}
                 id="signUpPassword"
                 placeholder="Password"
@@ -68,13 +65,8 @@ const SignUp = () => {
               <label htmlFor="signUpPassword2">Confirm Password</label>
               <input
                 type="password"
-                name="password"
-                onChange={(e) =>
-                  setData({
-                    ...data,
-                    passwordTwo: e.target.value,
-                  })
-                }
+                name="passwordTwo"
+                onChange={handleChange}
                 value={data.passwordTwo}
                 id="signUpPassword2"
                 placeholder="Password"

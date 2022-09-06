@@ -1,11 +1,11 @@
-const ButtonSecondary = ({ label, type, handleClick, children }) => {
+const ButtonSecondary = ({ label, type, handleClick, children, xClass }) => {
   return (
     <button
       onClick={handleClick}
-      className="bg-blue-100 font-bold text-sm py-1 px-1 sm:px-2 text-blue-500 rounded-md self-start flex items-center gap-1"
+      className={`bg-blue-100 font-bold text-sm p-1 text-blue-500 self-start flex items-center ${xClass}`}
       type={type}
     >
-      <div className="flex space-x-2 items-center">
+      <div className={`flex ${label ? "space-x-2" : "space-x-0"} items-center`}>
         {children}
         <span className="hidden sm:block">{label}</span>
       </div>

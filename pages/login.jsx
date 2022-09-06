@@ -14,6 +14,13 @@ const Login = () => {
     password: "",
   });
 
+  const handleChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value.trim(),
+    });
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log(user);
@@ -38,12 +45,7 @@ const Login = () => {
               <input
                 type="email"
                 value={data.email}
-                onChange={(e) =>
-                  setData({
-                    ...data,
-                    email: e.target.value,
-                  })
-                }
+                onChange={handleChange}
                 name="email"
                 id="loginEmail"
                 placeholder="Email"
@@ -55,12 +57,7 @@ const Login = () => {
                 type="password"
                 name="password"
                 value={data.password}
-                onChange={(e) =>
-                  setData({
-                    ...data,
-                    password: e.target.value,
-                  })
-                }
+                onChange={handleChange}
                 id="loginPassword"
                 placeholder="Password"
               />

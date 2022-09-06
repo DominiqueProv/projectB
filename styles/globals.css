@@ -49,8 +49,9 @@
     isolation: isolate;
   }
 
-  input {
-    @apply bg-slate-200 p-2 rounded-md;
+  input,
+  textarea {
+    @apply bg-slate-200 p-2 rounded-md focus:ring-indigo-800 focus:ring-2 outline-none focus:outline-none placeholder:text-indigo-300 placeholder:uppercase placeholder:font-semibold placeholder:text-xs;
   }
 
   h2 {

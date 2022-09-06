@@ -1,5 +1,3 @@
-import React from "react";
-
 const ButtonPrimary = ({
   label,
   type,
@@ -11,7 +9,6 @@ const ButtonPrimary = ({
   const disabledClass = isDisabled
     ? "bg-gray-500 cursor-not-allowed"
     : "bg-indigo-800";
-  console.log(isDisabled);
   return (
     <button
       disabled={isDisabled}

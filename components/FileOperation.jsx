@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { storage } from "../lib/firebase";
+import { v4 } from "uuid";
+
 import {
   ref,
   uploadBytesResumable,
@@ -19,14 +21,16 @@ import FileCard from "./cards/FileCard";
 
 const listRef = ref(storage, "files/");
 
-export default function NoteOperations() {
+const FileOperations = () => {
   const inputFileRef = useRef();
   const [files, setFiles] = useState([]);
   const [filesData, setFilesData] = useState([]);
   const [uploadTask, setUploadTask] = useState({});
   const [isUpload, setIsUpload] = useState(false);
+  const [isFilesLoaded, setIsFilesLoaded] = useState(false);
   const [percent, setPercent] = useState(0);
   const isDisabled = isUpload || !files.length;
+
   useEffect(() => {
     getFiles();
   }, []);
@@ -43,12 +47,13 @@ export default function NoteOperations() {
   };
 
   const putStorageItem = (item) => {
+    const ext = item.name.split(".").pop();
     const metadata = {
       customMetadata: {
         originalDate: `${item.lastModified.toString()}`,
       },
     };
-    const storageRef = ref(storage, `/files/${item.name}`);
+    const storageRef = ref(storage, `/files/${v4()}.${ext}`);
     const uploadTaskRef = uploadBytesResumable(storageRef, item);
     setUploadTask(uploadTaskRef);
     setIsUpload(true);
@@ -124,15 +129,16 @@ export default function NoteOperations() {
             });
         });
       })
+      .then(() => {
+        setIsFilesLoaded(true);
+      })
       .catch((error) => {
         console.error(error.message);
       });
   };
 
   const deleteFile = (file) => {
-    const name = decodeURIComponent(
-      file.url.split("files%2F").pop().split("?")[0]
-    );
+    const name = file.metadata.name;
     const fileRef = ref(storage, `files/${name}`);
     deleteObject(fileRef)
       .then(() => {
@@ -183,7 +189,7 @@ export default function NoteOperations() {
         )}
       </div>
       <Loader percent={percent} />
-      {filesData.length ? (
+      {isFilesLoaded ? (
         <div className="flex mt-10 gap-6">
           <div className="grid grid-cols-1 lg:grid-cols-4 w-full gap-6">
             {filesData
@@ -196,7 +202,8 @@ export default function NoteOperations() {
                 return <FileCard file={file} key={i} deleteFile={deleteFile} />;
               })}
           </div>
-          <Timeline files={filesData} />
+          {/* TODO */}
+          {/* <Timeline files={filesData} /> */}
         </div>
       ) : (
         <div className="w-full flex justify-center items-center min-h-300">
@@ -205,4 +212,6 @@ export default function NoteOperations() {
       )}
     </>
   );
-}
+};
+
+export default FileOperations;

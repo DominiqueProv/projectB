@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { MdOutlineBedroomBaby } from "react-icons/md";
 import MenuModal from "../components/modals/MenuModal";
+import { MdOutlineBedroomBaby } from "react-icons/md";
 
 const Navbar = () => {
   return (
