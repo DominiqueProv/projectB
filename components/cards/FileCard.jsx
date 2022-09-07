@@ -2,22 +2,14 @@ import Medias from "../../components/Medias";
 import ButtonSecondary from "../buttons/ButtonSecondary";
 import { formatDate } from "../../utils/date";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import Icon from "../buttons/Icon";
 import NotesModal from "../modals/NotesModal";
 import FileModal from "../modals/FileModal";
 
-const FileCard = ({ file, deleteFile }) => {
+const FileCard = ({ file }) => {
   return (
     <article className="flex flex-col">
       <div className="w-full aspect-video relative rounded-t-md overflow-hidden group">
-        {/* <ButtonSecondary
-          handleClick={() => deleteFile(file)}
-          xClass={
-            "rounded-full absolute right-1 top-1 z-10 group-hover:opacity-100 opacity-0 duration-300 ease-out-expo"
-          }
-        >
-          <Icon icon={"delete"} xClass={"text-blue-500"} />
-        </ButtonSecondary> */}
+        <FileModal file={file} />
         {file && <Medias file={file} />}
       </div>
       <div className="flex justify-between group items-center bg-indigo-50 p-2 rounded-b-md">
@@ -28,7 +20,6 @@ const FileCard = ({ file, deleteFile }) => {
           </span>
         </div>
         <NotesModal file={file} />
-        <FileModal file={file} />
       </div>
     </article>
   );

@@ -30,11 +30,11 @@ const components = {
   expand: BsArrowsAngleExpand,
 };
 
-const Icon = ({ icon, xClass }) => {
+const Icon = ({ icon, xClass, size }) => {
   const IconDisplay = components[icon];
   return (
     <IconDisplay
-      size={18}
+      size={size || 18}
       className={`flex-shrink-0 ${xClass ? xClass : "text-indigo-100"}`}
     />
   );
