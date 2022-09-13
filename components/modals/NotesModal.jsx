@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
 import { v4 } from "uuid";
 import ButtonSecondary from "../buttons/ButtonSecondary";
@@ -8,7 +8,25 @@ import NotesForm from "../forms/NotesForm";
 const NotesModal = ({ file }) => {
   const [showModal, setShowModal] = useState(false);
   const [notesInput, setNotesInput] = useState([]);
-  const notesStyle = ["height", "weigth", "description", "location", "mood"];
+  const notesStyle = [
+    "title",
+    "description",
+    "location",
+    "mood",
+    "height",
+    "weigth",
+  ];
+
+  const orderInput = (notesInput) => {
+    const customLookup = notesStyle.reduce((r, a, i) => {
+      r[a] = `${i}`;
+      return r;
+    }, {});
+    const customSortFn = (a, b) => {
+      return (customLookup[a] || a).localeCompare(customLookup[b] || b);
+    };
+    notesInput.sort(customSortFn);
+  };
 
   const handleClick = (e) => {
     const dataLabel = e.currentTarget.dataset.label;
@@ -19,6 +37,10 @@ const NotesModal = ({ file }) => {
       setNotesInput((prev) => [...prev, dataLabel]);
     }
   };
+
+  useEffect(() => {
+    orderInput(notesInput);
+  }, [notesInput]);
 
   return (
     <>

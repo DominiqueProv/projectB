@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { database } from "../../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
 
@@ -8,11 +8,17 @@ const initialFormData = Object.freeze({
   description: "",
   location: "",
   mood: "",
+  title: "",
 });
 
 const NotesForm = ({ notesInput, file, setShowModal }) => {
   const [formData, updateFormData] = useState(initialFormData);
+  const [upNotesInput, setNotesInput] = useState();
   const fileRefName = file.metadata.name.split(".")[0];
+
+  useEffect(() => {
+    setNotesInput(notesInput);
+  }, [notesInput]);
 
   const saveNote = async () => {
     await setDoc(doc(database, `notes/${fileRefName}`), formData, {
@@ -35,9 +41,9 @@ const NotesForm = ({ notesInput, file, setShowModal }) => {
 
   return (
     <>
-      {notesInput && (
+      {upNotesInput && (
         <form className="flex flex-col space-y-2 pt-5">
-          {notesInput.map((noteType, i) => {
+          {upNotesInput.map((noteType, i) => {
             let input;
             switch (noteType) {
               case "height":
@@ -46,7 +52,18 @@ const NotesForm = ({ notesInput, file, setShowModal }) => {
                     key={i}
                     type="number"
                     name={noteType}
-                    placeholder={"metric"}
+                    placeholder={"height in metric"}
+                    onChange={handleChange}
+                  />
+                );
+                break;
+              case "title":
+                input = (
+                  <input
+                    key={i}
+                    type="text"
+                    name={noteType}
+                    placeholder={"your title"}
                     onChange={handleChange}
                   />
                 );
@@ -57,7 +74,7 @@ const NotesForm = ({ notesInput, file, setShowModal }) => {
                     key={i}
                     type="number"
                     name={noteType}
-                    placeholder={"kg"}
+                    placeholder={"weigth in kg"}
                     onChange={handleChange}
                   />
                 );
