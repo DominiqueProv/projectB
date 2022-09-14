@@ -13,6 +13,7 @@ import { TbMoodHappy } from "react-icons/tb";
 import { MdOutlinePlace } from "react-icons/md";
 import { BsArrowsAngleExpand } from "react-icons/bs";
 import { MdTitle } from "react-icons/md";
+import { IoAddSharp } from "react-icons/io5";
 
 const components = {
   timeline: MdOutlineBedroomBaby,
@@ -30,6 +31,7 @@ const components = {
   location: MdOutlinePlace,
   mood: TbMoodHappy,
   expand: BsArrowsAngleExpand,
+  add: IoAddSharp,
 };
 
 const Icon = ({ icon, xClass, size }) => {

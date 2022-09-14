@@ -36,7 +36,7 @@ const MenuModal = () => {
                 <NavLinkPrimary
                   exact
                   url="/timeline"
-                  label="timeline"
+                  label="Timeline"
                   xClass={"px-2 sm:px-4 rounded-md"}
                 >
                   <Icon icon={"timeline"} />

@@ -15,6 +15,7 @@ import { Loader } from "./Loader";
 import ButtonPrimary from "./buttons/ButtonPrimary";
 import { CgSpinner } from "react-icons/cg";
 import Timeline from "./Timeline";
+import Icon from "./buttons/Icon";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { MdOutlineCancel } from "react-icons/md";
 import FileCard from "./cards/FileCard";
@@ -29,7 +30,6 @@ const FileOperations = () => {
   const [isUpload, setIsUpload] = useState(false);
   const [isFilesLoaded, setIsFilesLoaded] = useState(false);
   const [percent, setPercent] = useState(0);
-  const isDisabled = isUpload || !files.length;
 
   useEffect(() => {
     getFiles();
@@ -82,7 +82,7 @@ const FileOperations = () => {
           .catch((error) => {
             console.error(error);
           });
-        inputFileRef.current.value = "";
+        // inputFileRef.current.value = "";
         setFiles([]);
         setIsUpload(false);
       }
@@ -105,7 +105,7 @@ const FileOperations = () => {
 
   const handleCancel = () => {
     uploadTask.cancel();
-    inputFileRef.current.value = "";
+    // inputFileRef.current.value = "";
     setIsUpload(false);
     setPercent(0);
     setFiles([]);
@@ -157,46 +157,65 @@ const FileOperations = () => {
           ? "Add memories to your story"
           : "Start by adding some memories"}
       </h2>
-      <div className="space-x-3 flex w-full">
-        <input
-          className="w-full rounded-md sm:max-w-md"
-          type="file"
-          multiple="multiple"
-          ref={inputFileRef}
-          onChange={handleChange}
-          accept=".png, .jpeg, video/*"
-        />
-        <ButtonPrimary
-          isDisabled={isDisabled}
-          xClass={"px-4 flex-shrink-0"}
-          handleClick={handleUpload}
-          label={"Upload"}
-          type={"button"}
-        >
-          <IoCloudUploadOutline size={18} />
-        </ButtonPrimary>
-        {isUpload ? (
-          <ButtonPrimary
-            xClass={"px-4"}
-            handleClick={handleCancel}
-            label={"Cancel"}
-            type={"button"}
-          >
-            <MdOutlineCancel size={25} />
-          </ButtonPrimary>
-        ) : (
-          <></>
-        )}
-      </div>
-      <Loader percent={percent} />
+
       {isFilesLoaded ? (
         <div className="flex mt-10 gap-6">
           <div className="grid grid-cols-1 lg:grid-cols-4 w-full gap-6">
+            <div className="border-2 rounded-lg border-indigo-800 flex justify-center items-center hover:bg-blue-100 duration-300 ease-out-expo relative space-x-2">
+              {isUpload || files.length ? (
+                <>
+                  <ButtonPrimary
+                    xClass={"px-4 flex-shrink-0"}
+                    handleClick={handleUpload}
+                    type={"button"}
+                  >
+                    <IoCloudUploadOutline size={18} />
+                    <span className="">
+                      {`Upload ${files.length} file${
+                        files.length > 1 ? "s" : ""
+                      } `}
+                    </span>
+                  </ButtonPrimary>
+                  <ButtonPrimary
+                    xClass={"bg-transparent"}
+                    handleClick={handleCancel}
+                    type={"button"}
+                  >
+                    <MdOutlineCancel size={30} className={"text-indigo-800"} />
+                  </ButtonPrimary>
+                  <Loader percent={percent} />
+                </>
+              ) : (
+                <>
+                  <label
+                    htmlFor="file-upload"
+                    role="upload"
+                    className="w-full h-full flex justify-center items-center cursor-pointer"
+                  >
+                    <Icon
+                      icon="add"
+                      size={35}
+                      xClass="text-indigo-800 cursor-pointer"
+                    />
+                  </label>
+                  <input
+                    className="hidden"
+                    id="file-upload"
+                    type="file"
+                    multiple="multiple"
+                    ref={inputFileRef}
+                    onChange={handleChange}
+                    accept=".png, .jpeg, video/*"
+                  />
+                </>
+              )}
+            </div>
+
             {filesData
               .sort(
                 (a, b) =>
-                  b.metadata.customMetadata.originalDate -
-                  a.metadata.customMetadata.originalDate
+                  b?.metadata?.customMetadata?.originalDate -
+                  a?.metadata?.customMetadata?.originalDate
               )
               .map((file, i) => {
                 return <FileCard file={file} key={i} deleteFile={deleteFile} />;

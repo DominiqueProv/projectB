@@ -3,17 +3,17 @@ import { database } from "../../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
 
 const initialFormData = Object.freeze({
-  height: 0,
-  weigth: 0,
+  title: "",
   description: "",
   location: "",
   mood: "",
-  title: "",
+  height: 0,
+  weigth: 0,
 });
 
 const NotesForm = ({ notesInput, file, setShowModal }) => {
   const [formData, updateFormData] = useState(initialFormData);
-  const [upNotesInput, setNotesInput] = useState();
+  const [upNotesInput, setNotesInput] = useState([]);
   const fileRefName = file.metadata.name.split(".")[0];
 
   useEffect(() => {

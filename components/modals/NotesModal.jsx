@@ -46,6 +46,9 @@ const NotesModal = ({ file }) => {
     <>
       <ButtonSecondary
         className="font-bold text-xs"
+        xClass={
+          "px-2 rounded-md hover:bg-indigo-800 hover:text-white duration-300 ease-out-expo"
+        }
         handleClick={() => setShowModal(!showModal)}
         label={"Add Notes"}
       />
