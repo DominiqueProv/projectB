@@ -104,10 +104,6 @@ const FileOperations = () => {
   };
 
   const handleCancel = () => {
-    uploadTask.cancel();
-    // inputFileRef.current.value = "";
-    setIsUpload(false);
-    setPercent(0);
     setFiles([]);
   };
 
@@ -161,7 +157,11 @@ const FileOperations = () => {
       {isFilesLoaded ? (
         <div className="flex mt-10 gap-6">
           <div className="grid grid-cols-1 lg:grid-cols-4 w-full gap-6">
-            <div className="border-2 rounded-lg border-indigo-800 flex justify-center items-center hover:bg-blue-100 duration-300 ease-out-expo relative space-x-2">
+            <div
+              className={`border-2 rounded-lg border-indigo-800 flex justify-center items-center ${
+                !files.length ? "hover:bg-blue-100" : ""
+              } duration-300 ease-out-expo relative space-x-2`}
+            >
               {isUpload || files.length ? (
                 <>
                   <ButtonPrimary
@@ -176,13 +176,13 @@ const FileOperations = () => {
                       } `}
                     </span>
                   </ButtonPrimary>
-                  <ButtonPrimary
+                  <button
                     xClass={"bg-transparent"}
-                    handleClick={handleCancel}
+                    onClick={handleCancel}
                     type={"button"}
                   >
                     <MdOutlineCancel size={30} className={"text-indigo-800"} />
-                  </ButtonPrimary>
+                  </button>
                   <Loader percent={percent} />
                 </>
               ) : (

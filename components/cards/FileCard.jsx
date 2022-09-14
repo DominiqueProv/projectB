@@ -16,7 +16,7 @@ const FileCard = ({ file, deleteFile }) => {
             deleteFile(file);
           }}
           xClass={
-            "rounded-full absolute bg-opacity-70 top-1 left-1 z-10 p-2 font-bold text-xs opacity-0 group-hover:opacity-100 hover:bg-opacity-100 duration-300 ease-out-expo"
+            "rounded-full absolute bg-opacity-70 top-2 right-2 z-10 p-2 font-bold text-xs delay-200 opacity-0 group-hover:opacity-100 hover:bg-opacity-100 duration-300 ease-out-expo"
           }
         >
           <Icon icon={"delete"} xClass={"text-blue-500"} size={15} />

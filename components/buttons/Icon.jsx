@@ -11,7 +11,7 @@ import { MdOutlineMonitorWeight } from "react-icons/md";
 import { TbFileDescription } from "react-icons/tb";
 import { TbMoodHappy } from "react-icons/tb";
 import { MdOutlinePlace } from "react-icons/md";
-import { BsArrowsAngleExpand } from "react-icons/bs";
+import { RiFullscreenLine } from "react-icons/ri";
 import { MdTitle } from "react-icons/md";
 import { IoAddSharp } from "react-icons/io5";
 
@@ -30,7 +30,7 @@ const components = {
   description: TbFileDescription,
   location: MdOutlinePlace,
   mood: TbMoodHappy,
-  expand: BsArrowsAngleExpand,
+  expand: RiFullscreenLine,
   add: IoAddSharp,
 };
 
