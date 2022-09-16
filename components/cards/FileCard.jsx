@@ -1,26 +1,37 @@
+import { useState, useEffect } from "react";
 import Medias from "../../components/Medias";
-import ButtonSecondary from "../buttons/ButtonSecondary";
 import { formatDate } from "../../utils/date";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import NotesModal from "../modals/NotesModal";
 import FileModal from "../modals/FileModal";
-import Icon from "../buttons/Icon";
+import DeleteModal from "../modals/DeleteModal";
+import { doc, getDoc } from "firebase/firestore";
+import { database } from "../../lib/firebase";
 
 const FileCard = ({ file, deleteFile }) => {
+  const [notes, setNotes] = useState({});
+
+  const getNote = async (file) => {
+    const fileRefName = file.metadata.name.split(".")[0];
+    const docRef = doc(database, `notes/${fileRefName}`);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      setNotes({ ...docSnap.data() });
+    } else {
+      console.log("No such document!");
+    }
+  };
+
+  useEffect(() => {
+    getNote(file);
+  }, []);
+
   return (
     <article className="flex flex-col">
       <div className="w-full aspect-video relative rounded-t-md overflow-hidden group">
-        <FileModal file={file} />
-        <ButtonSecondary
-          handleClick={() => {
-            deleteFile(file);
-          }}
-          xClass={
-            "rounded-full absolute bg-opacity-70 top-2 right-2 z-10 p-2 font-bold text-xs delay-200 opacity-0 group-hover:opacity-100 hover:bg-opacity-100 duration-300 ease-out-expo"
-          }
-        >
-          <Icon icon={"delete"} xClass={"text-blue-500"} size={15} />
-        </ButtonSecondary>
+        <FileModal file={file} notes={notes} />
+        <DeleteModal deleteFile={deleteFile} file={file} />
         {file && <Medias file={file} />}
       </div>
       <div className="flex justify-between group items-center bg-indigo-50 p-2 rounded-b-md">
@@ -30,7 +41,7 @@ const FileCard = ({ file, deleteFile }) => {
             {formatDate(file?.metadata?.customMetadata?.originalDate)}
           </span>
         </div>
-        <NotesModal file={file} />
+        <NotesModal file={file} notes={notes} />
       </div>
     </article>
   );

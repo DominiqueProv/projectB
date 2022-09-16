@@ -15,6 +15,8 @@ const MediasFull = ({ file }) => {
       file.url && (
         <Image
           layout="fill"
+          height={600}
+          width={400}
           sizes="100vw"
           quality={70}
           objectFit="contain"

@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { IoMdClose } from "react-icons/io";
 import { v4 } from "uuid";
 import ButtonSecondary from "../buttons/ButtonSecondary";
 import ButtonNotesStyle from "../buttons/ButtonNotesStyle";
 import NotesForm from "../forms/NotesForm";
+import CloseButton from "../buttons/CloseButton";
 
-const NotesModal = ({ file }) => {
+const NotesModal = ({ file, notes }) => {
+  console.log(notes);
   const [showModal, setShowModal] = useState(false);
   const [notesInput, setNotesInput] = useState([]);
   const notesStyle = [
@@ -41,7 +42,6 @@ const NotesModal = ({ file }) => {
   useEffect(() => {
     orderInput(notesInput);
   }, [notesInput]);
-
   return (
     <>
       <ButtonSecondary
@@ -50,7 +50,7 @@ const NotesModal = ({ file }) => {
           "px-2 rounded-md hover:bg-indigo-800 hover:text-white duration-300 ease-out-expo"
         }
         handleClick={() => setShowModal(!showModal)}
-        label={"Add Notes"}
+        label={Object.keys(notes).length > 0 ? "Edit Notes" : "Add Notes"}
       />
 
       {showModal && (
@@ -63,16 +63,7 @@ const NotesModal = ({ file }) => {
           ></div>
           <div className="flex justify-center items-center absolute z-40 inset-0">
             <div className="flex w-full sm:max-w-[420px] rounded-lg p-3 relative flex-col bg-white">
-              <button
-                onClick={() => setShowModal(!showModal)}
-                className="bg-blue-200 self-end z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
-                type="button"
-              >
-                <IoMdClose
-                  size={25}
-                  className="text-indigo-800 hover:rotate-[90deg] ease-out-expo duration-200"
-                />
-              </button>
+              <CloseButton showModal={showModal} setShowModal={setShowModal} />
               <h3 className="text-3xl font-semibold">Add notes</h3>
               <ul className="flex flex-wrap gap-2 pt-3">
                 {notesStyle.map((type) => {

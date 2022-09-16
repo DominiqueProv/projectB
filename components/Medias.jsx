@@ -12,7 +12,7 @@ const Medias = ({ file }) => {
     );
   } else {
     return (
-      file.url && (
+      file?.url && (
         <Image
           layout="fill"
           sizes="320"

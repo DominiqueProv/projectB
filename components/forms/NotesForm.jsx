@@ -7,8 +7,8 @@ const initialFormData = Object.freeze({
   description: "",
   location: "",
   mood: "",
-  height: 0,
-  weigth: 0,
+  height: "",
+  weigth: "",
 });
 
 const NotesForm = ({ notesInput, file, setShowModal }) => {
