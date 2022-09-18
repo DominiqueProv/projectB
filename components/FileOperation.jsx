@@ -11,6 +11,8 @@ import {
   listAll,
   deleteObject,
 } from "firebase/storage";
+import { doc, deleteDoc } from "firebase/firestore";
+import { database } from "../lib/firebase";
 import { Loader } from "./Loader";
 import ButtonPrimary from "./buttons/ButtonPrimary";
 import { CgSpinner } from "react-icons/cg";
@@ -133,7 +135,8 @@ const FileOperations = () => {
       });
   };
 
-  const deleteFile = (file) => {
+  const deleteFile = async (file) => {
+    const fileRefName = file.metadata.name.split(".")[0];
     const name = file.metadata.name;
     const fileRef = ref(storage, `files/${name}`);
     deleteObject(fileRef)
@@ -144,6 +147,7 @@ const FileOperations = () => {
       .catch((error) => {
         console.log(error);
       });
+    await deleteDoc(doc(database, `notes/${fileRefName}`));
   };
 
   return (
@@ -158,9 +162,11 @@ const FileOperations = () => {
         <div className="flex mt-10 gap-6">
           <div className="grid grid-cols-1 lg:grid-cols-4 w-full gap-6">
             <div
-              className={`border-2 rounded-lg border-indigo-800 flex justify-center items-center ${
+              className={`border-2 ${
+                filesData.length ? "" : "aspect-video"
+              } rounded-lg border-indigo-800 flex justify-center items-center duration-300 ease-out-expo relative space-x-2 ${
                 !files.length ? "hover:bg-blue-100" : ""
-              } duration-300 ease-out-expo relative space-x-2`}
+              }`}
             >
               {isUpload || files.length ? (
                 <>
@@ -177,7 +183,7 @@ const FileOperations = () => {
                     </span>
                   </ButtonPrimary>
                   <button
-                    xClass={"bg-transparent"}
+                    className="bg-transparent"
                     onClick={handleCancel}
                     type={"button"}
                   >
@@ -190,12 +196,12 @@ const FileOperations = () => {
                   <label
                     htmlFor="file-upload"
                     role="upload"
-                    className="w-full h-full flex justify-center items-center cursor-pointer"
+                    className="w-full h-full flex justify-center items-center cursor-pointer group"
                   >
                     <Icon
                       icon="add"
-                      size={35}
-                      xClass="text-indigo-800 cursor-pointer"
+                      size={40}
+                      xClass="text-indigo-800 cursor-pointer group-hover:scale-125 duration-200"
                     />
                   </label>
                   <input

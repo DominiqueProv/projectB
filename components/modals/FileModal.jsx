@@ -1,30 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
-import ButtonSecondary from "../buttons/ButtonSecondary";
 import Icon from "../buttons/Icon";
 import MediasFull from "../MediasFull";
 import Modal from "./Modal";
 import { Loader } from "../Loader";
+import DeleteModal from "../modals/DeleteModal";
+import NotesModal from "./NotesModal";
 
-const FileModal = ({ file, notes }) => {
+const FileModal = ({ file, notes, deleteFile, getNote }) => {
   const [showModal, setShowModal] = useState(false);
 
+  useEffect(() => {
+    getNote(file);
+  }, []);
   return (
     <>
-      <ButtonSecondary
-        handleClick={() => {
+      <button
+        onClick={() => {
           setShowModal(!showModal);
         }}
-        xClass={
-          "rounded-full absolute bg-opacity-70 bottom-2 right-2 z-10 p-2 font-bold text-xs hover:bg-opacity-100 duration-300 ease-out-expo"
-        }
+        className={"absolute inset-0 z-10"}
+        type="button"
       >
-        <Icon
-          icon={"expand"}
-          xClass={"text-indigo-800 hover:scale-125 duration-200 "}
-          size={20}
-        />
-      </ButtonSecondary>
+        <div className="rounded-full bg-blue-100 opacity-0 absolute bottom-2 right-2 z-10 p-2 font-bold text-xs group-hover:opacity-100 group-hover:bg-opacity-70 duration-300 ease-out-expo">
+          <Icon
+            icon={"expand"}
+            xClass={
+              "text-indigo-800 scale-75 group-hover:scale-100 duration-300 "
+            }
+            size={20}
+          />
+        </div>
+      </button>
       <Modal>
         {showModal && notes && (
           <>
@@ -61,22 +68,45 @@ const FileModal = ({ file, notes }) => {
                         <div className="bg-slate-500 inset-0 absolute opacity-50"></div>
                         {file && <MediasFull file={file} />}
                       </div>
-                      {Object.keys(notes).length > 0 && (
-                        <ul className="font-semibold bg-blue-100 bg-opacity-70 rounded-lg p-4 sm:w-[400px]">
-                          <li>
-                            <span>{notes.description}</span>
-                          </li>
-                          <li>
-                            <span>{notes.mood}</span>
-                          </li>
-                          <li>
-                            <span>{notes.height}</span>
-                          </li>
-                          <li>
-                            <span>{notes.weigth}</span>
-                          </li>
-                        </ul>
-                      )}
+                      <div className="bg-blue-100 bg-opacity-70 rounded-lg p-4 sm:w-[400px] flex flex-col justify-between">
+                        {Object.keys(notes).length > 0 && (
+                          <ul>
+                            {notes.description && (
+                              <li>
+                                <span>{notes.description}</span>
+                              </li>
+                            )}
+                            {notes.location && (
+                              <li>
+                                <span>{notes.location}</span>
+                              </li>
+                            )}
+                            {notes.mood && (
+                              <li>
+                                <span>{notes.mood}</span>
+                              </li>
+                            )}
+                            {notes.height && (
+                              <li>
+                                <span>{notes.height} cm</span>
+                              </li>
+                            )}
+                            {notes.weight && (
+                              <li>
+                                <span>{notes.weight} kg</span>
+                              </li>
+                            )}
+                          </ul>
+                        )}
+                        <div className="flex justify-between gap-3">
+                          <NotesModal file={file} notes={notes} isFileModal />
+                          <DeleteModal
+                            deleteFile={deleteFile}
+                            file={file}
+                            setShowFileModal={setShowModal}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </>
                 ) : (

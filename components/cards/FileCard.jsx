@@ -4,7 +4,6 @@ import { formatDate } from "../../utils/date";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import NotesModal from "../modals/NotesModal";
 import FileModal from "../modals/FileModal";
-import DeleteModal from "../modals/DeleteModal";
 import { doc, getDoc } from "firebase/firestore";
 import { database } from "../../lib/firebase";
 
@@ -25,13 +24,17 @@ const FileCard = ({ file, deleteFile }) => {
 
   useEffect(() => {
     getNote(file);
-  }, []);
+  }, [file]);
 
   return (
     <article className="flex flex-col">
-      <div className="w-full aspect-video relative rounded-t-md overflow-hidden group">
-        <FileModal file={file} notes={notes} />
-        <DeleteModal deleteFile={deleteFile} file={file} />
+      <div className="w-full aspect-video rounded-t-md overflow-hidden group relative">
+        <FileModal
+          file={file}
+          notes={notes}
+          deleteFile={deleteFile}
+          getNote={getNote}
+        />
         {file && <Medias file={file} />}
       </div>
       <div className="flex justify-between group items-center bg-indigo-50 p-2 rounded-b-md">

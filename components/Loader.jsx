@@ -4,9 +4,9 @@ export const Loader = ({ percent }) => {
   return (
     <>
       {percent > 0 && percent < 100 ? (
-        <div className="w-full bg-gray-200 rounded-full h-1.5 my-4 dark:bg-gray- absolute bottom-2 left-2 right-2">
+        <div className="bg-gray-200 rounded-full h-1.5 absolute bottom-2 left-2 right-2">
           <div
-            className="bg-blue-600 h-1.5 rounded-full dark:bg-blue-500"
+            className="bg-indigo-800 h-1.5 rounded-full"
             style={{ width: `${percent}%` }}
           ></div>
         </div>

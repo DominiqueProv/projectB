@@ -1,23 +1,19 @@
 import { useState } from "react";
 
-import ButtonSecondary from "../buttons/ButtonSecondary";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import Icon from "../buttons/Icon";
 import Modal from "./Modal";
 
-const DeleteModal = ({ file, deleteFile }) => {
+const DeleteModal = ({ file, deleteFile, setShowFileModal }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
-      <ButtonSecondary
+      <ButtonPrimary
         handleClick={() => setShowModal(!showModal)}
-        xClass={
-          "rounded-full hover:rotate-[90deg] ease-out-expo duration-300 absolute bg-opacity-70 top-2 right-2 z-10 p-2 font-bold text-xs delay-200 opacity-0 group-hover:opacity-100 hover:bg-opacity-100 duration-300 ease-out-expo bg-red-100"
-        }
-      >
-        <Icon icon={"delete"} xClass={"text-red-500"} size={18} />
-      </ButtonSecondary>
+        label={"Delete Memory"}
+        xClass={"px-3 flex-grow"}
+      ></ButtonPrimary>
       <Modal>
         {showModal && (
           <>
@@ -40,6 +36,7 @@ const DeleteModal = ({ file, deleteFile }) => {
                     handleClick={() => {
                       deleteFile(file);
                       setShowModal(false);
+                      setShowFileModal(false);
                     }}
                   />
                   <ButtonPrimary

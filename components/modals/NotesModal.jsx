@@ -4,9 +4,9 @@ import ButtonSecondary from "../buttons/ButtonSecondary";
 import ButtonNotesStyle from "../buttons/ButtonNotesStyle";
 import NotesForm from "../forms/NotesForm";
 import CloseButton from "../buttons/CloseButton";
+import ButtonPrimary from "../buttons/ButtonPrimary";
 
-const NotesModal = ({ file, notes }) => {
-  console.log(notes);
+const NotesModal = ({ file, notes, isFileModal }) => {
   const [showModal, setShowModal] = useState(false);
   const [notesInput, setNotesInput] = useState([]);
   const notesStyle = [
@@ -15,9 +15,8 @@ const NotesModal = ({ file, notes }) => {
     "location",
     "mood",
     "height",
-    "weigth",
+    "weight",
   ];
-
   const orderInput = (notesInput) => {
     const customLookup = notesStyle.reduce((r, a, i) => {
       r[a] = `${i}`;
@@ -44,14 +43,23 @@ const NotesModal = ({ file, notes }) => {
   }, [notesInput]);
   return (
     <>
-      <ButtonSecondary
-        className="font-bold text-xs"
-        xClass={
-          "px-2 rounded-md hover:bg-indigo-800 hover:text-white duration-300 ease-out-expo"
-        }
-        handleClick={() => setShowModal(!showModal)}
-        label={Object.keys(notes).length > 0 ? "Edit Notes" : "Add Notes"}
-      />
+      {Object.keys(notes).length === 0 && (
+        <ButtonSecondary
+          className="font-bold text-xs"
+          xClass={
+            "px-2 rounded-md hover:bg-indigo-800 hover:text-white duration-300 ease-out-expo flex-shrink-0"
+          }
+          handleClick={() => setShowModal(!showModal)}
+          label={"Add Notes"}
+        />
+      )}
+      {isFileModal && (
+        <ButtonPrimary
+          handleClick={() => setShowModal(!showModal)}
+          label={"Edit Notes"}
+          xClass={"px-3 flex-grow"}
+        />
+      )}
 
       {showModal && (
         <>
@@ -64,7 +72,9 @@ const NotesModal = ({ file, notes }) => {
           <div className="flex justify-center items-center absolute z-40 inset-0">
             <div className="flex w-full sm:max-w-[420px] rounded-lg p-3 relative flex-col bg-white">
               <CloseButton showModal={showModal} setShowModal={setShowModal} />
-              <h3 className="text-3xl font-semibold">Add notes</h3>
+              <h3 className="text-3xl font-semibold">
+                {Object.keys(notes).length > 0 ? "Edit Notes" : "Add Notes"}
+              </h3>
               <ul className="flex flex-wrap gap-2 pt-3">
                 {notesStyle.map((type) => {
                   return (
@@ -81,6 +91,7 @@ const NotesModal = ({ file, notes }) => {
                 notesInput={notesInput}
                 file={file}
                 setShowModal={setShowModal}
+                notes={notes}
               />
             </div>
           </div>

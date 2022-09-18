@@ -26,7 +26,7 @@ const components = {
   arrow: FiChevronRight,
   edit: AiFillEdit,
   height: AiOutlineColumnHeight,
-  weigth: MdOutlineMonitorWeight,
+  weight: MdOutlineMonitorWeight,
   description: TbFileDescription,
   location: MdOutlinePlace,
   mood: TbMoodHappy,

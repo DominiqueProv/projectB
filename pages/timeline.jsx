@@ -14,11 +14,6 @@ const TimelineFeed = () => {
       <section className="mt-10">
         <FileOperation />
       </section>
-      <hr className="my-10" />
-      <section className="mt-10">
-        <NoteOperation />
-      </section>
-      <hr />
     </LayoutDefault>
   );
 };

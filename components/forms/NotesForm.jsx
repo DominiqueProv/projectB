@@ -2,17 +2,8 @@ import { useState, useEffect } from "react";
 import { database } from "../../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
 
-const initialFormData = Object.freeze({
-  title: "",
-  description: "",
-  location: "",
-  mood: "",
-  height: "",
-  weigth: "",
-});
-
-const NotesForm = ({ notesInput, file, setShowModal }) => {
-  const [formData, updateFormData] = useState(initialFormData);
+const NotesForm = ({ notesInput, file, notes, setShowModal }) => {
+  const [formData, updateFormData] = useState({});
   const [upNotesInput, setNotesInput] = useState([]);
   const fileRefName = file.metadata.name.split(".")[0];
 
@@ -30,6 +21,8 @@ const NotesForm = ({ notesInput, file, setShowModal }) => {
     e.preventDefault();
     saveNote();
     setShowModal(false);
+    setNotesInput([]);
+    updateFormData({});
   };
 
   const handleChange = (e) => {
@@ -68,13 +61,13 @@ const NotesForm = ({ notesInput, file, setShowModal }) => {
                   />
                 );
                 break;
-              case "weigth":
+              case "weight":
                 input = (
                   <input
                     key={i}
                     type="number"
                     name={noteType}
-                    placeholder={"weigth in kg"}
+                    placeholder={"weight in kg"}
                     onChange={handleChange}
                   />
                 );
@@ -132,7 +125,9 @@ const NotesForm = ({ notesInput, file, setShowModal }) => {
               className="bg-indigo-800 cursor-pointer text-white rounded-lg py-2 hover:bg-blue-500 duration-300 ease-out-expo"
               onClick={handleSubmit}
             >
-              Add Informations
+              {Object.keys(notes).length === 0
+                ? "Add Informations"
+                : "Edit Informations"}
             </button>
           )}
         </form>
