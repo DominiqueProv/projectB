@@ -1,154 +1,15 @@
-import { useState, useEffect, useRef } from "react";
-import { storage } from "../lib/firebase";
-import { v4 } from "uuid";
-
-import {
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-  getMetadata,
-  updateMetadata,
-  listAll,
-  deleteObject,
-} from "firebase/storage";
-import { doc, deleteDoc } from "firebase/firestore";
-import { database } from "../lib/firebase";
-import { Loader } from "./Loader";
-import ButtonPrimary from "./buttons/ButtonPrimary";
-import { CgSpinner } from "react-icons/cg";
-import Timeline from "./Timeline";
-import Icon from "./buttons/Icon";
-import { IoCloudUploadOutline } from "react-icons/io5";
-import { MdOutlineCancel } from "react-icons/md";
+import { useEffect } from "react";
+import { useFiles } from "../context/FilesContext";
 import FileCard from "./cards/FileCard";
-
-const listRef = ref(storage, "files/");
+import { CgSpinner } from "react-icons/cg";
+import UploadButton from "./buttons/UploadButton";
 
 const FileOperations = () => {
-  const inputFileRef = useRef();
-  const [files, setFiles] = useState([]);
-  const [filesData, setFilesData] = useState([]);
-  const [uploadTask, setUploadTask] = useState({});
-  const [isUpload, setIsUpload] = useState(false);
-  const [isFilesLoaded, setIsFilesLoaded] = useState(false);
-  const [percent, setPercent] = useState(0);
+  const { filesData, getFiles, isFilesLoaded } = useFiles();
 
   useEffect(() => {
     getFiles();
   }, []);
-
-  const handleChange = (event) => {
-    const chosenFiles = Array.from(event.target.files);
-    const uploaded = [...files];
-    chosenFiles.some((file) => {
-      if (uploaded.findIndex((f) => f.name === file.name) === -1) {
-        uploaded.push(file);
-      }
-    });
-    setFiles(uploaded);
-  };
-
-  const putStorageItem = (item) => {
-    const ext = item.name.split(".").pop();
-    const metadata = {
-      customMetadata: {
-        originalDate: `${item.lastModified.toString()}`,
-      },
-    };
-    const storageRef = ref(storage, `/files/${v4()}.${ext}`);
-    const uploadTaskRef = uploadBytesResumable(storageRef, item);
-    setUploadTask(uploadTaskRef);
-    setIsUpload(true);
-    uploadTaskRef.on(
-      "state_changed",
-      (snapshot) => {
-        const percent = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setPercent(percent);
-      },
-      (err) => console.error(err.message),
-      () => {
-        const data = {};
-        getDownloadURL(uploadTaskRef.snapshot.ref).then((url) => {
-          data.url = url;
-        });
-        updateMetadata(storageRef, metadata)
-          .then((metadata) => {})
-          .catch((error) => {});
-        getMetadata(storageRef)
-          .then((metadata) => {
-            data.metadata = metadata;
-            setFilesData((prev) => [...prev, data]);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        // inputFileRef.current.value = "";
-        setFiles([]);
-        setIsUpload(false);
-      }
-    );
-  };
-
-  const handleUpload = () => {
-    if (!files.length) {
-      alert("Please choose a file first!");
-      return;
-    }
-    Promise.all(files.map((item) => putStorageItem(item)))
-      .then(() => {
-        console.log(`All success`);
-      })
-      .catch((error) => {
-        console.log(`Some failed: `, error.message);
-      });
-  };
-
-  const handleCancel = () => {
-    setFiles([]);
-  };
-
-  const getFiles = () => {
-    listAll(listRef)
-      .then((res) => {
-        res.items.forEach((itemRef) => {
-          const data = {};
-          getDownloadURL(itemRef).then((url) => {
-            data.url = url;
-          });
-          getMetadata(itemRef)
-            .then((metadata) => {
-              data.metadata = metadata;
-              setFilesData((prev) => [...prev, data]);
-            })
-            .catch((error) => {
-              console.error(error.message);
-            });
-        });
-      })
-      .then(() => {
-        setIsFilesLoaded(true);
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-  };
-
-  const deleteFile = async (file) => {
-    const fileRefName = file.metadata.name.split(".")[0];
-    const name = file.metadata.name;
-    const fileRef = ref(storage, `files/${name}`);
-    deleteObject(fileRef)
-      .then(() => {
-        const files = filesData.filter((el) => el.url !== file.url);
-        setFilesData(files);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    await deleteDoc(doc(database, `notes/${fileRefName}`));
-  };
 
   return (
     <>
@@ -161,62 +22,7 @@ const FileOperations = () => {
       {isFilesLoaded ? (
         <div className="flex mt-10 gap-6">
           <div className="grid grid-cols-1 lg:grid-cols-4 w-full gap-6">
-            <div
-              className={`border-2 ${
-                filesData.length ? "" : "aspect-video"
-              } rounded-lg border-indigo-800 flex justify-center items-center duration-300 ease-out-expo relative space-x-2 ${
-                !files.length ? "hover:bg-blue-100" : ""
-              }`}
-            >
-              {isUpload || files.length ? (
-                <>
-                  <ButtonPrimary
-                    xClass={"px-4 flex-shrink-0"}
-                    handleClick={handleUpload}
-                    type={"button"}
-                  >
-                    <IoCloudUploadOutline size={18} />
-                    <span className="">
-                      {`Upload ${files.length} file${
-                        files.length > 1 ? "s" : ""
-                      } `}
-                    </span>
-                  </ButtonPrimary>
-                  <button
-                    className="bg-transparent"
-                    onClick={handleCancel}
-                    type={"button"}
-                  >
-                    <MdOutlineCancel size={30} className={"text-indigo-800"} />
-                  </button>
-                  <Loader percent={percent} />
-                </>
-              ) : (
-                <>
-                  <label
-                    htmlFor="file-upload"
-                    role="upload"
-                    className="w-full h-full flex justify-center items-center cursor-pointer group"
-                  >
-                    <Icon
-                      icon="add"
-                      size={40}
-                      xClass="text-indigo-800 cursor-pointer group-hover:scale-125 duration-200"
-                    />
-                  </label>
-                  <input
-                    className="hidden"
-                    id="file-upload"
-                    type="file"
-                    multiple="multiple"
-                    ref={inputFileRef}
-                    onChange={handleChange}
-                    accept=".png, .jpeg, video/*"
-                  />
-                </>
-              )}
-            </div>
-
+            <UploadButton />
             {filesData
               .sort(
                 (a, b) =>
@@ -224,11 +30,10 @@ const FileOperations = () => {
                   a?.metadata?.customMetadata?.originalDate
               )
               .map((file, i) => {
-                return <FileCard file={file} key={i} deleteFile={deleteFile} />;
+                console.log(file);
+                return <FileCard file={file} key={i} index={i} />;
               })}
           </div>
-          {/* TODO */}
-          {/* <Timeline files={filesData} /> */}
         </div>
       ) : (
         <div className="w-full flex justify-center items-center min-h-300">

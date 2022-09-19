@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
+import { CgSpinner } from "react-icons/cg";
 import Icon from "../buttons/Icon";
 import MediasFull from "../MediasFull";
 import Modal from "./Modal";
-import { Loader } from "../Loader";
 import DeleteModal from "../modals/DeleteModal";
 import NotesModal from "./NotesModal";
+import { useFiles } from "../../context/FilesContext";
 
-const FileModal = ({ file, notes, deleteFile, getNote }) => {
+const FileModal = ({ file, index }) => {
   const [showModal, setShowModal] = useState(false);
+  const { filesData, getNote } = useFiles();
+  const notes = filesData[index]?.notes;
 
-  useEffect(() => {
-    getNote(file);
-  }, []);
   return (
     <>
       <button
@@ -33,7 +33,7 @@ const FileModal = ({ file, notes, deleteFile, getNote }) => {
         </div>
       </button>
       <Modal>
-        {showModal && notes && (
+        {showModal && (
           <>
             <div
               onClick={() => setShowModal(false)}
@@ -44,7 +44,9 @@ const FileModal = ({ file, notes, deleteFile, getNote }) => {
             <div className="flex justify-center items-center absolute z-40 inset-0">
               <div className="flex h-full w-[90vw] max-h-[80vh] sm:w-[80vw] rounded-lg p-3 relative flex-col bg-white">
                 <div className="flex justify-between">
-                  <h3 className="text-3xl font-semibold mt-4">{notes.title}</h3>
+                  <h3 className="text-3xl font-semibold mt-4">
+                    {notes?.title}
+                  </h3>
                   <button
                     onClick={() => setShowModal(!showModal)}
                     className="bg-blue-200 self-end z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
@@ -56,7 +58,7 @@ const FileModal = ({ file, notes, deleteFile, getNote }) => {
                     />
                   </button>
                 </div>
-                {notes && file ? (
+                {file ? (
                   <>
                     <div className="flex w-full h-full gap-2 relative mt-4">
                       <div className="relative rounded-md overflow-hidden w-full h-full">
@@ -69,7 +71,7 @@ const FileModal = ({ file, notes, deleteFile, getNote }) => {
                         {file && <MediasFull file={file} />}
                       </div>
                       <div className="bg-blue-100 bg-opacity-70 rounded-lg p-4 sm:w-[400px] flex flex-col justify-between">
-                        {Object.keys(notes).length > 0 && (
+                        {notes && (
                           <ul>
                             {notes.description && (
                               <li>
@@ -99,9 +101,8 @@ const FileModal = ({ file, notes, deleteFile, getNote }) => {
                           </ul>
                         )}
                         <div className="flex justify-between gap-3">
-                          <NotesModal file={file} notes={notes} isFileModal />
+                          <NotesModal isFileModal />
                           <DeleteModal
-                            deleteFile={deleteFile}
                             file={file}
                             setShowFileModal={setShowModal}
                           />
@@ -110,7 +111,13 @@ const FileModal = ({ file, notes, deleteFile, getNote }) => {
                     </div>
                   </>
                 ) : (
-                  <Loader />
+                  <div className="w-full flex justify-center items-center min-h-300">
+                    <CgSpinner
+                      className="animate-spin"
+                      color={"dodgerblue"}
+                      size={40}
+                    />
+                  </div>
                 )}
               </div>
             </div>

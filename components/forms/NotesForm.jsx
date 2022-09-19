@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import { database } from "../../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { useFiles } from "../../context/FilesContext";
 
-const NotesForm = ({ notesInput, file, notes, setShowModal }) => {
+const NotesForm = ({ notesInput, file, setShowModal, index }) => {
+  const { filesData, getNote } = useFiles();
+  const notes = filesData[index]?.notes;
   const [formData, updateFormData] = useState({});
   const [upNotesInput, setNotesInput] = useState([]);
-  const fileRefName = file.metadata.name.split(".")[0];
+  console.log(file);
+  const fileRefName = file?.metadata?.name?.split(".")[0];
 
   useEffect(() => {
     setNotesInput(notesInput);
@@ -23,6 +27,7 @@ const NotesForm = ({ notesInput, file, notes, setShowModal }) => {
     setShowModal(false);
     setNotesInput([]);
     updateFormData({});
+    getNote();
   };
 
   const handleChange = (e) => {
@@ -125,9 +130,7 @@ const NotesForm = ({ notesInput, file, notes, setShowModal }) => {
               className="bg-indigo-800 cursor-pointer text-white rounded-lg py-2 hover:bg-blue-500 duration-300 ease-out-expo"
               onClick={handleSubmit}
             >
-              {Object.keys(notes).length === 0
-                ? "Add Informations"
-                : "Edit Informations"}
+              {!notes ? "Add Informations" : "Edit Informations"}
             </button>
           )}
         </form>

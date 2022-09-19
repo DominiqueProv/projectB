@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 import ButtonPrimary from "../buttons/ButtonPrimary";
-import Icon from "../buttons/Icon";
 import Modal from "./Modal";
+import { useFiles } from "../../context/FilesContext";
 
-const DeleteModal = ({ file, deleteFile, setShowFileModal }) => {
+const DeleteModal = ({ file, setShowFileModal }) => {
   const [showModal, setShowModal] = useState(false);
-
+  const { deleteFile } = useFiles();
   return (
     <>
       <ButtonPrimary

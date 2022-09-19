@@ -6,7 +6,7 @@ import NotesForm from "../forms/NotesForm";
 import CloseButton from "../buttons/CloseButton";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 
-const NotesModal = ({ file, notes, isFileModal }) => {
+const NotesModal = ({ isFileModal, file, index }) => {
   const [showModal, setShowModal] = useState(false);
   const [notesInput, setNotesInput] = useState([]);
   const notesStyle = [
@@ -17,6 +17,7 @@ const NotesModal = ({ file, notes, isFileModal }) => {
     "height",
     "weight",
   ];
+
   const orderInput = (notesInput) => {
     const customLookup = notesStyle.reduce((r, a, i) => {
       r[a] = `${i}`;
@@ -40,10 +41,11 @@ const NotesModal = ({ file, notes, isFileModal }) => {
 
   useEffect(() => {
     orderInput(notesInput);
-  }, [notesInput]);
+  }, []);
+
   return (
     <>
-      {Object.keys(notes).length === 0 && (
+      {!file?.notes && (
         <ButtonSecondary
           className="font-bold text-xs"
           xClass={
@@ -53,7 +55,7 @@ const NotesModal = ({ file, notes, isFileModal }) => {
           label={"Add Notes"}
         />
       )}
-      {isFileModal && (
+      {file?.notes && isFileModal && (
         <ButtonPrimary
           handleClick={() => setShowModal(!showModal)}
           label={"Edit Notes"}
@@ -73,7 +75,7 @@ const NotesModal = ({ file, notes, isFileModal }) => {
             <div className="flex w-full sm:max-w-[420px] rounded-lg p-3 relative flex-col bg-white">
               <CloseButton showModal={showModal} setShowModal={setShowModal} />
               <h3 className="text-3xl font-semibold">
-                {Object.keys(notes).length > 0 ? "Edit Notes" : "Add Notes"}
+                {file?.notes ? "Edit Notes" : "Add Notes"}
               </h3>
               <ul className="flex flex-wrap gap-2 pt-3">
                 {notesStyle.map((type) => {
@@ -89,9 +91,9 @@ const NotesModal = ({ file, notes, isFileModal }) => {
               </ul>
               <NotesForm
                 notesInput={notesInput}
-                file={file}
                 setShowModal={setShowModal}
-                notes={notes}
+                index={index}
+                file={file}
               />
             </div>
           </div>
