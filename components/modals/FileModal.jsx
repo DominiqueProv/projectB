@@ -69,35 +69,37 @@ const FileModal = ({ file, notes, deleteFile, getNote }) => {
                         {file && <MediasFull file={file} />}
                       </div>
                       <div className="bg-blue-100 bg-opacity-70 rounded-lg p-4 sm:w-[400px] flex flex-col justify-between">
-                        {Object.keys(notes).length > 0 && (
-                          <ul>
-                            {notes.description && (
-                              <li>
-                                <span>{notes.description}</span>
-                              </li>
-                            )}
-                            {notes.location && (
-                              <li>
-                                <span>{notes.location}</span>
-                              </li>
-                            )}
-                            {notes.mood && (
-                              <li>
-                                <span>{notes.mood}</span>
-                              </li>
-                            )}
-                            {notes.height && (
-                              <li>
-                                <span>{notes.height} cm</span>
-                              </li>
-                            )}
-                            {notes.weight && (
-                              <li>
-                                <span>{notes.weight} kg</span>
-                              </li>
-                            )}
-                          </ul>
-                        )}
+                        <ul>
+                          {Object.keys(notes).length > 0 && (
+                            <>
+                              {notes.description && (
+                                <li>
+                                  <span>{notes.description}</span>
+                                </li>
+                              )}
+                              {notes.location && (
+                                <li>
+                                  <span>{notes.location}</span>
+                                </li>
+                              )}
+                              {notes.mood && (
+                                <li>
+                                  <span>{notes.mood}</span>
+                                </li>
+                              )}
+                              {notes.height && (
+                                <li>
+                                  <span>{notes.height} cm</span>
+                                </li>
+                              )}
+                              {notes.weight && (
+                                <li>
+                                  <span>{notes.weight} kg</span>
+                                </li>
+                              )}
+                            </>
+                          )}
+                        </ul>
                         <div className="flex justify-between gap-3">
                           <NotesModal file={file} notes={notes} isFileModal />
                           <DeleteModal

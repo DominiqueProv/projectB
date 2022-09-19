@@ -43,7 +43,7 @@ const NotesModal = ({ file, notes, isFileModal }) => {
   }, [notesInput]);
   return (
     <>
-      {Object.keys(notes).length === 0 && (
+      {Object.keys(notes).length === 0 && !isFileModal && (
         <ButtonSecondary
           className="font-bold text-xs"
           xClass={
@@ -56,7 +56,7 @@ const NotesModal = ({ file, notes, isFileModal }) => {
       {isFileModal && (
         <ButtonPrimary
           handleClick={() => setShowModal(!showModal)}
-          label={"Edit Notes"}
+          label={Object.keys(notes).length > 0 ? "Edit Notes" : "Add Notes"}
           xClass={"px-3 flex-grow"}
         />
       )}
