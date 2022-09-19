@@ -6,13 +6,10 @@ import MediasFull from "../MediasFull";
 import Modal from "./Modal";
 import DeleteModal from "../modals/DeleteModal";
 import NotesModal from "./NotesModal";
-import { useFiles } from "../../context/FilesContext";
 
 const FileModal = ({ file, index }) => {
   const [showModal, setShowModal] = useState(false);
-  const { filesData, getNote } = useFiles();
-  const notes = filesData[index]?.notes;
-
+  const notes = file?.notes;
   return (
     <>
       <button
@@ -71,37 +68,39 @@ const FileModal = ({ file, index }) => {
                         {file && <MediasFull file={file} />}
                       </div>
                       <div className="bg-blue-100 bg-opacity-70 rounded-lg p-4 sm:w-[400px] flex flex-col justify-between">
-                        {notes && (
-                          <ul>
-                            {notes.description && (
-                              <li>
-                                <span>{notes.description}</span>
-                              </li>
-                            )}
-                            {notes.location && (
-                              <li>
-                                <span>{notes.location}</span>
-                              </li>
-                            )}
-                            {notes.mood && (
-                              <li>
-                                <span>{notes.mood}</span>
-                              </li>
-                            )}
-                            {notes.height && (
-                              <li>
-                                <span>{notes.height} cm</span>
-                              </li>
-                            )}
-                            {notes.weight && (
-                              <li>
-                                <span>{notes.weight} kg</span>
-                              </li>
-                            )}
-                          </ul>
-                        )}
+                        <ul>
+                          {notes && (
+                            <>
+                              {notes.description && (
+                                <li>
+                                  <span>{notes.description}</span>
+                                </li>
+                              )}
+                              {notes.location && (
+                                <li>
+                                  <span>{notes.location}</span>
+                                </li>
+                              )}
+                              {notes.mood && (
+                                <li>
+                                  <span>{notes.mood}</span>
+                                </li>
+                              )}
+                              {notes.height && (
+                                <li>
+                                  <span>{notes.height} cm</span>
+                                </li>
+                              )}
+                              {notes.weight && (
+                                <li>
+                                  <span>{notes.weight} kg</span>
+                                </li>
+                              )}
+                            </>
+                          )}
+                        </ul>
                         <div className="flex justify-between gap-3">
-                          <NotesModal isFileModal />
+                          <NotesModal isFileModal file={file} index={index} />
                           <DeleteModal
                             file={file}
                             setShowFileModal={setShowModal}

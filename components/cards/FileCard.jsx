@@ -5,7 +5,6 @@ import NotesModal from "../modals/NotesModal";
 import FileModal from "../modals/FileModal";
 
 const FileCard = ({ file, index }) => {
-  console.log(file);
   return (
     <article className="flex flex-col">
       <div className="w-full aspect-video rounded-t-md overflow-hidden group relative">

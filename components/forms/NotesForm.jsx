@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
 import { database } from "../../lib/firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useFiles } from "../../context/FilesContext";
 
-const NotesForm = ({ notesInput, file, setShowModal, index }) => {
-  const { filesData, getNote } = useFiles();
-  const notes = filesData[index]?.notes;
+const NotesForm = ({ file, setShowModal, index }) => {
+  const { filesData, setFilesData, notesInput, setNotesInput } = useFiles();
   const [formData, updateFormData] = useState({});
-  const [upNotesInput, setNotesInput] = useState([]);
-  console.log(file);
   const fileRefName = file?.metadata?.name?.split(".")[0];
 
   useEffect(() => {
@@ -16,18 +13,29 @@ const NotesForm = ({ notesInput, file, setShowModal, index }) => {
   }, [notesInput]);
 
   const saveNote = async () => {
-    await setDoc(doc(database, `notes/${fileRefName}`), formData, {
+    const docRef = doc(database, `notes/${fileRefName}`);
+    await setDoc(docRef, formData, {
       merge: true,
     });
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const newfilesData = [...filesData];
+      newfilesData[index] = {
+        ...newfilesData[index],
+        notes: docSnap.data(),
+      };
+      setFilesData(newfilesData);
+      setNotesInput([]);
+    } else {
+      console.log("No such document!");
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     saveNote();
     setShowModal(false);
-    setNotesInput([]);
     updateFormData({});
-    getNote();
   };
 
   const handleChange = (e) => {
@@ -39,9 +47,9 @@ const NotesForm = ({ notesInput, file, setShowModal, index }) => {
 
   return (
     <>
-      {upNotesInput && (
+      {notesInput && (
         <form className="flex flex-col space-y-2 pt-5">
-          {upNotesInput.map((noteType, i) => {
+          {notesInput.map((noteType, i) => {
             let input;
             switch (noteType) {
               case "height":
@@ -130,7 +138,7 @@ const NotesForm = ({ notesInput, file, setShowModal, index }) => {
               className="bg-indigo-800 cursor-pointer text-white rounded-lg py-2 hover:bg-blue-500 duration-300 ease-out-expo"
               onClick={handleSubmit}
             >
-              {!notes ? "Add Informations" : "Edit Informations"}
+              {!file.notes ? "Add Informations" : "Edit Informations"}
             </button>
           )}
         </form>

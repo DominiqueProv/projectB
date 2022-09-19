@@ -5,10 +5,13 @@ import ButtonNotesStyle from "../buttons/ButtonNotesStyle";
 import NotesForm from "../forms/NotesForm";
 import CloseButton from "../buttons/CloseButton";
 import ButtonPrimary from "../buttons/ButtonPrimary";
+import { useFiles } from "../../context/FilesContext";
 
 const NotesModal = ({ isFileModal, file, index }) => {
   const [showModal, setShowModal] = useState(false);
-  const [notesInput, setNotesInput] = useState([]);
+  // const [notesInput, setNotesInput] = useState([]);
+  const { notesInput, setNotesInput } = useFiles();
+
   const notesStyle = [
     "title",
     "description",
@@ -45,7 +48,7 @@ const NotesModal = ({ isFileModal, file, index }) => {
 
   return (
     <>
-      {!file?.notes && (
+      {!file?.notes && !isFileModal && (
         <ButtonSecondary
           className="font-bold text-xs"
           xClass={
@@ -55,10 +58,10 @@ const NotesModal = ({ isFileModal, file, index }) => {
           label={"Add Notes"}
         />
       )}
-      {file?.notes && isFileModal && (
+      {isFileModal && (
         <ButtonPrimary
           handleClick={() => setShowModal(!showModal)}
-          label={"Edit Notes"}
+          label={file?.notes ? "Edit Notes" : "Add Notes"}
           xClass={"px-3 flex-grow"}
         />
       )}
@@ -92,8 +95,8 @@ const NotesModal = ({ isFileModal, file, index }) => {
               <NotesForm
                 notesInput={notesInput}
                 setShowModal={setShowModal}
-                index={index}
                 file={file}
+                index={index}
               />
             </div>
           </div>

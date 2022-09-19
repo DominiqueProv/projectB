@@ -6,7 +6,7 @@ import UploadButton from "./buttons/UploadButton";
 
 const FileOperations = () => {
   const { filesData, getFiles, isFilesLoaded } = useFiles();
-
+  console.log(filesData);
   useEffect(() => {
     getFiles();
   }, []);
@@ -24,13 +24,12 @@ const FileOperations = () => {
           <div className="grid grid-cols-1 lg:grid-cols-4 w-full gap-6">
             <UploadButton />
             {filesData
-              .sort(
+              ?.sort(
                 (a, b) =>
                   b?.metadata?.customMetadata?.originalDate -
                   a?.metadata?.customMetadata?.originalDate
               )
               .map((file, i) => {
-                console.log(file);
                 return <FileCard file={file} key={i} index={i} />;
               })}
           </div>

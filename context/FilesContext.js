@@ -19,12 +19,12 @@ export const useFiles = () => useContext(FilesContext);
 
 const FilesContextProvider = ({ children }) => {
   const [files, setFiles] = useState([]);
-  const [notes, setNotes] = useState({});
   const [filesData, setFilesData] = useState([]);
   const [uploadTask, setUploadTask] = useState({});
   const [isUpload, setIsUpload] = useState(false);
   const [isFilesLoaded, setIsFilesLoaded] = useState(false);
   const [percent, setPercent] = useState(0);
+  const [notesInput, setNotesInput] = useState([]);
 
   const putStorageItem = (item) => {
     const ext = item.name.split(".").pop();
@@ -62,7 +62,6 @@ const FilesContextProvider = ({ children }) => {
           .catch((error) => {
             console.error(error);
           });
-
         getNote(data?.metadata?.name.split(".")[0])
           .then((note) => (data.notes = note))
           .catch((error) => console.log(error.message));
@@ -96,12 +95,10 @@ const FilesContextProvider = ({ children }) => {
             });
         });
       })
-      .then(() => {
-        setIsFilesLoaded(true);
-      })
       .catch((error) => {
         console.error(error.message);
       });
+    setIsFilesLoaded(true);
   };
 
   const deleteFile = async (file) => {
@@ -134,15 +131,17 @@ const FilesContextProvider = ({ children }) => {
       value={{
         files,
         filesData,
-        notes,
         isUpload,
         isFilesLoaded,
         percent,
         getFiles,
         setFiles,
+        setFilesData,
         deleteFile,
         putStorageItem,
         getNote,
+        notesInput,
+        setNotesInput,
       }}
     >
       {children}
