@@ -1,6 +1,4 @@
-import React from "react";
-
-export const Loader = ({ percent }) => {
+const Loader = ({ percent }) => {
   return (
     <>
       {percent > 0 && percent < 100 ? (
@@ -16,3 +14,5 @@ export const Loader = ({ percent }) => {
     </>
   );
 };
+
+export default Loader;

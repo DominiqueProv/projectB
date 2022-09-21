@@ -13,7 +13,7 @@ const LinkPrimary = ({ url, label, children, xClass, exact }) => {
         }`}
       >
         {children}
-        <span className="hidden sm:block">{label}</span>
+        <span>{label}</span>
       </a>
     </Link>
   );

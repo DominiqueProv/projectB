@@ -1,23 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import Icon from "../buttons/Icon";
 import MediasFull from "../MediasFull";
-import Modal from "./Modal";
-import { Loader } from "../Loader";
+import Modal from "./Portal";
 import DeleteModal from "../modals/DeleteModal";
 import NotesModal from "./NotesModal";
+import FileModalSideInfo from "./FileModalSideInfo";
 
-const FileModal = ({ file, notes, deleteFile, getNote }) => {
+const FileModal = ({ file, index }) => {
   const [showModal, setShowModal] = useState(false);
-
-  useEffect(() => {
-    getNote(file);
-  }, []);
+  const notes = file?.notes;
   return (
     <>
       <button
         onClick={() => {
-          setShowModal(!showModal);
+          setShowModal(true);
+          if (typeof window != "undefined" && window.document) {
+            document.body.style.overflow = "hidden";
+          }
         }}
         className={"absolute inset-0 z-10"}
         type="button"
@@ -33,20 +33,28 @@ const FileModal = ({ file, notes, deleteFile, getNote }) => {
         </div>
       </button>
       <Modal>
-        {showModal && notes && (
+        {showModal && (
           <>
             <div
-              onClick={() => setShowModal(false)}
-              className={`inset-0 absolute bg-black bg-opacity-30 z-40 backdrop-blur-sm ${
+              onClick={() => {
+                setShowModal(false);
+                document.body.style.overflow = "unset";
+              }}
+              className={`inset-0 fixed bg-black bg-opacity-30 z-40 backdrop-blur-sm ${
                 showModal ? "block" : "hidden"
               }`}
             ></div>
-            <div className="flex justify-center items-center absolute z-40 inset-0">
-              <div className="flex h-full w-[90vw] max-h-[80vh] sm:w-[80vw] rounded-lg p-3 relative flex-col bg-white">
-                <div className="flex justify-between">
-                  <h3 className="text-3xl font-semibold mt-4">{notes.title}</h3>
+            <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
+              <div className="flex w-[90vw] h-[90vh] sm:w-[80vw] rounded-lg p-3 relative flex-col bg-white overflow-auto pb-[85px]">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-3xl font-semibold mt-4">
+                    {notes?.title}
+                  </h3>
                   <button
-                    onClick={() => setShowModal(!showModal)}
+                    onClick={() => {
+                      setShowModal(false);
+                      document.body.style.overflow = "unset";
+                    }}
                     className="bg-blue-200 self-end z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
                     type="button"
                   >
@@ -56,64 +64,29 @@ const FileModal = ({ file, notes, deleteFile, getNote }) => {
                     />
                   </button>
                 </div>
-                {notes && file ? (
-                  <>
-                    <div className="flex w-full h-full gap-2 relative mt-4">
-                      <div className="relative rounded-md overflow-hidden w-full h-full">
-                        <img
-                          src={file.url}
-                          alt={file.name}
-                          className="absolute inset-0 object-cover blur-md"
-                        />
-                        <div className="bg-slate-500 inset-0 absolute opacity-50"></div>
-                        {file && <MediasFull file={file} />}
-                      </div>
-                      <div className="bg-blue-100 bg-opacity-70 rounded-lg p-4 sm:w-[400px] flex flex-col justify-between">
-                        <ul>
-                          {Object.keys(notes).length > 0 && (
-                            <>
-                              {notes.description && (
-                                <li>
-                                  <span>{notes.description}</span>
-                                </li>
-                              )}
-                              {notes.location && (
-                                <li>
-                                  <span>{notes.location}</span>
-                                </li>
-                              )}
-                              {notes.mood && (
-                                <li>
-                                  <span>{notes.mood}</span>
-                                </li>
-                              )}
-                              {notes.height && (
-                                <li>
-                                  <span>{notes.height} cm</span>
-                                </li>
-                              )}
-                              {notes.weight && (
-                                <li>
-                                  <span>{notes.weight} kg</span>
-                                </li>
-                              )}
-                            </>
-                          )}
-                        </ul>
-                        <div className="flex justify-between gap-3">
-                          <NotesModal file={file} notes={notes} isFileModal />
-                          <DeleteModal
-                            deleteFile={deleteFile}
-                            file={file}
-                            setShowFileModal={setShowModal}
-                          />
-                        </div>
-                      </div>
+                <div className="flex flex-col lg:flex-row w-full gap-4 relative mt-4">
+                  <div className="relative rounded-md lg:overflow-hidden w-full">
+                    {file && <MediasFull file={file} />}
+                  </div>
+                  <div
+                    className={`bg-blue-100 bg-opacity-70 rounded-lg p-2 lg:p-4 w-full lg:w-[320px] flex flex-col flex-shrink-0 justify-between ${
+                      !notes ? "hidden lg:flex" : ""
+                    }`}
+                  >
+                    <FileModalSideInfo notes={notes} />
+                    <div className="justify-between gap-3 hidden lg:flex">
+                      <NotesModal isFileModal file={file} index={index} />
+                      <DeleteModal
+                        file={file}
+                        setShowFileModal={setShowModal}
+                      />
                     </div>
-                  </>
-                ) : (
-                  <Loader />
-                )}
+                  </div>
+                </div>
+                <div className="flex justify-between gap-3 p-3 fixed bottom-0 left-0 right-0 lg:hidden bg-slate-700/20 backdrop-blur">
+                  <NotesModal isFileModal file={file} index={index} />
+                  <DeleteModal file={file} setShowFileModal={setShowModal} />
+                </div>
               </div>
             </div>
           </>

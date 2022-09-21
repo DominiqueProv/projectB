@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import ButtonPrimary from "../components/buttons/ButtonPrimary";
 import Icon from "../components/buttons/Icon";
 import LayoutDefault from "../components/layouts/LayoutDefault";
+import PageTitle from "../components/text/PageTitle";
 
 const SignUp = () => {
   const { signup } = useAuth();
@@ -33,8 +34,8 @@ const SignUp = () => {
   return (
     <>
       <LayoutDefault>
-        <div className="w-96 mx-auto rounded-md bg-slate-100 p-5 mt-24">
-          <h2>Signup</h2>
+        <PageTitle title={"Sign Up"} />
+        <div className="mx-auto w-full rounded-md sm:max-w-md bg-slate-100 flex flex-col space-y-5 p-5 mt-4">
           <form
             className="flex flex-col space-y-5 pt-3"
             onSubmit={handleSignup}

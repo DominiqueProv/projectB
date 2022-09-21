@@ -5,10 +5,14 @@ import ButtonNotesStyle from "../buttons/ButtonNotesStyle";
 import NotesForm from "../forms/NotesForm";
 import CloseButton from "../buttons/CloseButton";
 import ButtonPrimary from "../buttons/ButtonPrimary";
+import { useFiles } from "../../context/FilesContext";
+import Icon from "../buttons/Icon";
+import Modal from "./Portal";
 
-const NotesModal = ({ file, notes, isFileModal }) => {
+const NotesModal = ({ isFileModal, file, index }) => {
   const [showModal, setShowModal] = useState(false);
-  const [notesInput, setNotesInput] = useState([]);
+  const { notesInput, setNotesInput } = useFiles();
+
   const notesStyle = [
     "title",
     "description",
@@ -17,6 +21,7 @@ const NotesModal = ({ file, notes, isFileModal }) => {
     "height",
     "weight",
   ];
+
   const orderInput = (notesInput) => {
     const customLookup = notesStyle.reduce((r, a, i) => {
       r[a] = `${i}`;
@@ -40,10 +45,11 @@ const NotesModal = ({ file, notes, isFileModal }) => {
 
   useEffect(() => {
     orderInput(notesInput);
-  }, [notesInput]);
+  }, []);
+
   return (
     <>
-      {Object.keys(notes).length === 0 && !isFileModal && (
+      {!file?.notes && !isFileModal && (
         <ButtonSecondary
           className="font-bold text-xs"
           xClass={
@@ -56,47 +62,57 @@ const NotesModal = ({ file, notes, isFileModal }) => {
       {isFileModal && (
         <ButtonPrimary
           handleClick={() => setShowModal(!showModal)}
-          label={Object.keys(notes).length > 0 ? "Edit Notes" : "Add Notes"}
+          label={file?.notes ? "Edit Notes" : "Add Notes"}
           xClass={"px-3 flex-grow"}
-        />
-      )}
-
-      {showModal && (
-        <>
-          <div
-            onClick={() => setShowModal(false)}
-            className={`inset-0 absolute bg-black bg-opacity-30 z-40 backdrop-blur-sm ${
-              showModal ? "block" : "hidden"
-            }`}
-          ></div>
-          <div className="flex justify-center items-center absolute z-40 inset-0">
-            <div className="flex w-full sm:max-w-[420px] rounded-lg p-3 relative flex-col bg-white">
-              <CloseButton showModal={showModal} setShowModal={setShowModal} />
-              <h3 className="text-3xl font-semibold">
-                {Object.keys(notes).length > 0 ? "Edit Notes" : "Add Notes"}
-              </h3>
-              <ul className="flex flex-wrap gap-2 pt-3">
-                {notesStyle.map((type) => {
-                  return (
-                    <ButtonNotesStyle
-                      label={type}
-                      key={`${v4()}`}
-                      handleClick={handleClick}
-                      notesInput={notesInput}
-                    />
-                  );
-                })}
-              </ul>
-              <NotesForm
-                notesInput={notesInput}
-                file={file}
-                setShowModal={setShowModal}
-                notes={notes}
-              />
-            </div>
+        >
+          <div className="lg:hidden">
+            <Icon icon={"edit"} size={25} />
           </div>
-        </>
+        </ButtonPrimary>
       )}
+      <Modal>
+        {showModal && (
+          <>
+            <div
+              onClick={() => setShowModal(false)}
+              className={`inset-0 fixed bg-black bg-opacity-30 z-40 backdrop-blur-sm ${
+                showModal ? "block" : "hidden"
+              }`}
+            ></div>
+            <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-full p-4">
+              <div className="flex w-full lg:max-w-[420px] rounded-lg p-3 relative flex-col bg-white">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-3xl font-semibold">
+                    {file?.notes ? "Edit Notes" : "Add Notes"}
+                  </h3>
+                  <CloseButton
+                    showModal={showModal}
+                    setShowModal={setShowModal}
+                  />
+                </div>
+                <ul className="flex flex-wrap gap-2 pt-3">
+                  {notesStyle.map((type) => {
+                    return (
+                      <ButtonNotesStyle
+                        label={type}
+                        key={`${v4()}`}
+                        handleClick={handleClick}
+                        notesInput={notesInput}
+                      />
+                    );
+                  })}
+                </ul>
+                <NotesForm
+                  notesInput={notesInput}
+                  setShowModal={setShowModal}
+                  file={file}
+                  index={index}
+                />
+              </div>
+            </div>
+          </>
+        )}
+      </Modal>
     </>
   );
 };

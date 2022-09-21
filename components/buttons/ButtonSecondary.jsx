@@ -7,7 +7,7 @@ const ButtonSecondary = ({ label, type, handleClick, children, xClass }) => {
     >
       <div className={`flex ${label ? "space-x-2" : "space-x-0"} items-center`}>
         {children}
-        <span className="hidden sm:block">{label}</span>
+        <span>{label}</span>
       </div>
     </button>
   );

@@ -10,34 +10,34 @@ export default function NoteOperations() {
   const [noteDesc, setNoteDesc] = useState("");
   const [notesArray, setNotesArray] = useState([]);
 
-  useEffect(() => {
-    getNotes();
-  }, []);
+  // useEffect(() => {
+  //   getNotes();
+  // }, []);
 
   const inputToggle = () => {
     setInputVisible(!isInputVisible);
   };
 
-  const saveNote = () => {
-    addDoc(dbInstance, {
-      noteTitle: noteTitle,
-      noteDesc: noteDesc,
-    }).then(() => {
-      setNoteTitle("");
-      setNoteDesc("");
-      getNotes();
-    });
-  };
+  // const saveNote = () => {
+  //   addDoc(dbInstance, {
+  //     noteTitle: noteTitle,
+  //     noteDesc: noteDesc,
+  //   }).then(() => {
+  //     setNoteTitle("");
+  //     setNoteDesc("");
+  //     getNotes();
+  //   });
+  // };
 
-  const getNotes = () => {
-    getDocs(dbInstance).then((data) => {
-      setNotesArray(
-        data.docs.map((item) => {
-          return { ...item.data(), id: item.id };
-        })
-      );
-    });
-  };
+  // const getNotes = () => {
+  //   getDocs(dbInstance).then((data) => {
+  //     setNotesArray(
+  //       data.docs.map((item) => {
+  //         return { ...item.data(), id: item.id };
+  //       })
+  //     );
+  //   });
+  // };
 
   return (
     <>

@@ -1,7 +1,7 @@
-import NoteOperation from "../components/NoteOperation";
 import FileOperation from "../components/FileOperation";
 import LayoutDefault from "../components/layouts/LayoutDefault";
 import { FaPhotoVideo } from "react-icons/fa";
+import FilesContextProvider from "../context/FilesContext";
 
 const TimelineFeed = () => {
   return (
@@ -12,7 +12,9 @@ const TimelineFeed = () => {
       </header>
       <hr />
       <section className="mt-10">
-        <FileOperation />
+        <FilesContextProvider>
+          <FileOperation />
+        </FilesContextProvider>
       </section>
     </LayoutDefault>
   );

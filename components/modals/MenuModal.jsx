@@ -19,13 +19,13 @@ const MenuModal = () => {
       <BurgerMenu setShowModal={setShowModal} showModal={showModal} />
       <BackDrop setShowModal={setShowModal} showModal={showModal} />
       <aside
-        className={`flex justify-end p-2 duration-300 ease-out-expo absolute z-20 right-0 top-0 ${
-          showModal ? "translate-y-0" : "-translate-y-[130px]"
+        className={`flex justify-end p-2 duration-500 ease-out-expo absolute z-20 right-0 top-0 w-full ${
+          showModal ? "translate-y-0" : "-translate-y-[100%]"
         }`}
       >
-        <div className="flex w-full sm:max-w-420 border-0 rounded-lg p-3 shadow-lg relative flex-col bg-white outline-none focus:outline-none">
+        <div className="flex max-w-full sm:max-w-420 border-0 rounded-lg p-3 shadow-lg relative flex-col bg-white outline-none focus:outline-none">
           <h3 className="text-3xl font-semibold">Menu</h3>
-          <nav className="space-x-2 flex justify-between items-center pt-3">
+          <nav className="space-x-2 flex items-center pt-3">
             {user ? (
               <>
                 <UserButton
@@ -46,8 +46,8 @@ const MenuModal = () => {
                   label={"Logout"}
                   type={"button"}
                   handleClick={() => {
-                    logout();
                     router.push("/");
+                    logout();
                   }}
                 >
                   <Icon icon={"signout"} />

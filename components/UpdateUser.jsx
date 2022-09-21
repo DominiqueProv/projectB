@@ -1,8 +1,8 @@
 import { useState, useRef } from "react";
-import ButtonPrimary from "../buttons/ButtonPrimary";
-import { useAuth } from "../../context/AuthContext";
-import Icon from "../buttons/Icon";
-import { storage } from "../../lib/firebase";
+import ButtonPrimary from "./buttons/ButtonPrimary";
+import { useAuth } from "../context/AuthContext";
+import Icon from "./buttons/Icon";
+import { storage } from "../lib/firebase";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 const UpdateUser = () => {
@@ -37,10 +37,14 @@ const UpdateUser = () => {
   };
   return (
     <>
-      <form className="flex flex-col space-y-5 pt-3" onSubmit={handleSubmit}>
+      <form
+        className="mx-auto w-full rounded-md sm:max-w-md bg-slate-100 flex flex-col space-y-5 p-5 mt-4"
+        onSubmit={handleSubmit}
+      >
         <div className="flex flex-col">
           <label htmlFor="updateUserName">Username</label>
           <input
+            className="w-full rounded-md sm:max-w-md"
             type="text"
             onChange={(e) => {
               setData(e.target.value);
@@ -49,6 +53,7 @@ const UpdateUser = () => {
             name="username"
             id="updateUserName"
             placeholder="John Smith"
+            required
           />
         </div>
         <div className="flex flex-col">
@@ -59,9 +64,11 @@ const UpdateUser = () => {
             ref={inputFileRef}
             onChange={handleChange}
             accept=".png, .jpeg"
+            required
           />
         </div>
         <ButtonPrimary
+          xClass={"w-full sm:max-w-md"}
           label={"Update user"}
           type={"submit"}
           isDisabled={isDisabled}

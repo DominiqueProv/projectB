@@ -1,29 +1,34 @@
 import { useState } from "react";
 
 import ButtonPrimary from "../buttons/ButtonPrimary";
+import Modal from "./Portal";
+import { useFiles } from "../../context/FilesContext";
 import Icon from "../buttons/Icon";
-import Modal from "./Modal";
 
-const DeleteModal = ({ file, deleteFile, setShowFileModal }) => {
+const DeleteModal = ({ file, setShowFileModal }) => {
   const [showModal, setShowModal] = useState(false);
-
+  const { deleteFile } = useFiles();
   return (
     <>
       <ButtonPrimary
         handleClick={() => setShowModal(!showModal)}
         label={"Delete Memory"}
         xClass={"px-3 flex-grow"}
-      ></ButtonPrimary>
+      >
+        <div className="lg:hidden">
+          <Icon icon={"delete"} size={30} />
+        </div>
+      </ButtonPrimary>
       <Modal>
         {showModal && (
           <>
             <div
               onClick={() => setShowModal(false)}
-              className={`inset-0 absolute bg-black bg-opacity-30 z-40 backdrop-blur-sm ${
+              className={`inset-0 fixed bg-black bg-opacity-30 z-40 backdrop-blur-sm ${
                 showModal ? "block" : "hidden"
               }`}
             ></div>
-            <div className="flex justify-center items-center absolute z-40 inset-0">
+            <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
               <div className="flex w-full sm:max-w-[420px] rounded-lg p-3 relative flex-col bg-white">
                 <h3 className="text-xl font-semibold">
                   Are you sure you want to delete this file ?
