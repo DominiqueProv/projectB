@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
-import { CgSpinner } from "react-icons/cg";
 import Icon from "../buttons/Icon";
 import MediasFull from "../MediasFull";
 import Modal from "./Portal";
@@ -11,7 +10,6 @@ import FileModalSideInfo from "./FileModalSideInfo";
 const FileModal = ({ file, index }) => {
   const [showModal, setShowModal] = useState(false);
   const notes = file?.notes;
-
   return (
     <>
       <button
@@ -53,7 +51,10 @@ const FileModal = ({ file, index }) => {
                     {notes?.title}
                   </h3>
                   <button
-                    onClick={() => setShowModal(!showModal)}
+                    onClick={() => {
+                      setShowModal(false);
+                      document.body.style.overflow = "unset";
+                    }}
                     className="bg-blue-200 self-end z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
                     type="button"
                   >
@@ -63,39 +64,25 @@ const FileModal = ({ file, index }) => {
                     />
                   </button>
                 </div>
-                {file ? (
-                  <>
-                    <div className="flex flex-col lg:flex-row w-full gap-4 relative mt-4">
-                      <div className="relative rounded-md lg:overflow-hidden w-full">
-                        <img
-                          src={file.url}
-                          alt={file.name}
-                          className="absolute inset-0 object-cover blur-md hidden lg:block w-full"
-                        />
-                        <div className="bg-slate-500 inset-0 absolute opacity-50 hidden lg:block"></div>
-                        {file && <MediasFull file={file} />}
-                      </div>
-                      <div className="bg-blue-100 bg-opacity-70 rounded-lg p-2 lg:p-4 w-full lg:w-[320px] flex flex-col flex-shrink-0 justify-between">
-                        <FileModalSideInfo notes={notes} />
-                        <div className="justify-between gap-3 hidden lg:flex">
-                          <NotesModal isFileModal file={file} index={index} />
-                          <DeleteModal
-                            file={file}
-                            setShowFileModal={setShowModal}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <div className="w-full flex justify-center items-center min-h-300">
-                    <CgSpinner
-                      className="animate-spin"
-                      color={"dodgerblue"}
-                      size={40}
-                    />
+                <div className="flex flex-col lg:flex-row w-full gap-4 relative mt-4">
+                  <div className="relative rounded-md lg:overflow-hidden w-full">
+                    {file && <MediasFull file={file} />}
                   </div>
-                )}
+                  <div
+                    className={`bg-blue-100 bg-opacity-70 rounded-lg p-2 lg:p-4 w-full lg:w-[320px] flex flex-col flex-shrink-0 justify-between ${
+                      !notes ? "hidden lg:flex" : ""
+                    }`}
+                  >
+                    <FileModalSideInfo notes={notes} />
+                    <div className="justify-between gap-3 hidden lg:flex">
+                      <NotesModal isFileModal file={file} index={index} />
+                      <DeleteModal
+                        file={file}
+                        setShowFileModal={setShowModal}
+                      />
+                    </div>
+                  </div>
+                </div>
                 <div className="flex justify-between gap-3 p-3 fixed bottom-0 left-0 right-0 lg:hidden bg-slate-700/20 backdrop-blur">
                   <NotesModal isFileModal file={file} index={index} />
                   <DeleteModal file={file} setShowFileModal={setShowModal} />

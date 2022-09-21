@@ -6,7 +6,7 @@ import { MdOutlineMonitorWeight } from "react-icons/md";
 
 const FileModalSideInfo = ({ notes }) => {
   return (
-    <ul className="space-y-2 overflow-auto max-h-[58vh] rounded-md">
+    <ul className="space-y-2 lg:overflow-auto lg:max-h-[58vh] rounded-md">
       {notes && (
         <>
           {notes.description && (

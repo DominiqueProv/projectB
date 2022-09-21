@@ -24,11 +24,11 @@ const DeleteModal = ({ file, setShowFileModal }) => {
           <>
             <div
               onClick={() => setShowModal(false)}
-              className={`inset-0 absolute bg-black bg-opacity-30 z-40 backdrop-blur-sm ${
+              className={`inset-0 fixed bg-black bg-opacity-30 z-40 backdrop-blur-sm ${
                 showModal ? "block" : "hidden"
               }`}
             ></div>
-            <div className="flex justify-center items-center absolute z-40 inset-0">
+            <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
               <div className="flex w-full sm:max-w-[420px] rounded-lg p-3 relative flex-col bg-white">
                 <h3 className="text-xl font-semibold">
                   Are you sure you want to delete this file ?

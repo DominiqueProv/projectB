@@ -7,6 +7,7 @@ import CloseButton from "../buttons/CloseButton";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import { useFiles } from "../../context/FilesContext";
 import Icon from "../buttons/Icon";
+import Modal from "./Portal";
 
 const NotesModal = ({ isFileModal, file, index }) => {
   const [showModal, setShowModal] = useState(false);
@@ -69,43 +70,49 @@ const NotesModal = ({ isFileModal, file, index }) => {
           </div>
         </ButtonPrimary>
       )}
-
-      {showModal && (
-        <>
-          <div
-            onClick={() => setShowModal(false)}
-            className={`inset-0 absolute bg-black bg-opacity-30 z-40 backdrop-blur-sm ${
-              showModal ? "block" : "hidden"
-            }`}
-          ></div>
-          <div className="flex justify-center items-center absolute z-40 inset-0">
-            <div className="flex w-full sm:max-w-[420px] rounded-lg p-3 relative flex-col bg-white">
-              <CloseButton showModal={showModal} setShowModal={setShowModal} />
-              <h3 className="text-3xl font-semibold">
-                {file?.notes ? "Edit Notes" : "Add Notes"}
-              </h3>
-              <ul className="flex flex-wrap gap-2 pt-3">
-                {notesStyle.map((type) => {
-                  return (
-                    <ButtonNotesStyle
-                      label={type}
-                      key={`${v4()}`}
-                      handleClick={handleClick}
-                      notesInput={notesInput}
-                    />
-                  );
-                })}
-              </ul>
-              <NotesForm
-                notesInput={notesInput}
-                setShowModal={setShowModal}
-                file={file}
-                index={index}
-              />
+      <Modal>
+        {showModal && (
+          <>
+            <div
+              onClick={() => setShowModal(false)}
+              className={`inset-0 fixed bg-black bg-opacity-30 z-40 backdrop-blur-sm ${
+                showModal ? "block" : "hidden"
+              }`}
+            ></div>
+            <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-full p-4">
+              <div className="flex w-full lg:max-w-[420px] rounded-lg p-3 relative flex-col bg-white">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-3xl font-semibold">
+                    {file?.notes ? "Edit Notes" : "Add Notes"}
+                  </h3>
+                  <CloseButton
+                    showModal={showModal}
+                    setShowModal={setShowModal}
+                  />
+                </div>
+                <ul className="flex flex-wrap gap-2 pt-3">
+                  {notesStyle.map((type) => {
+                    return (
+                      <ButtonNotesStyle
+                        label={type}
+                        key={`${v4()}`}
+                        handleClick={handleClick}
+                        notesInput={notesInput}
+                      />
+                    );
+                  })}
+                </ul>
+                <NotesForm
+                  notesInput={notesInput}
+                  setShowModal={setShowModal}
+                  file={file}
+                  index={index}
+                />
+              </div>
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </Modal>
     </>
   );
 };

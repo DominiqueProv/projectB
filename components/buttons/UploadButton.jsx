@@ -37,8 +37,8 @@ const UploadButton = () => {
 
   return (
     <div
-      className={`border-2 ${
-        filesData.length ? "" : "aspect-video"
+      className={`border-2 w-48 aspect-square lg:aspect-auto lg:w-full ${
+        filesData.length ? "" : "lg:aspect-video"
       } rounded-lg border-indigo-800 flex justify-center items-center duration-300 ease-out-expo relative space-x-2 ${
         !files.length ? "hover:bg-blue-100" : ""
       }`}

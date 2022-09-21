@@ -5,6 +5,7 @@ import LinkSecondary from "../components/buttons/LinkSecondary";
 import ButtonPrimary from "../components/buttons/ButtonPrimary";
 import Icon from "../components/buttons/Icon";
 import LayoutDefault from "../components/layouts/LayoutDefault";
+import PageTitle from "../components/text/PageTitle";
 
 const Login = () => {
   const router = useRouter();
@@ -35,9 +36,8 @@ const Login = () => {
   return (
     <>
       <LayoutDefault>
-        <div className="w-96 mx-auto rounded-md bg-slate-100 p-5 mt-24">
-          <h2>Login</h2>
-
+        <PageTitle title={"Login"} />
+        <div className="mx-auto w-full rounded-md sm:max-w-md bg-slate-100 flex flex-col space-y-5 p-5 mt-4">
           <form className="flex flex-col space-y-5 pt-3" onSubmit={handleLogin}>
             {/* {error && <div className="text-red">{error}</div>} */}
             <div className="flex flex-col">

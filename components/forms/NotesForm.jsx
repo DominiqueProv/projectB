@@ -58,7 +58,7 @@ const NotesForm = ({ file, setShowModal, index }) => {
                     key={i}
                     type="number"
                     name={noteType}
-                    placeholder={"height in metric"}
+                    placeholder={"baby's height (metric)"}
                     onChange={handleChange}
                   />
                 );
@@ -80,7 +80,7 @@ const NotesForm = ({ file, setShowModal, index }) => {
                     key={i}
                     type="number"
                     name={noteType}
-                    placeholder={"weight in kg"}
+                    placeholder={"baby's weight (kg)"}
                     onChange={handleChange}
                   />
                 );

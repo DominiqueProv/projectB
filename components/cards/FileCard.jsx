@@ -7,7 +7,7 @@ import FileModal from "../modals/FileModal";
 const FileCard = ({ file, index }) => {
   return (
     <article className="flex flex-col">
-      <div className="w-full aspect-video rounded-t-md overflow-hidden group relative">
+      <div className="w-full lg:aspect-video rounded-t-md overflow-hidden group relative">
         <FileModal file={file} index={index} />
         {file && <Medias file={file} />}
       </div>

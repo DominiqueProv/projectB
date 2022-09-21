@@ -22,7 +22,6 @@ const FilesContextProvider = ({ children }) => {
   const [filesData, setFilesData] = useState([]);
   const [uploadTask, setUploadTask] = useState({});
   const [isUpload, setIsUpload] = useState(false);
-  const [isFilesLoaded, setIsFilesLoaded] = useState(false);
   const [percent, setPercent] = useState(0);
   const [notesInput, setNotesInput] = useState([]);
 
@@ -98,7 +97,6 @@ const FilesContextProvider = ({ children }) => {
       .catch((error) => {
         console.error(error.message);
       });
-    setIsFilesLoaded(true);
   };
 
   const deleteFile = async (file) => {
@@ -132,15 +130,14 @@ const FilesContextProvider = ({ children }) => {
         files,
         filesData,
         isUpload,
-        isFilesLoaded,
         percent,
+        notesInput,
         getFiles,
         setFiles,
         setFilesData,
         deleteFile,
         putStorageItem,
         getNote,
-        notesInput,
         setNotesInput,
       }}
     >
