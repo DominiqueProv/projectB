@@ -58,3 +58,10 @@
     @apply text-2xl font-bold;
   }
 }
+
+* {
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}

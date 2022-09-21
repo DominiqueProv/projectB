@@ -13,17 +13,13 @@ const MediasFull = ({ file }) => {
   } else {
     return (
       file.url && (
-        <Image
-          layout="fill"
-          height={600}
-          width={400}
-          sizes="100vw"
-          quality={70}
-          objectFit="contain"
-          priority
-          src={file.url}
-          alt={file.name}
-        />
+        <div className="relative rounded-md overflow-hidden">
+          <img
+            src={file.url}
+            alt={file.name}
+            className="object-contain w-full lg:h-[calc(90vh-92px)]"
+          />
+        </div>
       )
     );
   }

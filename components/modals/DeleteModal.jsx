@@ -1,8 +1,9 @@
 import { useState } from "react";
 
 import ButtonPrimary from "../buttons/ButtonPrimary";
-import Modal from "./Modal";
+import Modal from "./Portal";
 import { useFiles } from "../../context/FilesContext";
+import Icon from "../buttons/Icon";
 
 const DeleteModal = ({ file, setShowFileModal }) => {
   const [showModal, setShowModal] = useState(false);
@@ -13,7 +14,11 @@ const DeleteModal = ({ file, setShowFileModal }) => {
         handleClick={() => setShowModal(!showModal)}
         label={"Delete Memory"}
         xClass={"px-3 flex-grow"}
-      ></ButtonPrimary>
+      >
+        <div className="lg:hidden">
+          <Icon icon={"delete"} size={30} />
+        </div>
+      </ButtonPrimary>
       <Modal>
         {showModal && (
           <>

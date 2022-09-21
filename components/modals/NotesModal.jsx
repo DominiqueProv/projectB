@@ -6,10 +6,10 @@ import NotesForm from "../forms/NotesForm";
 import CloseButton from "../buttons/CloseButton";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import { useFiles } from "../../context/FilesContext";
+import Icon from "../buttons/Icon";
 
 const NotesModal = ({ isFileModal, file, index }) => {
   const [showModal, setShowModal] = useState(false);
-  // const [notesInput, setNotesInput] = useState([]);
   const { notesInput, setNotesInput } = useFiles();
 
   const notesStyle = [
@@ -63,7 +63,11 @@ const NotesModal = ({ isFileModal, file, index }) => {
           handleClick={() => setShowModal(!showModal)}
           label={file?.notes ? "Edit Notes" : "Add Notes"}
           xClass={"px-3 flex-grow"}
-        />
+        >
+          <div className="lg:hidden">
+            <Icon icon={"edit"} size={25} />
+          </div>
+        </ButtonPrimary>
       )}
 
       {showModal && (
