@@ -29,7 +29,7 @@ const DeleteModal = ({ file, setShowFileModal }) => {
               }`}
             ></div>
             <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
-              <div className="flex w-full sm:max-w-[420px] rounded-lg p-3 relative flex-col bg-white">
+              <div className="flex w-[90vw] sm:w-[420px] rounded-lg p-3 relative flex-col bg-white">
                 <h3 className="text-xl font-semibold">
                   Are you sure you want to delete this file ?
                 </h3>
@@ -43,13 +43,17 @@ const DeleteModal = ({ file, setShowFileModal }) => {
                       setShowModal(false);
                       setShowFileModal(false);
                     }}
-                  />
+                  >
+                    <span>Delete</span>
+                  </ButtonPrimary>
                   <ButtonPrimary
                     handleClick={() => setShowModal(!showModal)}
                     xClass={"px-4 flex-grow"}
                     type={"button"}
                     label={"Cancel"}
-                  />
+                  >
+                    <span>Cancel</span>
+                  </ButtonPrimary>
                 </div>
               </div>
             </div>

@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from "react";
 import { v4 } from "uuid";
 import { doc, deleteDoc, getDoc } from "firebase/firestore";
 import { database, storage } from "../lib/firebase";
+import { useAuth } from "../context/AuthContext";
 import {
   ref,
   uploadBytesResumable,
@@ -13,17 +14,18 @@ import {
 } from "firebase/storage";
 
 const FilesContext = createContext({});
-const listImagesRef = ref(storage, "files/");
 
 export const useFiles = () => useContext(FilesContext);
 
 const FilesContextProvider = ({ children }) => {
+  const { user } = useAuth();
   const [files, setFiles] = useState([]);
   const [filesData, setFilesData] = useState([]);
   const [uploadTask, setUploadTask] = useState({});
   const [isUpload, setIsUpload] = useState(false);
   const [percent, setPercent] = useState(0);
   const [notesInput, setNotesInput] = useState([]);
+  const listImagesRef = ref(storage, `${user.uid}/files`);
 
   const putStorageItem = (item) => {
     const ext = item.name.split(".").pop();
@@ -32,7 +34,7 @@ const FilesContextProvider = ({ children }) => {
         originalDate: `${item?.lastModified?.toString()}`,
       },
     };
-    const storageRef = ref(storage, `/files/${v4()}.${ext}`);
+    const storageRef = ref(storage, `${user.uid}/files/${v4()}.${ext}`);
     const uploadTaskRef = uploadBytesResumable(storageRef, item);
     setUploadTask(uploadTaskRef);
     setIsUpload(true);
@@ -102,7 +104,7 @@ const FilesContextProvider = ({ children }) => {
   const deleteFile = async (file) => {
     const fileRefName = file.metadata.name.split(".")[0];
     const name = file.metadata.name;
-    const fileRef = ref(storage, `files/${name}`);
+    const fileRef = ref(storage, `${user.uid}/files/${name}`);
     deleteObject(fileRef)
       .then(() => {
         const filesURL = filesData.filter((el) => el.url !== file.url);
@@ -111,11 +113,11 @@ const FilesContextProvider = ({ children }) => {
       .catch((error) => {
         console.log(error);
       });
-    await deleteDoc(doc(database, `notes/${fileRefName}`));
+    await deleteDoc(doc(database, `${user.uid}/${fileRefName}`));
   };
 
   const getNote = async (file) => {
-    const docRef = doc(database, `notes/${file}`);
+    const docRef = doc(database, `${user.uid}/${file}`);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       return docSnap.data();

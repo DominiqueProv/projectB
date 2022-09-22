@@ -1,3 +1,7 @@
 ._title-xl {
   @apply font-bold text-3xl;
 }
+
+._title-md {
+  @apply font-bold text-xl;
+}

@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { database } from "../../lib/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useFiles } from "../../context/FilesContext";
+import { useAuth } from "../../context/AuthContext";
 
 const NotesForm = ({ file, setShowModal, index }) => {
+  const { user } = useAuth();
   const { filesData, setFilesData, notesInput, setNotesInput } = useFiles();
   const [formData, updateFormData] = useState({});
   const fileRefName = file?.metadata?.name?.split(".")[0];
@@ -13,7 +15,7 @@ const NotesForm = ({ file, setShowModal, index }) => {
   }, [notesInput]);
 
   const saveNote = async () => {
-    const docRef = doc(database, `notes/${fileRefName}`);
+    const docRef = doc(database, `${user.uid}/${fileRefName}`);
     await setDoc(docRef, formData, {
       merge: true,
     });
