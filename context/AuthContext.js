@@ -24,13 +24,15 @@ export const AuthContextProvider = ({ children }) => {
           email: user.email,
           userName: user.displayName,
           photoUrl: user.photoURL,
+          emailVerified: user.emailVerified,
+          lastLoginTime: user.metadata.lastLoginAt,
+          lastLoginDay: user.metadata.lastSignInTime,
         });
       } else {
         setUser(null);
       }
       setLoading(false);
     });
-
     return () => unsubscribe();
   }, []);
 
@@ -39,19 +41,18 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const updateUser = async (displayName, photoURL) => {
-    return updateProfile(auth.currentUser, {
+    updateProfile(auth.currentUser, {
       displayName,
       photoURL,
-    })
-      .then(() => {
-        setUser({
-          userName: user.displayName,
-          photoUrl: user.photoURL,
-        });
-      })
-      .catch((error) => {
-        console.error(error);
+    });
+    const userUpdate = auth.currentUser;
+    if (userUpdate !== null) {
+      setUser({
+        ...user,
+        photoUrl: userUpdate.photoURL,
+        userName: userUpdate.displayName,
       });
+    }
   };
 
   const login = (email, password) => {
@@ -64,7 +65,9 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, updateUser }}>
+    <AuthContext.Provider
+      value={{ user, login, signup, logout, updateUser, setUser }}
+    >
       {loading ? null : children}
     </AuthContext.Provider>
   );

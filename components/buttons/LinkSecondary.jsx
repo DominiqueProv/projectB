@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-const ButtonSecondary = ({ url, label }) => {
+const LinkSecondary = ({ url, label }) => {
   return (
     <Link href={url} passHref>
       <a className="bg-blue-100 py-1 px-3 text-blue-500 rounded-md self-start">
@@ -11,4 +11,4 @@ const ButtonSecondary = ({ url, label }) => {
   );
 };
 
-export default ButtonSecondary;
+export default LinkSecondary;

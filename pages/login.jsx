@@ -24,7 +24,6 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log(user);
     try {
       await login(data.email, data.password);
       router.push("/timeline");
@@ -37,7 +36,7 @@ const Login = () => {
     <>
       <LayoutDefault>
         <PageTitle title={"Login"} />
-        <div className="mx-auto w-full rounded-md sm:max-w-md bg-slate-100 flex flex-col space-y-5 p-5 mt-4">
+        <div className="mx-auto w-full rounded-md sm:max-w-md bg-slate-100/30 flex flex-col space-y-5 p-5 mt-4">
           <form className="flex flex-col space-y-5 pt-3" onSubmit={handleLogin}>
             {/* {error && <div className="text-red">{error}</div>} */}
             <div className="flex flex-col">
@@ -62,11 +61,12 @@ const Login = () => {
                 placeholder="Password"
               />
             </div>
-            <ButtonPrimary label={"Login"} type={"submit"}>
-              <Icon icon={"login"} />
-            </ButtonPrimary>
-            <div className="flex flex-col">
-              <h3 className="">No account?</h3>
+            <ButtonPrimary
+              label={"Go go ga ga"}
+              type={"submit"}
+            ></ButtonPrimary>
+            <div className="flex items-center gap-x-3">
+              <h3 className="">You dont have an account yet?</h3>
               <LinkSecondary url={"/signup"} label={"Create one"} />
             </div>
           </form>

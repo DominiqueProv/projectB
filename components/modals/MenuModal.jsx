@@ -13,7 +13,6 @@ const MenuModal = () => {
   const [showModal, setShowModal] = useState(false);
   const { user, logout } = useAuth();
   const router = useRouter();
-
   return (
     <>
       <BurgerMenu setShowModal={setShowModal} showModal={showModal} />
@@ -23,36 +22,34 @@ const MenuModal = () => {
           showModal ? "translate-y-0" : "-translate-y-[100%]"
         }`}
       >
-        <div className="flex max-w-full sm:max-w-420 border-0 rounded-lg p-3 shadow-lg relative flex-col bg-white outline-none focus:outline-none">
+        <div className="flex w-full sm:w-420 border-0 rounded-lg p-3 shadow-lg relative flex-col bg-white outline-none focus:outline-none">
           <h3 className="text-3xl font-semibold">Menu</h3>
           <nav className="space-x-2 flex items-center pt-3">
             {user ? (
-              <>
-                <UserButton
-                  user={user}
-                  setShowModal={setShowModal}
-                  router={router}
-                />
-                <NavLinkPrimary
-                  exact
-                  url="/timeline"
-                  label="Timeline"
-                  xClass={"px-2 sm:px-4 rounded-md"}
-                >
-                  <Icon icon={"timeline"} />
-                </NavLinkPrimary>
-                <ButtonPrimary
-                  xClass={"px-2 sm:px-4 sm:gap-2"}
-                  label={"Logout"}
-                  type={"button"}
-                  handleClick={() => {
-                    router.push("/");
-                    logout();
-                  }}
-                >
-                  <Icon icon={"signout"} />
-                </ButtonPrimary>
-              </>
+              <div className="flex flex-col gap-y-3">
+                <UserButton setShowModal={setShowModal} />
+                <div className="flex gap-2">
+                  <NavLinkPrimary
+                    exact
+                    url="/timeline"
+                    label="Timeline"
+                    xClass={"px-2 sm:px-4 rounded-md"}
+                  >
+                    <Icon icon={"timeline"} />
+                  </NavLinkPrimary>
+                  <ButtonPrimary
+                    xClass={"px-2 sm:px-4 sm:gap-2"}
+                    label={"Logout"}
+                    type={"button"}
+                    handleClick={() => {
+                      router.push("/");
+                      logout();
+                    }}
+                  >
+                    <Icon icon={"signout"} />
+                  </ButtonPrimary>
+                </div>
+              </div>
             ) : (
               <>
                 <NavLinkPrimary
