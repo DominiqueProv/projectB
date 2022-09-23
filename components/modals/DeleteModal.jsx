@@ -43,17 +43,13 @@ const DeleteModal = ({ file, setShowFileModal }) => {
                       setShowModal(false);
                       setShowFileModal(false);
                     }}
-                  >
-                    <span>Delete</span>
-                  </ButtonPrimary>
+                  />
                   <ButtonPrimary
                     handleClick={() => setShowModal(!showModal)}
                     xClass={"px-4 flex-grow"}
                     type={"button"}
                     label={"Cancel"}
-                  >
-                    <span>Cancel</span>
-                  </ButtonPrimary>
+                  />
                 </div>
               </div>
             </div>

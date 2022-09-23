@@ -15,9 +15,9 @@ const UserButton = ({ setShowModal }) => {
       }}
     >
       <div className="bg-indigo-100 rounded-md p-2 flex items-center space-x-2 group-hover:blur group-hover:opacity-30 duration-150">
-        {user ? (
+        {user.photoUrl ? (
           <img
-            src={user.photoUrl}
+            src={user.photoUrl + "?" + Math.random()}
             className={"rounded-full overflow-hidden object-cover w-8 h-8"}
             alt={"user avatar"}
           />
@@ -26,7 +26,7 @@ const UserButton = ({ setShowModal }) => {
         )}
         {user && (
           <div className="">
-            Welcome back{" "}
+            Welcome{" "}
             <span className="font-semibold">{user.userName || user.email}</span>
           </div>
         )}

@@ -12,7 +12,7 @@ const UpdateUser = () => {
   const [file, setFile] = useState([]);
   const [isUpload, setIsUpload] = useState(false);
   const isDisabled = isUpload || !file?.length;
-
+  console.log(user);
   const handleChange = (e) => {
     if (e.target.files) {
       setFile(e.target.files);
@@ -41,7 +41,7 @@ const UpdateUser = () => {
       >
         <SectionTitle title="Manage" />
         <div className="flex flex-col">
-          <label htmlFor="updateUserName">Username</label>
+          <label htmlFor="updateUserName">Change your username</label>
           <input
             className="w-full rounded-md"
             type="text"
@@ -56,9 +56,20 @@ const UpdateUser = () => {
           />
         </div>
         <div className="flex gap-3">
+          <div className="flex flex-col w-full">
+            <label htmlFor="signUpPassword">Update your avatar</label>
+            <input
+              className="rounded-md w-full"
+              type="file"
+              ref={inputFileRef}
+              onChange={handleChange}
+              accept=".png, .jpeg"
+              required
+            />
+          </div>
           {!isUpload ? (
             <img
-              src={user.photoUrl}
+              src={user.photoUrl + "?" + Math.random()}
               className={`rounded-full overflow-hidden object-cover flex-shrink-0 w-16 h-16`}
               alt={"user avatar"}
             />
@@ -71,21 +82,10 @@ const UpdateUser = () => {
               />
             </div>
           )}
-          <div className="flex flex-col w-full">
-            <label htmlFor="signUpPassword">Avatar</label>
-            <input
-              className="rounded-md w-full"
-              type="file"
-              ref={inputFileRef}
-              onChange={handleChange}
-              accept=".png, .jpeg"
-              required
-            />
-          </div>
         </div>
         <ButtonPrimary
           xClass={"w-full"}
-          label={"Update"}
+          label={"Update your profile"}
           type={"submit"}
           isDisabled={isDisabled}
         ></ButtonPrimary>
