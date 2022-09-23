@@ -12,7 +12,7 @@ const UserInfo = () => {
   const actionCodeSettings = {
     // URL you want to redirect back to. The domain (www.example.com) for this
     // URL must be in the authorized domains list in the Firebase Console.
-    url: "https://project-baby-phi.vercel.app/update",
+    url: "https://project-baby-phi.vercel.app/",
     handleCodeInApp: true,
     iOS: {
       bundleId: "com.example.ios",
@@ -22,7 +22,7 @@ const UserInfo = () => {
       installApp: true,
       minimumVersion: "12",
     },
-    dynamicLinkDomain: "https://project-baby-phi.vercel.app/update",
+    dynamicLinkDomain: "https://project-baby-phi.vercel.app/",
   };
 
   const handleVerifyWithEmail = () => {
