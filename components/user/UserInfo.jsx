@@ -22,7 +22,7 @@ const UserInfo = () => {
       installApp: true,
       minimumVersion: "12",
     },
-    dynamicLinkDomain: "https://project-baby-phi.vercel.app/update",
+    dynamicLinkDomain: "https://project-baby-phi.vercel.app",
   };
 
   const handleVerifyWithEmail = () => {
