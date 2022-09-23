@@ -22,7 +22,7 @@ const UserInfo = () => {
       installApp: true,
       minimumVersion: "12",
     },
-    dynamicLinkDomain: "https://project-baby-phi.vercel.app",
+    dynamicLinkDomain: "https://project-baby-phi.vercel.app/update",
   };
 
   const handleVerifyWithEmail = () => {
@@ -47,8 +47,8 @@ const UserInfo = () => {
   return (
     <div className="w-full rounded-md bg-slate-100/30 flex-grow flex flex-col gap-y-5 p-5">
       <SectionTitle title="Info" />
-      <div className="grid md:grid-cols-2 h-full gap-y-3 md:gap-y-0">
-        <div className="flex space-x-3 md:border-r-[1px] border-r-slate-300 pr-5">
+      <div className="grid lg:grid-cols-2 lg:h-full gap-y-3">
+        <div className="flex space-x-3 lg:border-r-[1px] lg:border-r-slate-300 lg:pr-5">
           <span className="">
             {user.emailVerified
               ? "Your account is Verified"
@@ -65,7 +65,7 @@ const UserInfo = () => {
             />
           )}
         </div>
-        <div className="flex gap-x-3 md:pl-5">
+        <div className="flex gap-x-3 lg:pl-5">
           <span className="">Last login:</span>
           <span className="">{date}</span>
         </div>
