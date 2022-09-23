@@ -3,11 +3,46 @@ import { useAuth } from "../../context/AuthContext";
 import SectionTitle from "../text/SectionTitle";
 import { MdVerified } from "react-icons/md";
 import ButtonSecondary from "../buttons/ButtonSecondary";
+import { getAuth, sendSignInLinkToEmail } from "firebase/auth";
 
 const UserInfo = () => {
   const { user } = useAuth();
-  const rawDate = new Date(user.lastLoginDay);
-  const date = rawDate.toLocaleString();
+  const date = new Date(user.lastLoginDay).toLocaleString();
+
+  const actionCodeSettings = {
+    // URL you want to redirect back to. The domain (www.example.com) for this
+    // URL must be in the authorized domains list in the Firebase Console.
+    url: "http://localhost:3000/update",
+    handleCodeInApp: true,
+    iOS: {
+      bundleId: "com.example.ios",
+    },
+    android: {
+      packageName: "com.example.android",
+      installApp: true,
+      minimumVersion: "12",
+    },
+    dynamicLinkDomain: "http://localhost:3000/update",
+  };
+
+  const handleVerifyWithEmail = () => {
+    const auth = getAuth();
+    console.log(auth);
+    console.log(user.email);
+    sendSignInLinkToEmail(auth, user.email, actionCodeSettings)
+      .then(() => {
+        console.log("success");
+        // The link was successfully sent. Inform the user.
+        // Save the email locally so you don't need to ask the user for it again
+        // if they open the link on the same device.
+        window.localStorage.setItem("emailForSignIn", email);
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+  };
 
   return (
     <div className="w-full rounded-md bg-slate-100/30 flex-grow flex flex-col gap-y-5 p-5">
@@ -26,6 +61,7 @@ const UserInfo = () => {
             <ButtonSecondary
               label={"Verify with email"}
               xClass={"py-1 px-2 rounded-md flex-shrink-0"}
+              handleClick={handleVerifyWithEmail}
             />
           )}
         </div>

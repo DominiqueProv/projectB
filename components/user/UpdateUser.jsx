@@ -12,7 +12,6 @@ const UpdateUser = () => {
   const [file, setFile] = useState([]);
   const [isUpload, setIsUpload] = useState(false);
   const isDisabled = isUpload || !file?.length;
-  console.log(user);
   const handleChange = (e) => {
     if (e.target.files) {
       setFile(e.target.files);
