@@ -19,7 +19,7 @@ export const useFiles = () => useContext(FilesContext);
 
 const FilesContextProvider = ({ children }) => {
   const router = useRouter();
-  const pid = router.query.id;
+  const pid = router?.query?.id;
   const { user } = useAuth();
   const [files, setFiles] = useState([]);
   const [filesData, setFilesData] = useState([]);
@@ -27,7 +27,7 @@ const FilesContextProvider = ({ children }) => {
   const [isUpload, setIsUpload] = useState(false);
   const [percent, setPercent] = useState(0);
   const [notesInput, setNotesInput] = useState([]);
-  const listImagesRef = ref(storage, `${user.uid}/${pid}`);
+  let listImagesRef = ref(storage, `${user.uid}/${pid}`);
 
   const putStorageItem = (item) => {
     const ext = item.name.split(".").pop();
@@ -75,7 +75,8 @@ const FilesContextProvider = ({ children }) => {
     );
   };
 
-  const getFiles = () => {
+  const getFiles = (pid) => {
+    console.log(listImagesRef);
     listAll(listImagesRef)
       .then((res) => {
         res.items.forEach((itemRef) => {

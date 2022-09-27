@@ -26,7 +26,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(data.email, data.password);
-      router.push("/timeline");
+      router.push("/dashboard");
     } catch (err) {
       console.log(err);
     }

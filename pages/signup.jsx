@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import ButtonPrimary from "../components/buttons/ButtonPrimary";
-import Icon from "../components/buttons/Icon";
 import LayoutDefault from "../components/layouts/LayoutDefault";
 import PageTitle from "../components/text/PageTitle";
 import { useRouter } from "next/router";

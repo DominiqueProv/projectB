@@ -4,7 +4,6 @@ import { BiUserPlus } from "react-icons/bi";
 import { FiUserCheck } from "react-icons/fi";
 import { FiChevronRight } from "react-icons/fi";
 import { AiFillEdit } from "react-icons/ai";
-import { MdOutlineBedroomBaby } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { AiOutlineColumnHeight } from "react-icons/ai";
 import { MdOutlineMonitorWeight } from "react-icons/md";
@@ -14,9 +13,9 @@ import { MdOutlinePlace } from "react-icons/md";
 import { RiFullscreenLine } from "react-icons/ri";
 import { MdTitle } from "react-icons/md";
 import { IoAddSharp } from "react-icons/io5";
+import { HiUsers } from "react-icons/hi";
 
 const components = {
-  timeline: MdOutlineBedroomBaby,
   title: MdTitle,
   signout: VscSignOut,
   login: FiLogIn,
@@ -32,6 +31,7 @@ const components = {
   mood: TbMoodHappy,
   expand: RiFullscreenLine,
   add: IoAddSharp,
+  members: HiUsers,
 };
 
 const Icon = ({ icon, xClass, size }) => {

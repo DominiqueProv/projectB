@@ -1,13 +1,8 @@
-import { useEffect } from "react";
 import { useBabies } from "../context/BabiesContext";
 import { CgSpinner } from "react-icons/cg";
 
 const BabiesGrid = () => {
-  const { getBabies, babiesDataList, isUpload } = useBabies();
-
-  useEffect(() => {
-    getBabies();
-  }, []);
+  const { babiesDataList } = useBabies();
 
   return (
     <>

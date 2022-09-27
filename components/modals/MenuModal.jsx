@@ -31,11 +31,11 @@ const MenuModal = () => {
                 <div className="flex gap-2">
                   <NavLinkPrimary
                     exact
-                    url="/timeline"
-                    label="Timeline"
+                    url="/dashboard"
+                    label="Family members"
                     xClass={"px-2 sm:px-4 rounded-md"}
                   >
-                    <Icon icon={"timeline"} />
+                    <Icon icon={"members"} />
                   </NavLinkPrimary>
                   <ButtonPrimary
                     xClass={"px-2 sm:px-4 sm:gap-2"}

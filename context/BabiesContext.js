@@ -1,10 +1,9 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { database } from "../lib/firebase";
 import { useAuth } from "../context/AuthContext";
 import { collection, query, getDocs } from "firebase/firestore";
 
 const BabiesContext = createContext({});
-
 export const useBabies = () => useContext(BabiesContext);
 
 const BabiesContextProvider = ({ children }) => {
@@ -20,6 +19,10 @@ const BabiesContextProvider = ({ children }) => {
       setBabiesDataList((prev) => [...prev, { ...doc.data(), id: doc.id }]);
     });
   };
+
+  useEffect(() => {
+    getBabies();
+  }, []);
 
   return (
     <BabiesContext.Provider

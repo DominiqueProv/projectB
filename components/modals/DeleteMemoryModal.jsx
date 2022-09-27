@@ -5,7 +5,7 @@ import Modal from "./Portal";
 import { useFiles } from "../../context/FilesContext";
 import Icon from "../buttons/Icon";
 
-const DeleteModal = ({ file, setShowFileModal }) => {
+const DeleteMemoryModal = ({ file, setShowFileModal }) => {
   const [showModal, setShowModal] = useState(false);
   const { deleteFile } = useFiles();
   return (
@@ -60,4 +60,4 @@ const DeleteModal = ({ file, setShowFileModal }) => {
   );
 };
 
-export default DeleteModal;
+export default DeleteMemoryModal;
