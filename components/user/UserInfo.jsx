@@ -47,27 +47,39 @@ const UserInfo = () => {
   return (
     <div className="w-full rounded-md bg-slate-100/30 flex-grow flex flex-col gap-y-5 p-5">
       <SectionTitle title="Info" />
-      <div className="grid lg:grid-cols-2 lg:h-full gap-y-3">
-        <div className="flex space-x-3 lg:border-r-[1px] lg:border-r-slate-300 lg:pr-5">
-          <span className="">
-            {user.emailVerified
-              ? "Your account is Verified"
-              : "Your account is not Verified"}
-          </span>
-          {user.emailVerified ? (
-            <MdVerified />
-          ) : (
-            //TODO autheticate with email
-            <ButtonSecondary
-              label={"Verify with email"}
-              xClass={"py-1 px-2 rounded-md flex-shrink-0"}
-              handleClick={handleVerifyWithEmail}
-            />
-          )}
+      <div className="grid lg:grid-cols-2">
+        <div className="lg:border-r-[1px] lg:border-r-slate-300 lg:pr-5 space-y-3">
+          <div className="flex gap-x-3">
+            <span>User Name:</span>
+            <span>{<span>{user.userName}</span>}</span>
+          </div>
+          <div className="flex gap-x-3">
+            <span>Account email:</span>
+            <span>{<span>{user.email}</span>}</span>
+          </div>
         </div>
-        <div className="flex gap-x-3 lg:pl-5">
-          <span className="">Last login:</span>
-          <span className="">{date}</span>
+        <div className="lg:pl-5 space-y-3">
+          <div className="flex space-x-3">
+            <span className="">
+              {user.emailVerified
+                ? "Your account is Verified"
+                : "Your account is not Verified"}
+            </span>
+            {user.emailVerified ? (
+              <MdVerified />
+            ) : (
+              //TODO autheticate with email
+              <ButtonSecondary
+                label={"Verify with email"}
+                xClass={"py-1 px-2 rounded-md flex-shrink-0"}
+                handleClick={handleVerifyWithEmail}
+              />
+            )}
+          </div>
+          <div className="flex gap-x-3">
+            <span>Last login:</span>
+            <span>{date}</span>
+          </div>
         </div>
       </div>
     </div>

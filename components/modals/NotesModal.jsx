@@ -66,7 +66,7 @@ const NotesModal = ({ isFileModal, file, index }) => {
           xClass={"px-3 flex-grow"}
         >
           <div className="lg:hidden">
-            <Icon icon={"edit"} size={25} />
+            <Icon icon={"edit"} size={25} xClass={"hidden lg:block"} />
           </div>
         </ButtonPrimary>
       )}
@@ -79,8 +79,8 @@ const NotesModal = ({ isFileModal, file, index }) => {
                 showModal ? "block" : "hidden"
               }`}
             ></div>
-            <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-full p-4">
-              <div className="flex w-full lg:max-w-[420px] rounded-lg p-3 relative flex-col bg-white">
+            <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-full p-4 lg:flex lg:justify-center">
+              <div className="flex w-full lg:max-w-[520px] rounded-lg p-3 relative flex-col bg-white">
                 <div className="flex justify-between items-center">
                   <h3 className="text-3xl font-semibold">
                     {file?.notes ? "Edit Notes" : "Add Notes"}
@@ -90,7 +90,7 @@ const NotesModal = ({ isFileModal, file, index }) => {
                     setShowModal={setShowModal}
                   />
                 </div>
-                <ul className="flex flex-wrap gap-2 pt-3">
+                <ul className="flex justify-between lg:justify-start gap-2 pt-3 lg:flex-wrap">
                   {notesStyle.map((type) => {
                     return (
                       <ButtonNotesStyle

@@ -37,10 +37,10 @@ const UploadButton = () => {
 
   return (
     <div
-      className={`border-2 p-3 w-48 aspect-video lg:aspect-auto lg:w-full ${
-        filesData.length ? "" : "lg:aspect-video"
+      className={`border-2 p-3 lg:aspect-auto w-full h-[120px] lg:h-full ${
+        filesData.length ? "" : "lg:min-h-[170px] lg:aspect-video"
       } rounded-lg border-indigo-800 flex justify-center items-center duration-300 ease-out-expo relative space-x-2 ${
-        !files.length ? "hover:bg-blue-100" : ""
+        !files.length ? "lg:hover:bg-blue-100" : ""
       }`}
     >
       {files.length ? (

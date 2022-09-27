@@ -16,7 +16,7 @@ const DeleteModal = ({ file, setShowFileModal }) => {
         xClass={"px-3 flex-grow"}
       >
         <div className="lg:hidden">
-          <Icon icon={"delete"} size={30} />
+          <Icon icon={"delete"} size={30} xClass={"hidden lg:block"} />
         </div>
       </ButtonPrimary>
       <Modal>

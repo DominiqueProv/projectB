@@ -31,7 +31,7 @@ const SignUp = () => {
         console.log(err);
       }
     }
-    router.push("/timeline");
+    router.push("/dashboard");
   };
 
   return (

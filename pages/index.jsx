@@ -5,7 +5,7 @@ const Home = () => {
     <LayoutDefault>
       <PageTitle title={"Home page"} />
       <section>
-        <h1>Main page content</h1>
+        <h2>Main page content</h2>
         <div className="bg-blue-200 aspect-video">sdkjfh</div>
       </section>
     </LayoutDefault>

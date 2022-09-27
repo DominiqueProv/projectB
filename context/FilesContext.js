@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { useRouter } from "next/router";
 import { v4 } from "uuid";
 import { doc, deleteDoc, getDoc } from "firebase/firestore";
 import { database, storage } from "../lib/firebase";
@@ -14,10 +15,11 @@ import {
 } from "firebase/storage";
 
 const FilesContext = createContext({});
-
 export const useFiles = () => useContext(FilesContext);
 
 const FilesContextProvider = ({ children }) => {
+  const router = useRouter();
+  const pid = router.query.id;
   const { user } = useAuth();
   const [files, setFiles] = useState([]);
   const [filesData, setFilesData] = useState([]);
@@ -25,7 +27,7 @@ const FilesContextProvider = ({ children }) => {
   const [isUpload, setIsUpload] = useState(false);
   const [percent, setPercent] = useState(0);
   const [notesInput, setNotesInput] = useState([]);
-  const listImagesRef = ref(storage, `${user.uid}/files`);
+  const listImagesRef = ref(storage, `${user.uid}/${pid}`);
 
   const putStorageItem = (item) => {
     const ext = item.name.split(".").pop();
@@ -34,7 +36,7 @@ const FilesContextProvider = ({ children }) => {
         originalDate: `${item?.lastModified?.toString()}`,
       },
     };
-    const storageRef = ref(storage, `${user.uid}/files/${v4()}.${ext}`);
+    const storageRef = ref(storage, `${user.uid}/${pid}/${v4()}.${ext}`);
     const uploadTaskRef = uploadBytesResumable(storageRef, item);
     setUploadTask(uploadTaskRef);
     setIsUpload(true);
@@ -104,7 +106,7 @@ const FilesContextProvider = ({ children }) => {
   const deleteFile = async (file) => {
     const fileRefName = file.metadata.name.split(".")[0];
     const name = file.metadata.name;
-    const fileRef = ref(storage, `${user.uid}/files/${name}`);
+    const fileRef = ref(storage, `${user.uid}/${pid}/${name}`);
     deleteObject(fileRef)
       .then(() => {
         const filesURL = filesData.filter((el) => el.url !== file.url);
@@ -113,11 +115,11 @@ const FilesContextProvider = ({ children }) => {
       .catch((error) => {
         console.log(error);
       });
-    await deleteDoc(doc(database, `${user.uid}/${fileRefName}`));
+    await deleteDoc(doc(database, `${user.uid}/${pid}/notes/${fileRefName}`));
   };
 
   const getNote = async (file) => {
-    const docRef = doc(database, `${user.uid}/${file}`);
+    const docRef = doc(database, `${user.uid}/${pid}/notes/${file}`);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       return docSnap.data();
@@ -129,6 +131,7 @@ const FilesContextProvider = ({ children }) => {
   return (
     <FilesContext.Provider
       value={{
+        pid,
         files,
         filesData,
         isUpload,

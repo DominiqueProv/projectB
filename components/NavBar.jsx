@@ -4,7 +4,7 @@ import { MdOutlineBedroomBaby } from "react-icons/md";
 
 const Navbar = () => {
   return (
-    <nav className="bg-indigo-500 p-4 flex justify-between items-center w-full">
+    <nav className="bg-indigo-800 p-4 flex justify-between items-center w-full">
       <Link href="/" passHref>
         <a className="space-x-3 flex items-center">
           <MdOutlineBedroomBaby size={35} className="text-blue-100" />

@@ -2,11 +2,14 @@ import { useEffect } from "react";
 import { useFiles } from "../context/FilesContext";
 import FileCard from "./cards/FileCard";
 import UploadButton from "./buttons/UploadButton";
+import { useRouter } from "next/router";
 
 const FileOperations = () => {
+  const router = useRouter();
+  const pid = router.query.id;
   const { filesData, getFiles } = useFiles();
   useEffect(() => {
-    getFiles();
+    getFiles(pid);
   }, []);
 
   return (

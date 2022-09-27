@@ -6,7 +6,8 @@ import { useAuth } from "../../context/AuthContext";
 
 const NotesForm = ({ file, setShowModal, index }) => {
   const { user } = useAuth();
-  const { filesData, setFilesData, notesInput, setNotesInput } = useFiles();
+  const { filesData, setFilesData, notesInput, setNotesInput, pid } =
+    useFiles();
   const [formData, updateFormData] = useState({});
   const fileRefName = file?.metadata?.name?.split(".")[0];
 
@@ -15,7 +16,7 @@ const NotesForm = ({ file, setShowModal, index }) => {
   }, [notesInput]);
 
   const saveNote = async () => {
-    const docRef = doc(database, `${user.uid}/${fileRefName}`);
+    const docRef = doc(database, `${user.uid}/${pid}/notes/${fileRefName}`);
     await setDoc(docRef, formData, {
       merge: true,
     });
@@ -50,7 +51,11 @@ const NotesForm = ({ file, setShowModal, index }) => {
   return (
     <>
       {notesInput && (
-        <form className="flex flex-col space-y-2 pt-5">
+        <form
+          className={`flex flex-col space-y-2 ${
+            notesInput.length > 0 ? "pt-5" : ""
+          }`}
+        >
           {notesInput.map((noteType, i) => {
             let input;
             switch (noteType) {

@@ -3,7 +3,7 @@ import { IoMdClose } from "react-icons/io";
 import Icon from "../buttons/Icon";
 import MediasFull from "../MediasFull";
 import Modal from "./Portal";
-import DeleteModal from "../modals/DeleteModal";
+import DeleteModal from "./DeleteModal";
 import NotesModal from "./NotesModal";
 import FileModalSideInfo from "./FileModalSideInfo";
 
