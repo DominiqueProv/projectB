@@ -46,7 +46,6 @@ export const AuthContextProvider = ({ children }) => {
       photoURL,
     });
     const userUpdate = auth.currentUser;
-    console.log(userUpdate);
     if (userUpdate !== null) {
       setUser({
         ...user,

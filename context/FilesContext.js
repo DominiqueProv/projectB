@@ -75,8 +75,7 @@ const FilesContextProvider = ({ children }) => {
     );
   };
 
-  const getFiles = (pid) => {
-    console.log(listImagesRef);
+  const getFiles = () => {
     listAll(listImagesRef)
       .then((res) => {
         res.items.forEach((itemRef) => {
