@@ -1,11 +1,11 @@
-import React from "react";
+import { useEffect } from "react";
 import { useBabies } from "../../context/BabiesContext";
 import DeleteMemberModal from "../modals/DeleteMemberModal";
 import SectionTitle from "../text/SectionTitle";
 
 const MembersGrid = () => {
   const { babiesDataList } = useBabies();
-  console.log(babiesDataList);
+
   return (
     <section
       className={
@@ -23,12 +23,12 @@ const MembersGrid = () => {
                 <div className="flex gap-3 items-center">
                   <img
                     src={baby.url + "?" + Math.random()}
-                    className={`rounded-full overflow-hidden object-cover flex-shrink-0 w-16 h-16`}
+                    className={`rounded-full overflow-hidden object-cover flex-shrink-0 w-12 h-12`}
                     alt={"user avatar"}
                   />
                   <span className="text-xl font-semibold">{baby.name}</span>
                 </div>
-                <DeleteMemberModal />
+                <DeleteMemberModal baby={baby} />
               </div>
             );
           })

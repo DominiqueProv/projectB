@@ -1,7 +1,7 @@
-import FileOperation from "../components/FileOperation";
-import LayoutDefault from "../components/layouts/LayoutDefault";
+import FileOperation from "../../../components/FileOperation";
+import LayoutDefault from "../../../components/layouts/LayoutDefault";
 import { FaPhotoVideo } from "react-icons/fa";
-import FilesContextProvider from "../context/FilesContext";
+import FilesContextProvider from "../../../context/FilesContext";
 
 const TimelineFeed = () => {
   return (

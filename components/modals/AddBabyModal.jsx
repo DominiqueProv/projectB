@@ -6,14 +6,13 @@ import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { storage, database } from "../../lib/firebase";
 import { useAuth } from "../../context/AuthContext";
 import { doc, setDoc } from "firebase/firestore";
-
 import Icon from "../buttons/Icon";
 import Modal from "./Portal";
 import Calendar from "react-calendar";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 
 const AddBabyModal = () => {
-  const { setBabiesDataList, setIsUpload } = useBabies();
+  const { setIsUpload, reload, setReload } = useBabies();
   const { user } = useAuth();
   const [babiesData, setBabiesData] = useState({});
   const [showModal, setShowModal] = useState(false);
@@ -32,7 +31,6 @@ const AddBabyModal = () => {
 
   const saveBabyData = async () => {
     const docRef = doc(database, `${user.uid}/${babyId}`);
-    console.log(babiesData);
     await setDoc(docRef, babiesData, {
       merge: true,
     });
@@ -58,7 +56,7 @@ const AddBabyModal = () => {
     await uploadBabyAvatar();
     saveBabyData();
     setIsUpload(false);
-    setBabiesDataList((prev) => [...prev, babiesData]);
+    setReload(!reload);
   };
 
   return (
@@ -71,7 +69,7 @@ const AddBabyModal = () => {
           }
         }}
         className={
-          "border-2 p-3 w-48 group aspect-square lg:w-full rounded-lg border-indigo-800 flex justify-center items-center duration-300 ease-out-expo relative space-x-2"
+          "border-2 p-3 group aspect-square w-full rounded-lg border-indigo-800 flex justify-center items-center duration-300 ease-out-expo relative space-x-2"
         }
         type="button"
       >

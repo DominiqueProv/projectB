@@ -3,17 +3,18 @@ import { useState } from "react";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import Modal from "./Portal";
 import { useBabies } from "../../context/BabiesContext";
+import { useAuth } from "../../context/AuthContext";
 import Icon from "../buttons/Icon";
 
-const DeleteMemberModal = ({ file, setShowFileModal }) => {
+const DeleteMemberModal = ({ baby }) => {
   const [showModal, setShowModal] = useState(false);
-  const { deleteBaby } = useBabies();
+  const { deleteBaby, setReload, reload } = useBabies();
+  const { user } = useAuth();
   return (
     <>
       <ButtonPrimary
         handleClick={() => setShowModal(!showModal)}
-        label={"Delete Member"}
-        xClass={"px-3"}
+        xClass={"px-3 bg-slate-300 hover:bg-slate-400"}
       >
         <Icon icon={"delete"} size={20} xClass={"hidden lg:block"} />
       </ButtonPrimary>
@@ -37,9 +38,8 @@ const DeleteMemberModal = ({ file, setShowFileModal }) => {
                     type={"button"}
                     label={"Delete"}
                     handleClick={() => {
-                      deleteFile(file);
+                      deleteBaby(user.uid, baby);
                       setShowModal(false);
-                      setShowFileModal(false);
                     }}
                   />
                   <ButtonPrimary

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import LinkSecondary from "../components/buttons/LinkSecondary";
 import ButtonPrimary from "../components/buttons/ButtonPrimary";
-import Icon from "../components/buttons/Icon";
 import LayoutDefault from "../components/layouts/LayoutDefault";
 import PageTitle from "../components/text/PageTitle";
 
