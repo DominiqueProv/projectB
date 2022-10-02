@@ -35,7 +35,7 @@ const UpdateUser = () => {
   return (
     <>
       <form
-        className="w-full rounded-md bg-slate-100/30 sm:max-w-[500px] flex flex-col gap-y-5 p-5"
+        className="w-full rounded-md bg-slate-100/30 sm:max-w-[500px] flex flex-col gap-y-5 p-3 md:p-5"
         onSubmit={handleSubmit}
       >
         <SectionTitle title="Manage" />

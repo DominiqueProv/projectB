@@ -10,6 +10,7 @@ import Icon from "../buttons/Icon";
 import Modal from "./Portal";
 import Calendar from "react-calendar";
 import ButtonPrimary from "../buttons/ButtonPrimary";
+import ModalTitle from "../text/ModalTitle";
 
 const AddBabyModal = () => {
   const { setIsUpload, reload, setReload } = useBabies();
@@ -96,7 +97,7 @@ const AddBabyModal = () => {
             <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
               <div className="flex w-[90vw] sm:w-[420px] rounded-lg p-3 relative flex-col bg-white">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-3xl font-semibold mt-4">Add a bambino</h3>
+                  <ModalTitle title="Add a bambino" />
                   <button
                     onClick={() => {
                       setShowModal(false);

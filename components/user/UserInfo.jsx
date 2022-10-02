@@ -45,7 +45,7 @@ const UserInfo = () => {
   };
 
   return (
-    <div className="w-full rounded-md bg-slate-100/30 flex-grow flex flex-col gap-y-5 p-5">
+    <div className="w-full rounded-md bg-slate-100/30 flex-grow flex flex-col gap-y-5 p-3 md:p-5">
       <SectionTitle title="Info" />
       <div className="grid lg:grid-cols-2">
         <div className="lg:border-r-[1px] lg:border-r-slate-300 lg:pr-5 space-y-3">
@@ -58,8 +58,8 @@ const UserInfo = () => {
             <span>{<span>{user.email}</span>}</span>
           </div>
         </div>
-        <div className="lg:pl-5 space-y-3">
-          <div className="flex space-x-3">
+        <div className="lg:pl-5 space-y-3 mt-5 md:mt-0">
+          <div className="flex md:space-x-3 flex-col md:flex-row">
             <span className="">
               {user.emailVerified
                 ? "Your account is Verified"

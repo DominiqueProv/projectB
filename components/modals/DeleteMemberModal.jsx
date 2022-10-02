@@ -16,7 +16,7 @@ const DeleteMemberModal = ({ baby }) => {
         handleClick={() => setShowModal(!showModal)}
         xClass={"px-3 bg-slate-300 hover:bg-slate-400"}
       >
-        <Icon icon={"delete"} size={20} xClass={"hidden lg:block"} />
+        <Icon icon={"delete"} size={20} />
       </ButtonPrimary>
       <Modal>
         {showModal && (

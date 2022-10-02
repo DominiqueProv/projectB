@@ -13,7 +13,7 @@ const Account = () => {
         <UserInfo />
         <UpdateUser />
       </section>
-      <section className="flex flex-col-reverse sm:flex-row gap-3 mt-4">
+      <section className="flex flex-col md:flex-col-reverse sm:flex-row gap-3 mt-4">
         <MembersGrid />
         <AccountWidget />
       </section>

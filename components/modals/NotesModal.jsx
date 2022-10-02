@@ -8,6 +8,7 @@ import ButtonPrimary from "../buttons/ButtonPrimary";
 import { useFiles } from "../../context/FilesContext";
 import Icon from "../buttons/Icon";
 import Modal from "./Portal";
+import ModalTitle from "../text/ModalTitle";
 
 const NotesModal = ({ isFileModal, file, index }) => {
   const [showModal, setShowModal] = useState(false);
@@ -82,9 +83,9 @@ const NotesModal = ({ isFileModal, file, index }) => {
             <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-full p-4 lg:flex lg:justify-center">
               <div className="flex w-full lg:max-w-[520px] rounded-lg p-3 relative flex-col bg-white">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-3xl font-semibold">
-                    {file?.notes ? "Edit Notes" : "Add Notes"}
-                  </h3>
+                  <ModalTitle
+                    title={file?.notes ? "Edit Notes" : "Add Notes"}
+                  />
                   <CloseButton
                     showModal={showModal}
                     setShowModal={setShowModal}

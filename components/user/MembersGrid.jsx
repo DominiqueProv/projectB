@@ -9,7 +9,7 @@ const MembersGrid = () => {
   return (
     <section
       className={
-        "w-full rounded-md bg-slate-100/30 flex-grow flex flex-col gap-y-5 p-5"
+        "w-full rounded-md bg-slate-100/30 flex-grow flex flex-col gap-y-5 p-3 md:p-5"
       }
     >
       <SectionTitle title="Babies List" />

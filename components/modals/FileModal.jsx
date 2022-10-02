@@ -6,6 +6,7 @@ import Modal from "./Portal";
 import DeleteMemoryModal from "./DeleteMemoryModal";
 import NotesModal from "./NotesModal";
 import FileModalSideInfo from "./FileModalSideInfo";
+import ModalTitle from "../text/ModalTitle";
 
 const FileModal = ({ file, index }) => {
   const [showModal, setShowModal] = useState(false);
@@ -47,9 +48,7 @@ const FileModal = ({ file, index }) => {
             <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
               <div className="flex w-[90vw] h-[90vh] sm:w-[80vw] rounded-lg p-3 relative flex-col bg-white overflow-auto pb-[85px]">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-3xl font-semibold mt-4">
-                    {notes?.title}
-                  </h3>
+                  <ModalTitle title={notes?.title} />
                   <button
                     onClick={() => {
                       setShowModal(false);
