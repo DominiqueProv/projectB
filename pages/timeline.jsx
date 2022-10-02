@@ -1,4 +1,4 @@
-import FileOperation from "../components/FileOperation";
+import MemberTimeline from "../components/MemberTimeline";
 import LayoutSignedIn from "../components/layouts/LayoutSignedIn";
 import { FaPhotoVideo } from "react-icons/fa";
 import PageTitle from "../components/text/PageTitle";
@@ -9,7 +9,7 @@ const TimelineFeed = () => {
       <PageTitle title={"Timeline"}>
         <FaPhotoVideo className="text-indigo-500" size={25} />
       </PageTitle>
-      <FileOperation />
+      <MemberTimeline />
     </LayoutSignedIn>
   );
 };

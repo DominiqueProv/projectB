@@ -9,7 +9,7 @@ const LayoutDefault = (props) => {
       <FilesContextProvider>
         <BabiesContextProvider>
           <Navbar />
-          <main className="max-w-[1920px] min-h-[calc(100vh-255px)] mx-auto px-4 pt-4">
+          <main className="max-w-[1920px] min-h-[calc(100vh-255px)] mx-auto px-2 md:px-4 pt-4">
             {props.children}
           </main>
           <Footer />

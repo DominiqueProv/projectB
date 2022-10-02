@@ -13,7 +13,7 @@ import { MdOutlinePlace } from "react-icons/md";
 import { RiFullscreenLine } from "react-icons/ri";
 import { MdTitle } from "react-icons/md";
 import { IoAddSharp } from "react-icons/io5";
-import { HiUsers } from "react-icons/hi";
+import { FiHeart } from "react-icons/fi";
 
 const components = {
   title: MdTitle,
@@ -31,7 +31,7 @@ const components = {
   mood: TbMoodHappy,
   expand: RiFullscreenLine,
   add: IoAddSharp,
-  members: HiUsers,
+  members: FiHeart,
 };
 
 const Icon = ({ icon, xClass, size }) => {

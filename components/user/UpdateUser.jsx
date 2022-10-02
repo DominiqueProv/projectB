@@ -18,7 +18,8 @@ const UpdateUser = () => {
     }
   };
   const upload = async (file, user, setIsUpload) => {
-    const fileRef = ref(storage, `${user.uid}/userAvatar/${user.uid}.png`);
+    const ext = file[0].name.split(".").pop();
+    const fileRef = ref(storage, `${user.uid}/userAvatar/${user.uid}.${ext}`);
     setIsUpload(true);
     const snapshot = await uploadBytes(fileRef, file[0]);
     const photoURL = await getDownloadURL(fileRef);

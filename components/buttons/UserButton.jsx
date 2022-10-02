@@ -1,11 +1,10 @@
 import { useRouter } from "next/router";
 import { HiOutlineUserCircle } from "react-icons/hi";
+import { RiSettings3Line } from "react-icons/ri";
 import { useAuth } from "../../context/AuthContext";
-import { useBabies } from "../../context/BabiesContext";
 
 const UserButton = ({ setShowModal }) => {
   const { user } = useAuth();
-  const { babiesDataList } = useBabies();
   const router = useRouter();
   return (
     <button
@@ -26,9 +25,14 @@ const UserButton = ({ setShowModal }) => {
           <HiOutlineUserCircle size={25} className="text-blue-500" />
         )}
         {user && (
-          <div className="">
-            Welcome{" "}
-            <span className="font-semibold">{user.userName || user.email}</span>
+          <div className="flex justify-between items-center w-full">
+            <div className="">
+              Welcome{" "}
+              <span className="font-semibold">
+                {user.userName || user.email}
+              </span>
+            </div>
+            <RiSettings3Line size={25} className="text-indigo-500 md:hidden" />
           </div>
         )}
       </div>

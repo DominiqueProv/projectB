@@ -8,13 +8,13 @@ import Icon from "../buttons/Icon";
 
 const DeleteMemberModal = ({ baby }) => {
   const [showModal, setShowModal] = useState(false);
-  const { deleteBaby, setReload, reload } = useBabies();
+  const { deleteBaby } = useBabies();
   const { user } = useAuth();
   return (
     <>
       <ButtonPrimary
         handleClick={() => setShowModal(!showModal)}
-        xClass={"px-3 bg-slate-300 hover:bg-slate-400"}
+        xClass={"p-3 bg-slate-300 hover:bg-slate-400 aspect-square"}
       >
         <Icon icon={"delete"} size={20} />
       </ButtonPrimary>
@@ -34,6 +34,12 @@ const DeleteMemberModal = ({ baby }) => {
                 </h3>
                 <div className="flex space-x-2 pt-3">
                   <ButtonPrimary
+                    handleClick={() => setShowModal(!showModal)}
+                    xClass={"px-4 flex-grow"}
+                    type={"button"}
+                    label={"Cancel"}
+                  />
+                  <ButtonPrimary
                     xClass={"px-4 bg-red-500 flex-grow"}
                     type={"button"}
                     label={"Delete"}
@@ -41,12 +47,6 @@ const DeleteMemberModal = ({ baby }) => {
                       deleteBaby(user.uid, baby);
                       setShowModal(false);
                     }}
-                  />
-                  <ButtonPrimary
-                    handleClick={() => setShowModal(!showModal)}
-                    xClass={"px-4 flex-grow"}
-                    type={"button"}
-                    label={"Cancel"}
                   />
                 </div>
               </div>

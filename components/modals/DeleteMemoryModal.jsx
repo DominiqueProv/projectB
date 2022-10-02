@@ -35,6 +35,12 @@ const DeleteMemoryModal = ({ file, setShowFileModal }) => {
                 </h3>
                 <div className="flex space-x-2 pt-3">
                   <ButtonPrimary
+                    handleClick={() => setShowModal(!showModal)}
+                    xClass={"px-4 flex-grow"}
+                    type={"button"}
+                    label={"Cancel"}
+                  />
+                  <ButtonPrimary
                     xClass={"px-4 bg-red-500 flex-grow"}
                     type={"button"}
                     label={"Delete"}
@@ -43,12 +49,6 @@ const DeleteMemoryModal = ({ file, setShowFileModal }) => {
                       setShowModal(false);
                       setShowFileModal(false);
                     }}
-                  />
-                  <ButtonPrimary
-                    handleClick={() => setShowModal(!showModal)}
-                    xClass={"px-4 flex-grow"}
-                    type={"button"}
-                    label={"Cancel"}
                   />
                 </div>
               </div>

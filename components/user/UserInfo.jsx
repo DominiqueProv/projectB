@@ -54,16 +54,14 @@ const UserInfo = () => {
             <span>{<span>{user.userName}</span>}</span>
           </div>
           <div className="flex gap-x-3">
-            <span>Account email:</span>
+            <span>Email:</span>
             <span>{<span>{user.email}</span>}</span>
           </div>
         </div>
         <div className="lg:pl-5 space-y-3 mt-5 md:mt-0">
-          <div className="flex md:space-x-3 flex-col md:flex-row">
+          <div className="flex space-x-3 md:flex-row">
             <span className="">
-              {user.emailVerified
-                ? "Your account is Verified"
-                : "Your account is not Verified"}
+              {user.emailVerified ? "Verified" : "Account not verified"}
             </span>
             {user.emailVerified ? (
               <MdVerified />

@@ -49,11 +49,9 @@ const UploadButton = () => {
             xClass={"px-4 flex-shrink-0"}
             handleClick={handleUploadFiles}
             type={"button"}
+            label={`Upload ${files.length} file${files.length > 1 ? "s" : ""} `}
           >
             <IoCloudUploadOutline size={18} />
-            <span className="">
-              {`Upload ${files.length} file${files.length > 1 ? "s" : ""} `}
-            </span>
           </ButtonPrimary>
           <button
             className="bg-transparent"

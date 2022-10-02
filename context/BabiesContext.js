@@ -15,6 +15,9 @@ const BabiesContextProvider = ({ children }) => {
   const [reload, setReload] = useState(false);
 
   const getBabies = async () => {
+    if (!user) {
+      return;
+    }
     const q = query(collection(database, `${user.uid}`));
     const querySnapshot = await getDocs(q);
     setBabiesDataList([]);
