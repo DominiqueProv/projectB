@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFiles } from "../context/FilesContext";
 import FileCard from "./cards/FileCard";
 import UploadButton from "./buttons/UploadButton";
@@ -6,12 +6,14 @@ import { useRouter } from "next/router";
 
 const MemberTimeline = () => {
   const { filesData, getFiles } = useFiles();
+  const [userName, setUserName] = useState();
   const router = useRouter();
 
   useEffect(() => {
     if (router.isReady) {
       const { id } = router.query;
       if (!id) return null;
+      setUserName(id.split("-")[0]);
       getFiles(id);
     }
   }, [router.isReady]);
@@ -20,7 +22,7 @@ const MemberTimeline = () => {
     <section className="mt-10">
       <h2 className="mb-5">
         {filesData.length
-          ? "Add memories to your story"
+          ? `Add memories to ${userName}'s story`
           : "Start by adding some memories"}
       </h2>
       <div className="flex lg:mt-10 gap-6">

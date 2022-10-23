@@ -20,10 +20,11 @@ const AddBabyModal = () => {
   const [date, onChange] = useState(new Date());
   const [file, setFile] = useState([]);
   const inputFileRef = useRef();
-  const babyId = `${babiesData.name}-${v4()}`;
+  const babyId = `${babiesData.name}-${user.uid}`;
 
   const uploadBabyAvatar = async () => {
-    const fileRef = ref(storage, `${user.uid}/babiesAvatar/${babyId}.png`);
+    const ext = file[0].name.split(".").pop();
+    const fileRef = ref(storage, `${user.uid}/babiesAvatar/${babyId}.${ext}`);
     setIsUpload(true);
     const snapshot = await uploadBytes(fileRef, file[0]);
     const photoURL = await getDownloadURL(fileRef);
