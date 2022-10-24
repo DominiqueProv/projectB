@@ -4,7 +4,13 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import NotesModal from "../modals/NotesModal";
 import FileModal from "../modals/FileModal";
 
-const FileCard = ({ file, index }) => {
+const FileCard = ({ file, index, dob }) => {
+  const dateOfFile = formatDate(file?.metadata?.customMetadata?.originalDate);
+  const ONEDAY = 1000 * 60 * 60 * 24;
+  const differenceMs =
+    file?.metadata?.customMetadata?.originalDate - dob.seconds * 1000;
+  const differenceInDays = Math.round(differenceMs / ONEDAY);
+
   return (
     <article className="flex flex-col">
       <div className="w-full lg:aspect-video rounded-t-md overflow-hidden group relative">
@@ -15,7 +21,8 @@ const FileCard = ({ file, index }) => {
         <div className="flex gap-2">
           <FaRegCalendarAlt size={15} className="text-blue-300" />
           <span className="font-bold text-xs">
-            {formatDate(file?.metadata?.customMetadata?.originalDate)}
+            {dateOfFile} <br />
+            {`${differenceInDays} day${differenceInDays > 1 ? "s" : ""} old`}
           </span>
         </div>
         <NotesModal file={file} index={index} />

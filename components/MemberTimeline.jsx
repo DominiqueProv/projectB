@@ -3,18 +3,34 @@ import { useFiles } from "../context/FilesContext";
 import FileCard from "./cards/FileCard";
 import UploadButton from "./buttons/UploadButton";
 import { useRouter } from "next/router";
+import { database } from "../lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { useAuth } from "../context/AuthContext";
 
 const MemberTimeline = () => {
   const { filesData, getFiles } = useFiles();
   const [userName, setUserName] = useState();
+  const [babyData, setBabyData] = useState();
   const router = useRouter();
+  const { user } = useAuth();
+
+  const getBabyData = async (babyId) => {
+    const docRef = doc(database, `${user.uid}/${babyId}`);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      setBabyData(docSnap.data());
+    } else {
+      console.log("No such document!");
+    }
+  };
 
   useEffect(() => {
     if (router.isReady) {
       const { id } = router.query;
       if (!id) return null;
-      setUserName(id.split("-")[0]);
+      setUserName(id.substr(0, id.lastIndexOf("-")));
       getFiles(id);
+      getBabyData(id);
     }
   }, [router.isReady]);
 
@@ -36,7 +52,14 @@ const MemberTimeline = () => {
                     a?.metadata?.customMetadata?.originalDate
                 )
                 .map((file, i) => {
-                  return <FileCard file={file} key={i} index={i} />;
+                  return (
+                    <FileCard
+                      file={file}
+                      key={i}
+                      index={i}
+                      dob={babyData.date}
+                    />
+                  );
                 })
             : null}
         </div>
