@@ -30,3 +30,11 @@ export const formatDate = (date) => {
     .map(extractValueAndCustomizeDayOfMonth)
     .join("");
 };
+
+export const formatDateFirst = (date) => {
+  var d = new Date(date.seconds * 1000);
+  return longEnUSFormatter
+    .formatToParts(d)
+    .map(extractValueAndCustomizeDayOfMonth)
+    .join("");
+};

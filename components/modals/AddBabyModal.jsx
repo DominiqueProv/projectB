@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
-import { v4 } from "uuid";
 import { useBabies } from "../../context/BabiesContext";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { useAuth } from "../../context/AuthContext";

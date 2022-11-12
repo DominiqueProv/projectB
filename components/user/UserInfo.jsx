@@ -27,8 +27,6 @@ const UserInfo = () => {
 
   const handleVerifyWithEmail = () => {
     const auth = getAuth();
-    console.log(auth);
-    console.log(user.email);
     sendSignInLinkToEmail(auth, user.email, actionCodeSettings)
       .then(() => {
         console.log("success");

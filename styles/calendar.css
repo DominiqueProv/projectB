@@ -79,11 +79,11 @@
 }
 
 .react-calendar__tile--now {
-  @apply bg-indigo-800;
+  @apply bg-indigo-800 text-black;
 }
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
-  background: #ffffa9;
+  @apply bg-blue-500 text-white;
 }
 .react-calendar__tile--hasActive {
   @apply bg-indigo-500;
@@ -93,12 +93,11 @@
   @apply bg-indigo-800;
 }
 .react-calendar__tile--active {
-  @apply bg-indigo-800;
-  color: white;
+  @apply bg-indigo-800 text-teal-500;
 }
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
-  @apply bg-indigo-800;
+  @apply bg-blue-500 text-white;
 }
 .react-calendar--selectRange .react-calendar__tile--hover {
   @apply bg-indigo-500;

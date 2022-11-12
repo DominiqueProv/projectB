@@ -3,74 +3,15 @@ import ModalTitle from "../text/ModalTitle";
 import CloseButton from "../buttons/CloseButton";
 import Modal from "./Portal";
 import { CgSmileMouthOpen } from "react-icons/cg";
-import { database } from "../../lib/firebase";
-import {
-  doc,
-  setDoc,
-  getDoc,
-  deleteField,
-  updateDoc,
-} from "firebase/firestore";
-import { useFiles } from "../../context/FilesContext";
-import { useAuth } from "../../context/AuthContext";
 import Icon from "../buttons/Icon";
+import AddDateModal from "./AddDateModal";
+import { useMyFirst } from "../../context/MyFirstContext";
+import { formatDateFirst } from "../../utils/date";
 
 const MyFirstTime = () => {
   const [showModal, setShowModal] = useState(false);
-  const [formData, updateFormData] = useState({});
-  const [formDataFromDb, setFormDataFromDb] = useState({});
-  const { pid } = useFiles();
-  const { user } = useAuth();
+  const { date, formDataFromDb, getInfo, handleDelete } = useMyFirst();
 
-  const handleChange = (e) => {
-    updateFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-    console.log(formData);
-  };
-
-  const handleSubmit = () => {
-    saveNote();
-  };
-
-  const handleDelete = async (e) => {
-    const infoRef = doc(database, `${user.uid}/${pid}/info/myFirst`);
-    // Remove the 'capital' field from the document
-    await updateDoc(infoRef, {
-      [e.currentTarget.name]: deleteField(),
-    });
-    getInfo();
-  };
-
-  const saveNote = async () => {
-    const docRef = doc(database, `${user.uid}/${pid}/info/myFirst`);
-    await setDoc(docRef, formData, {
-      merge: true,
-    });
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      setFormDataFromDb(docSnap.data());
-    } else {
-      console.log("No such document!");
-    }
-  };
-
-  const getInfo = async () => {
-    const docRef = doc(database, `${user.uid}/${pid}/info/myFirst`);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      setFormDataFromDb(docSnap.data());
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
-    }
-  };
-
-  useEffect(() => {
-    getInfo();
-  }, []);
   return (
     <>
       {!showModal && (
@@ -114,35 +55,32 @@ const MyFirstTime = () => {
                     setShowModal={setShowModal}
                   />
                 </div>
-                <div className="flex gap-3">
-                  {!formDataFromDb.firstTeeth ? (
+                <div className="flex gap-3 items-center bg-slate-100 p-1 pl-3 justify-between">
+                  {!formDataFromDb.myFirstTeeth ? (
                     <>
-                      <input
-                        className="flex-grow"
-                        type="text"
-                        name="firstTeeth"
-                        id="teeth"
-                        placeholder="My first teeth"
-                        onChange={handleChange}
-                      />
-                      <button
-                        className="bg-indigo-800 cursor-pointer text-white rounded-lg flex items-center justify-center aspect-square h-full hover:bg-blue-500 duration-300 ease-out-expo"
-                        onClick={handleSubmit}
-                      >
-                        <Icon icon={"arrow"} />
-                      </button>
+                      <span className="text-indigo-800 font-semibold">
+                        My first teeth
+                      </span>
+                      <AddDateModal date={date} id={"myFirstTeeth"} />
                     </>
                   ) : (
                     <>
-                      <span className="flex-grow items-center flex">
-                        {formDataFromDb.firstTeeth}
+                      <span className="flex-grow flex flex-col rounded-md">
+                        <span className="text-indigo-800 font-semibold">
+                          My first teeth
+                        </span>
+                        {formatDateFirst(formDataFromDb.myFirstTeeth)}
                       </span>
                       <button
-                        className="bg-slate-50 cursor-pointer text-white rounded-lg py-2 flex items-center justify-center aspect-square h-full hover:bg-red-500 duration-300 ease-out-expo"
+                        className="bg-slate-50 cursor-pointer text-white rounded-lg py-2 flex items-center justify-center aspect-square h-full hover:bg-slate-300 duration-300 ease-out-expo"
                         onClick={handleDelete}
-                        name="firstTeeth"
+                        name="myFirstTeeth"
                       >
-                        <Icon icon={"delete"} xClass="text-slate-500" />
+                        <Icon
+                          icon={"minus"}
+                          size={25}
+                          xClass="text-slate-500"
+                        />
                       </button>
                     </>
                   )}

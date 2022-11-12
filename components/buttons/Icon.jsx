@@ -14,6 +14,7 @@ import { RiFullscreenLine } from "react-icons/ri";
 import { MdTitle } from "react-icons/md";
 import { IoAddSharp } from "react-icons/io5";
 import { FiHeart } from "react-icons/fi";
+import { IoMdRemove } from "react-icons/io";
 
 const components = {
   title: MdTitle,
@@ -32,6 +33,7 @@ const components = {
   expand: RiFullscreenLine,
   add: IoAddSharp,
   members: FiHeart,
+  minus: IoMdRemove,
 };
 
 const Icon = ({ icon, xClass, size }) => {
