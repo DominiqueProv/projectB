@@ -25,16 +25,22 @@ const MyFirstContextProvider = ({ children }) => {
   const [formDataFromDb, setFormDataFromDb] = useState({});
   const [id, setId] = useState("");
   const [isReadyToUpload, setIsReadyToUpload] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const { pid } = useFiles();
   const { user } = useAuth();
   const [date, onChange] = useState(new Date());
 
   const handleDelete = async (e) => {
+    setIsDeleting(true);
     const infoRef = doc(database, `${user.uid}/${pid}/info/myFirst`);
     await updateDoc(infoRef, {
       [e.currentTarget.name]: deleteField(),
     });
     getInfo();
+    updateFormData({});
+    setTimeout(() => {
+      setIsDeleting(false);
+    }, 200);
   };
 
   const saveNote = useCallback(async () => {
@@ -49,9 +55,10 @@ const MyFirstContextProvider = ({ children }) => {
       console.log("No such document!");
     }
     setIsReadyToUpload(false);
-  }, [formData, user, pid]);
+  }, [formData]);
 
   const getInfo = useCallback(async () => {
+    console.log("getInfo");
     const docRef = doc(database, `${user.uid}/${pid}/info/myFirst`);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -84,6 +91,7 @@ const MyFirstContextProvider = ({ children }) => {
         date,
         formData,
         formDataFromDb,
+        isDeleting,
         onChange,
         updateFormData,
         getInfo,

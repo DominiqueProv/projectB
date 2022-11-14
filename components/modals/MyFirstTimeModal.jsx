@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ModalTitle from "../text/ModalTitle";
 import CloseButton from "../buttons/CloseButton";
 import Modal from "./Portal";
 import { CgSmileMouthOpen } from "react-icons/cg";
-import Icon from "../buttons/Icon";
-import AddDateModal from "./AddDateModal";
+import MyFirstField from "../MyFirstField";
+import { myFirstfields } from "../../data/my_first_fields";
+import { CgSpinner } from "react-icons/cg";
 import { useMyFirst } from "../../context/MyFirstContext";
-import { formatDateFirst } from "../../utils/date";
 
 const MyFirstTime = () => {
   const [showModal, setShowModal] = useState(false);
-  const { date, formDataFromDb, getInfo, handleDelete } = useMyFirst();
+  const { isDeleting } = useMyFirst();
 
   return (
     <>
@@ -55,35 +55,25 @@ const MyFirstTime = () => {
                     setShowModal={setShowModal}
                   />
                 </div>
-                <div className="flex gap-3 items-center bg-slate-100 p-1 pl-3 justify-between">
-                  {!formDataFromDb.myFirstTeeth ? (
-                    <>
-                      <span className="text-indigo-800 font-semibold">
-                        My first teeth
-                      </span>
-                      <AddDateModal date={date} id={"myFirstTeeth"} />
-                    </>
-                  ) : (
-                    <>
-                      <span className="flex-grow flex flex-col rounded-md">
-                        <span className="text-indigo-800 font-semibold">
-                          My first teeth
-                        </span>
-                        {formatDateFirst(formDataFromDb.myFirstTeeth)}
-                      </span>
-                      <button
-                        className="bg-slate-50 cursor-pointer text-white rounded-lg py-2 flex items-center justify-center aspect-square h-full hover:bg-slate-300 duration-300 ease-out-expo"
-                        onClick={handleDelete}
-                        name="myFirstTeeth"
-                      >
-                        <Icon
-                          icon={"minus"}
-                          size={25}
-                          xClass="text-slate-500"
-                        />
-                      </button>
-                    </>
-                  )}
+                <div
+                  className={`flex-grow min-h-[504px] flex justify-center items-center ${
+                    isDeleting ? "block" : "hidden"
+                  }`}
+                >
+                  <CgSpinner
+                    className="animate-spin"
+                    color={"dodgerblue"}
+                    size={40}
+                  />
+                </div>
+                <div
+                  className={` flex flex-col gap-2 ${
+                    isDeleting ? "hidden" : "block"
+                  }`}
+                >
+                  {myFirstfields.map((item) => (
+                    <MyFirstField key={item.id} item={item} />
+                  ))}
                 </div>
               </div>
             </aside>
