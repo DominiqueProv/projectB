@@ -9,7 +9,6 @@ import { useAuth } from "../context/AuthContext";
 
 const MemberTimeline = () => {
   const { filesData, getFiles } = useFiles();
-  const [userName, setUserName] = useState();
   const [babyData, setBabyData] = useState();
   const router = useRouter();
   const { user } = useAuth();
@@ -28,7 +27,6 @@ const MemberTimeline = () => {
     if (router.isReady) {
       const { id } = router.query;
       if (!id) return null;
-      setUserName(id.substr(0, id.lastIndexOf("-")));
       getFiles(id);
       getBabyData(id);
     }
@@ -38,7 +36,7 @@ const MemberTimeline = () => {
     <section className="mt-10">
       <h2 className="mb-5">
         {filesData.length
-          ? `Add memories to ${userName}'s story`
+          ? `Add memories to ${babyData.name}'s story`
           : "Start by adding some memories"}
       </h2>
       <div className="flex lg:mt-10 gap-6">

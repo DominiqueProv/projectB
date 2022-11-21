@@ -38,7 +38,6 @@ const AddDateModal = ({ id }) => {
             <div
               onClick={() => {
                 setShowModal(false);
-                document.body.style.overflow = "unset";
               }}
               className={`inset-0 fixed bg-black bg-opacity-30 z-40 backdrop-blur-sm ${
                 showModal ? "block" : "hidden"
@@ -51,7 +50,6 @@ const AddDateModal = ({ id }) => {
                   <button
                     onClick={() => {
                       setShowModal(false);
-                      document.body.style.overflow = "unset";
                     }}
                     className="bg-blue-200 self-end z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
                     type="button"
@@ -62,7 +60,7 @@ const AddDateModal = ({ id }) => {
                     />
                   </button>
                 </div>
-                <div className="rounded-lg border-indigo-800 border-[1px] overflow-hidden">
+                <div className="rounded-lg border-indigo-800 border-[1px] overflow-hidden mt-3">
                   <Calendar
                     value={date}
                     onClickDay={(value) => {

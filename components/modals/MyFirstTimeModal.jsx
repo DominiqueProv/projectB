@@ -43,13 +43,13 @@ const MyFirstTime = () => {
               }`}
             ></div>
             <aside
-              className={`flex justify-end p-2 duration-500 ease-out-expo absolute z-20 right-0 bottom-0 w-full ${
+              className={`flex justify-end p-2 duration-500 ease-out-expo fixed z-20 right-0 bottom-0 w-full ${
                 showModal ? "translate-y-0" : "translate-y-[100%]"
               }`}
             >
               <div className="flex w-full sm:w-420 border-0 rounded-lg p-3 shadow-lg relative gap-3 flex-col bg-white outline-none focus:outline-none">
                 <div className="flex justify-between">
-                  <ModalTitle title="My First times" />
+                  <ModalTitle title="First times" />
                   <CloseButton
                     showModal={showModal}
                     setShowModal={setShowModal}

@@ -1,31 +1,31 @@
 export const myFirstfields = [
   {
     id: "myFirstTeeth",
-    name: "My first teeth",
+    name: "Popping a tooth",
   },
   {
     id: "myFirstSmile",
-    name: "My first smile",
+    name: "Cracking a smile",
   },
   {
     id: "holdHisHead",
-    name: "Hold his head",
+    name: "Holding my head",
   },
   {
     id: "eatWithSpoon",
-    name: "Eat with spoon on his own",
+    name: "Eating with spoon on my own",
   },
   {
     id: "promouncedWordSentence",
-    name: "Has promounced 3 word sentence",
+    name: "Promouncing a 3 word sentence",
   },
   {
     id: "sittingAlone",
-    name: "His sitting alone",
+    name: "Sitting on my own",
   },
   {
     id: "walkAlone",
-    name: "Has Walked alone",
+    name: "Walking alone",
   },
   {
     id: "clean",

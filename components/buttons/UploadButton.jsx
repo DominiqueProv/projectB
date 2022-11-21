@@ -1,19 +1,20 @@
-import { useRef } from "react";
 import Icon from "./Icon";
-
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import Loader from "../Loader";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { MdOutlineCancel } from "react-icons/md";
 import { useFiles } from "../../context/FilesContext";
+import { toast } from "react-toastify";
 
 const UploadButton = () => {
   const { files, setFiles, percent, filesData, putStorageItem } = useFiles();
+  const notify = () => toast.success("Upload successful");
 
   const handleUploadFiles = () => {
     Promise.all(files.map((item) => putStorageItem(item)))
       .then(() => {
         console.log(`All success`);
+        notify();
       })
       .catch((error) => {
         console.log(`Some failed: `, error.message);

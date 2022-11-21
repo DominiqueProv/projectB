@@ -4,6 +4,8 @@ import { v4 } from "uuid";
 import { doc, deleteDoc, getDoc } from "firebase/firestore";
 import { database, storage } from "../lib/firebase";
 import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
+
 import {
   ref,
   uploadBytesResumable,
@@ -28,6 +30,8 @@ const FilesContextProvider = ({ children }) => {
   const [percent, setPercent] = useState(0);
   const [notesInput, setNotesInput] = useState([]);
   let listImagesRef = ref(storage, `${user.uid}/${pid}`);
+
+  const notify = () => toast.success("File deleted");
 
   const putStorageItem = (item) => {
     const ext = item.name.split(".").pop();
@@ -111,6 +115,7 @@ const FilesContextProvider = ({ children }) => {
       .then(() => {
         const filesURL = filesData.filter((el) => el.url !== file.url);
         setFilesData(filesURL);
+        notify();
       })
       .catch((error) => {
         console.log(error);
