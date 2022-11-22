@@ -22,11 +22,11 @@ const MyFirstTime = () => {
               document.body.style.overflow = "hidden";
             }
           }}
-          className="bg-pink-400 z-30
-  p-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
+          className="bg-white z-30
+  p-3 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none"
           type="button"
         >
-          <CgSmileMouthOpen size={35} className="text-white" />
+          <CgSmileMouthOpen size={35} className="text-pink-400" />
         </button>
       )}
 
@@ -43,9 +43,7 @@ const MyFirstTime = () => {
               }`}
             ></div>
             <aside
-              className={`flex justify-end p-2 duration-500 ease-out-expo fixed z-20 right-0 bottom-0 w-full ${
-                showModal ? "translate-y-0" : "translate-y-[100%]"
-              }`}
+              className={`flex justify-end p-2 duration-500 ease-out-expo fixed z-20 right-0 bottom-0 w-full`}
             >
               <div className="flex w-full sm:w-420 border-0 rounded-lg p-3 shadow-lg relative gap-3 flex-col bg-white outline-none focus:outline-none">
                 <div className="flex justify-between">

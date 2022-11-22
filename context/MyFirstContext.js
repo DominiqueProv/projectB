@@ -58,10 +58,11 @@ const MyFirstContextProvider = ({ children }) => {
   }, [formData]);
 
   const getInfo = useCallback(async () => {
-    console.log("getInfo");
     const docRef = doc(database, `${user.uid}/${pid}/info/myFirst`);
+    console.log(docRef);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
+      console.log(docSnap.data());
       setFormDataFromDb(docSnap.data());
     } else {
       console.log("No such document!");
@@ -83,7 +84,7 @@ const MyFirstContextProvider = ({ children }) => {
 
   useEffect(() => {
     getInfo();
-  }, [getInfo]);
+  }, []);
 
   return (
     <MyFirstContext.Provider

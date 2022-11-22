@@ -36,7 +36,7 @@ const MemberTimeline = () => {
     <section className="mt-10">
       <h2 className="mb-5">
         {filesData.length
-          ? `Add memories to ${babyData.name}'s story`
+          ? `Add memories to ${babyData?.name}'s story`
           : "Start by adding some memories"}
       </h2>
       <div className="flex lg:mt-10 gap-6">

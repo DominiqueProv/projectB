@@ -46,8 +46,8 @@ const MenuModal = () => {
                     label={"Logout"}
                     type={"button"}
                     handleClick={() => {
-                      router.push("/");
                       logout();
+                      router.push("/");
                     }}
                   >
                     <Icon icon={"signout"} />

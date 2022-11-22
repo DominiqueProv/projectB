@@ -11,6 +11,20 @@ const FileCard = ({ file, index, dob }) => {
     file?.metadata?.customMetadata?.originalDate - dob.seconds * 1000;
   const differenceInDays = Math.round(differenceMs / ONEDAY);
 
+  const dateValue = () => {
+    if (differenceInDays > 60) {
+      return `${Math.floor(differenceInDays / 30)} month${
+        differenceInDays / 30 > 1 ? "s" : ""
+      } old`;
+    } else if (differenceInDays / 30 > 12) {
+      return `${Math.floor(differenceInDays / 365)} year${
+        differenceInDays / 365 > 1 ? "s" : ""
+      } old`;
+    } else {
+      return `${differenceInDays} day${differenceInDays > 1 ? "s" : ""} old`;
+    }
+  };
+
   return (
     <article className="flex flex-col">
       <div className="w-full lg:aspect-video rounded-t-md overflow-hidden group relative">
@@ -22,7 +36,7 @@ const FileCard = ({ file, index, dob }) => {
           <FaRegCalendarAlt size={15} className="text-blue-300" />
           <span className="font-bold text-xs">
             {dateOfFile} <br />
-            {`${differenceInDays} day${differenceInDays > 1 ? "s" : ""} old`}
+            {dateValue()}
           </span>
         </div>
         <NotesModal file={file} index={index} />
