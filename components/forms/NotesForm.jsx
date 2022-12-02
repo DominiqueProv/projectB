@@ -13,6 +13,10 @@ const NotesForm = ({ file, setShowModal, index }) => {
 
   useEffect(() => {
     setNotesInput(notesInput);
+    updateFormData((prev) => ({
+      ...prev,
+      dateCreated: filesData[index]?.metadata?.customMetadata?.originalDate,
+    }));
   }, [notesInput]);
 
   const saveNote = async () => {
@@ -65,7 +69,7 @@ const NotesForm = ({ file, setShowModal, index }) => {
                     key={i}
                     type="number"
                     name={noteType}
-                    placeholder={"baby's height (metric)"}
+                    placeholder={"baby's height (cm)"}
                     onChange={handleChange}
                   />
                 );

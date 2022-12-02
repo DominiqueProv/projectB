@@ -22,11 +22,11 @@ const MyFirstTime = () => {
               document.body.style.overflow = "hidden";
             }
           }}
-          className="bg-white z-30
+          className="bg-white z-30 group
   p-3 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none"
           type="button"
         >
-          <CgSmileMouthOpen size={35} className="text-pink-400" />
+          <CgSmileMouthOpen size={35} className="text-pink-400 _scale-rotate" />
         </button>
       )}
 

@@ -7,7 +7,7 @@ const CloseButton = ({ showModal, setShowModal }) => {
         document.body.style.overflow = "unset";
         setShowModal(!showModal);
       }}
-      className="bg-blue-200 self-end z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
+      className="bg-blue-200 flex-shrink-0 self-start z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
       type="button"
     >
       <IoMdClose
