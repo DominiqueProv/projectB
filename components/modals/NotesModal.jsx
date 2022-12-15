@@ -91,7 +91,7 @@ const NotesModal = ({ isFileModal, file, index }) => {
                     setShowModal={setShowModal}
                   />
                 </div>
-                <ul className="flex justify-between lg:justify-start gap-2 pt-3 lg:flex-wrap">
+                <ul className="flex gap-2 pt-3 lg:flex-wrap">
                   {notesStyle.map((type) => {
                     return (
                       <ButtonNotesStyle

@@ -41,7 +41,7 @@ const Icon = ({ icon, xClass, size }) => {
   return (
     <IconDisplay
       size={size || 18}
-      className={`flex-shrink-0 ${xClass ? xClass : "text-indigo-100"}`}
+      className={`flex-shrink-0 ${xClass || "text-indigo-100"}`}
     />
   );
 };

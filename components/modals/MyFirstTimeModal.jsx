@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ModalTitle from "../text/ModalTitle";
 import CloseButton from "../buttons/CloseButton";
 import Modal from "./Portal";
@@ -10,7 +10,7 @@ import { useMyFirst } from "../../context/MyFirstContext";
 
 const MyFirstTime = () => {
   const [showModal, setShowModal] = useState(false);
-  const { isDeleting } = useMyFirst();
+  const { isDeleting, getInfo } = useMyFirst();
 
   return (
     <>
@@ -18,6 +18,7 @@ const MyFirstTime = () => {
         <button
           onClick={() => {
             setShowModal(true);
+            getInfo();
             if (typeof window != "undefined" && window.document) {
               document.body.style.overflow = "hidden";
             }

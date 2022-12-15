@@ -14,6 +14,11 @@ const longEnUSFormatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
 });
 
+const shortEnUSFormatter = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "short",
+});
+
 const convertToOrdinal = (number) =>
   `${number}${suffixes[pluralRules.select(number)]}`;
 
@@ -26,6 +31,13 @@ const extractValueAndCustomizeDayOfMonth = (part) => {
 
 export const formatDate = (date) => {
   return longEnUSFormatter
+    .formatToParts(date)
+    .map(extractValueAndCustomizeDayOfMonth)
+    .join("");
+};
+
+export const formatDateShort = (date) => {
+  return shortEnUSFormatter
     .formatToParts(date)
     .map(extractValueAndCustomizeDayOfMonth)
     .join("");

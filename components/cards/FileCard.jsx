@@ -10,9 +10,8 @@ const FileCard = ({ file, index, dob }) => {
   const differenceMs =
     file?.metadata?.customMetadata?.originalDate - dob.seconds * 1000;
   const differenceInDays = Math.round(differenceMs / ONEDAY);
-
   const dateValue = () => {
-    if (differenceInDays > 60) {
+    if (differenceInDays > 60 && differenceInDays < 365) {
       return `${Math.floor(differenceInDays / 30)} month${
         differenceInDays / 30 > 1 ? "s" : ""
       } old`;

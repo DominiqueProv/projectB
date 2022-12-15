@@ -19,7 +19,6 @@ import Growth from "../../data/growth";
 const GrowthCurveHeightModal = () => {
   const [showModal, setShowModal] = useState(false);
   const data = Growth();
-  console.log(data);
 
   return (
     <>
@@ -59,7 +58,7 @@ const GrowthCurveHeightModal = () => {
                   />
                 </div>
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={data}>
+                  <AreaChart data={data} className="-ml-5">
                     <defs>
                       <linearGradient
                         id="colorheight"

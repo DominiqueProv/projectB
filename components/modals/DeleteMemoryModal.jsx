@@ -48,6 +48,7 @@ const DeleteMemoryModal = ({ file, setShowFileModal }) => {
                       deleteFile(file);
                       setShowModal(false);
                       setShowFileModal(false);
+                      document.body.style.overflow = "unset";
                     }}
                   />
                 </div>

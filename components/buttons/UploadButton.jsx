@@ -1,19 +1,22 @@
+import { useState } from "react";
 import Icon from "./Icon";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import Loader from "../Loader";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { MdOutlineCancel } from "react-icons/md";
+import { BiCameraMovie } from "react-icons/bi";
 import { useFiles } from "../../context/FilesContext";
 import { toast } from "react-toastify";
 
 const UploadButton = () => {
   const { files, setFiles, percent, filesData, putStorageItem } = useFiles();
+  const [sources, setSources] = useState([]);
   const notify = () => toast.success("Upload successful");
 
   const handleUploadFiles = () => {
     Promise.all(files.map((item) => putStorageItem(item)))
       .then(() => {
-        console.log(`All success`);
+        setSources([]);
         notify();
       })
       .catch((error) => {
@@ -23,7 +26,22 @@ const UploadButton = () => {
 
   const handleCancel = () => {
     setFiles([]);
+    setSources([]);
   };
+
+  function showPreview(e) {
+    if (e.target.files.length > 0) {
+      Object.entries(e.target.files).forEach((file) => {
+        const [_, value] = file;
+        if (value.type === "video/quicktime") {
+          setSources((prev) => [...prev, "video"]);
+        } else {
+          const src = URL.createObjectURL(value);
+          setSources((prev) => [...prev, src]);
+        }
+      });
+    }
+  }
 
   const handleChange = (event) => {
     const chosenFiles = Array.from(event.target.files);
@@ -34,18 +52,37 @@ const UploadButton = () => {
       }
     });
     setFiles(uploaded);
+    showPreview(event);
   };
 
   return (
     <div
-      className={`border-2 p-3 lg:aspect-auto w-full h-[120px] lg:h-full ${
+      className={`border-2 p-3 lg:aspect-auto w-full min-h-[120px] lg:h-full ${
         filesData.length ? "" : "lg:min-h-[170px] lg:aspect-video"
-      } rounded-lg border-indigo-800 flex justify-center items-center duration-300 ease-out-expo relative space-x-2 ${
+      } rounded-lg border-indigo-800 flex justify-between flex-col lg:items-center duration-300 ease-out-expo relative lg:space-x-2 ${
         !files.length ? "lg:hover:bg-blue-100" : ""
       }`}
     >
+      {sources && (
+        <div className="grid grid-cols-4 lg:grid-cols-4 gap-2 mb-2">
+          {sources.map((src) => {
+            return src !== "video" ? (
+              <img
+                key={src}
+                alt={""}
+                src={src}
+                className="aspect-square w-full object-cover overflow-hidden rounded-lg"
+              />
+            ) : (
+              <div className="bg-slate-100 rounded-lg flex justify-center items-center">
+                <BiCameraMovie className="w-[60%] h-[60%] text-indigo-400" />
+              </div>
+            );
+          })}
+        </div>
+      )}
       {files.length ? (
-        <>
+        <div className="flex items-center gap-2">
           <ButtonPrimary
             xClass={"px-4 flex-shrink-0"}
             handleClick={handleUploadFiles}
@@ -55,14 +92,18 @@ const UploadButton = () => {
             <IoCloudUploadOutline size={18} />
           </ButtonPrimary>
           <button
-            className="bg-transparent"
+            className="bg-slate-100 rounded-lg h-full aspect-square items-center flex justify-center"
             onClick={handleCancel}
             type={"button"}
           >
-            <MdOutlineCancel size={30} className={"text-indigo-800"} />
+            <Icon
+              icon={"delete"}
+              size={30}
+              xClass={"text-indigo-800 transform"}
+            />
           </button>
           <Loader percent={percent} />
-        </>
+        </div>
       ) : (
         <>
           <label

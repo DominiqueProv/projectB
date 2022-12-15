@@ -11,6 +11,7 @@ import ModalTitle from "../text/ModalTitle";
 const FileModal = ({ file, index }) => {
   const [showModal, setShowModal] = useState(false);
   const notes = file?.notes || [];
+  console.log(Object.keys(notes).length);
   return (
     <>
       <button
@@ -46,7 +47,7 @@ const FileModal = ({ file, index }) => {
               }`}
             ></div>
             <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
-              <div className="flex w-[90vw] h-[90vh] sm:w-[80vw] rounded-lg p-3 relative flex-col bg-white overflow-auto pb-[85px]">
+              <div className="flex w-[90vw] h-[90vh] sm:w-[80vw] rounded-lg p-3 relative flex-col bg-white overflow-auto lg:overflow-hidden pb-[85px]">
                 <div className="flex justify-between items-center">
                   <ModalTitle title={notes?.title} />
                   <button
@@ -69,7 +70,10 @@ const FileModal = ({ file, index }) => {
                   </div>
                   <div
                     className={`bg-blue-100 bg-opacity-70 rounded-lg p-2 lg:p-4 w-full lg:w-[320px] flex flex-col flex-shrink-0 justify-between ${
-                      !notes ? "hidden lg:flex" : ""
+                      (Object.keys(notes).length === 2 && notes.title) ||
+                      Object.keys(notes).length === 0
+                        ? "hidden lg:flex"
+                        : null
                     }`}
                   >
                     <FileModalSideInfo notes={notes} />

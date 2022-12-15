@@ -57,17 +57,15 @@ const MyFirstContextProvider = ({ children }) => {
     setIsReadyToUpload(false);
   }, [formData]);
 
-  const getInfo = useCallback(async () => {
+  const getInfo = async () => {
     const docRef = doc(database, `${user.uid}/${pid}/info/myFirst`);
-    console.log(docRef);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      console.log(docSnap.data());
       setFormDataFromDb(docSnap.data());
     } else {
       console.log("No such document!");
     }
-  }, []);
+  };
 
   useEffect(() => {
     if (isReadyToUpload) {
@@ -81,10 +79,6 @@ const MyFirstContextProvider = ({ children }) => {
   useEffect(() => {
     saveNote();
   }, [formData, saveNote]);
-
-  useEffect(() => {
-    getInfo();
-  }, []);
 
   return (
     <MyFirstContext.Provider

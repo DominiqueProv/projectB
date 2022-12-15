@@ -23,7 +23,6 @@ const UpdateMemberButton = ({ index }) => {
     setIsUpload(true);
     const snapshot = await uploadBytes(fileRef, file[0]);
     const photoURL = await getDownloadURL(fileRef);
-    console.log(babiesDataList);
     const babyRef = doc(database, user.uid, `${babiesDataList[index].id}`);
 
     await updateDoc(babyRef, {
