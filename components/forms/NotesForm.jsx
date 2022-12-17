@@ -3,6 +3,7 @@ import { database } from "../../lib/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useFiles } from "../../context/FilesContext";
 import { useAuth } from "../../context/AuthContext";
+import GoogleInput from "./GoogleInput";
 
 const NotesForm = ({ file, setShowModal, index }) => {
   const { user } = useAuth();
@@ -49,6 +50,14 @@ const NotesForm = ({ file, setShowModal, index }) => {
     updateFormData({
       ...formData,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleLocation = (place) => {
+    console.log(place);
+    updateFormData({
+      ...formData,
+      location: place,
     });
   };
 
@@ -111,12 +120,9 @@ const NotesForm = ({ file, setShowModal, index }) => {
                 break;
               case "location":
                 input = (
-                  <input
-                    key={i}
-                    type="text"
-                    name={noteType}
-                    placeholder={"Where are we"}
-                    onChange={handleChange}
+                  <GoogleInput
+                    noteType={noteType}
+                    handleLocation={handleLocation}
                   />
                 );
                 break;

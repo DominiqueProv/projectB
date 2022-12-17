@@ -5,3 +5,7 @@
 ._title-md {
   @apply font-bold text-xl;
 }
+
+._text-current {
+  @apply font-manrope tracking-wide;
+}

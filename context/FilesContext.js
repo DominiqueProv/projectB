@@ -71,8 +71,7 @@ const FilesContextProvider = ({ children }) => {
           });
         getNote(data?.metadata?.name.split(".")[0])
           .then((note) => (data.notes = note))
-          .catch((error) => console.log(error.message));
-        console.log(filesData);
+          .catch((error) => console.error(error.message));
         setFiles([]);
         setIsUpload(false);
       }

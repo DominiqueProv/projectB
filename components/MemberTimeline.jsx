@@ -40,7 +40,7 @@ const MemberTimeline = () => {
           : "Start by adding some memories"}
       </h2>
       <div className="flex lg:mt-10 gap-6">
-        <div className="grid grid-cols-1 lg:grid-cols-4 w-full gap-6">
+        <div className="grid md:grid-cols-4 lg:grid-cols-5 w-full gap-5">
           <UploadButton />
           {filesData
             ? filesData

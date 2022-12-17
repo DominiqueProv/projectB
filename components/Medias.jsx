@@ -29,7 +29,7 @@ const Medias = ({ file }) => {
               />
             </div>
           )}
-          <div className="relative rounded-t-md overflow-hidden aspect-square lg:aspect-video">
+          <div className="relative rounded-t-md overflow-hidden aspect-square ">
             <img
               src={file.url}
               alt={file.name}

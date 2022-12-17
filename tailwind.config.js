@@ -21,6 +21,13 @@ module.exports = {
       transitionTimingFunction: {
         "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
       },
+      fontFamily: {
+        main: ["Unbounded"],
+        manrope: ["Manrope"],
+      },
+      aspectRatio: {
+        card: "16 / 14",
+      },
     },
   },
   plugins: [],

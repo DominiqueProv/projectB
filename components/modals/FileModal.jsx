@@ -11,7 +11,6 @@ import ModalTitle from "../text/ModalTitle";
 const FileModal = ({ file, index }) => {
   const [showModal, setShowModal] = useState(false);
   const notes = file?.notes || [];
-  console.log(Object.keys(notes).length);
   return (
     <>
       <button

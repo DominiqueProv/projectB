@@ -8,7 +8,7 @@ const Navbar = () => {
       <Link href="/" passHref>
         <a className="space-x-3 flex items-center">
           <MdOutlineBedroomBaby size={35} className="text-blue-100" />
-          <span className="font-bold text-2xl text-blue-100">
+          <span className="font-bold font-main text-2xl text-blue-100">
             My Babies Story
           </span>
         </a>
