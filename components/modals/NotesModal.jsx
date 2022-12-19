@@ -48,11 +48,21 @@ const NotesModal = ({ isFileModal, file, index }) => {
     orderInput(notesInput);
   }, []);
 
+  useEffect(() => {
+    const close = (e) => {
+      if (e.keyCode === 27) {
+        setShowModal(false);
+      }
+    };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, []);
+
   return (
     <>
       {!file?.notes && !isFileModal && (
         <ButtonSecondary
-          className="text-xs"
+          className="text-xs z-40"
           xClass={
             "px-2 rounded-md hover:bg-indigo-800 hover:text-white duration-300 ease-out-expo flex-shrink-0"
           }

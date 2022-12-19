@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ModalTitle from "../text/ModalTitle";
 import CloseButton from "../buttons/CloseButton";
 import Modal from "./Portal";
@@ -19,6 +19,16 @@ import Growth from "../../data/growth";
 const GrowthCurveWeightModal = () => {
   const [showModal, setShowModal] = useState(false);
   const data = Growth();
+
+  useEffect(() => {
+    const close = (e) => {
+      if (e.keyCode === 27) {
+        setShowModal(false);
+      }
+    };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, []);
 
   return (
     <>

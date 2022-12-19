@@ -5,6 +5,7 @@
 @import "./animations.css";
 @import "tailwindcss/utilities";
 @import "./calendar.css";
+@import "./nprogress.css";
 
 @layer base {
   @font-face {

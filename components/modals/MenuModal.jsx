@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "../../context/AuthContext";
 
 import ButtonPrimary from "../buttons/ButtonPrimary";
+import Link from "next/link";
 import UserButton from "../buttons/UserButton";
 import BurgerMenu from "../buttons/BurgerMenu";
 import BackDrop from "../modals/BackDrop";
@@ -17,12 +18,22 @@ const MenuModal = () => {
   const { user, logout } = useAuth();
   const { babiesDataList } = useBabies();
   const router = useRouter();
+
+  useEffect(() => {
+    const close = (e) => {
+      if (e.keyCode === 27) {
+        setShowModal(false);
+      }
+    };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, []);
   return (
     <>
       <BurgerMenu setShowModal={setShowModal} showModal={showModal} />
       <BackDrop setShowModal={setShowModal} showModal={showModal} />
       <aside
-        className={`flex justify-end p-2 duration-500 ease-out-expo absolute z-20 right-0 top-0 w-full ${
+        className={`flex justify-end p-2 duration-500 ease-out-expo absolute z-20 right-0 top-0 w-full sm:w-auto ${
           showModal ? "translate-y-0" : "-translate-y-[100%]"
         }`}
       >
@@ -82,23 +93,28 @@ const MenuModal = () => {
               <div className="space-y-2">
                 {babiesDataList?.map((baby, i) => {
                   return (
-                    <a
-                      key={i}
-                      href={`timeline?id=${baby.id}`}
-                      className="bg-slate-100 rounded-md p-2 flex items-center justify-between"
-                    >
-                      <div className="flex gap-3 items-center">
-                        <img
-                          src={baby.url + "?" + Math.random()}
-                          className={`rounded-full overflow-hidden object-cover flex-shrink-0 w-12 h-12`}
-                          alt={"user avatar"}
+                    <Link key={i} href={`/timeline/${baby.id}`}>
+                      <a
+                        className="bg-slate-100 rounded-md p-2 flex items-center justify-between"
+                        onClick={() => setShowModal(false)}
+                      >
+                        <div className="flex gap-3 items-center">
+                          <img
+                            src={baby.url + "?" + Math.random()}
+                            className={`rounded-full overflow-hidden object-cover flex-shrink-0 w-12 h-12`}
+                            alt={"user avatar"}
+                          />
+                          <span className="text-xl font-semibold">
+                            {baby.name}
+                          </span>
+                        </div>
+                        <Icon
+                          icon={"arrow"}
+                          size={25}
+                          xClass="text-indigo-800"
                         />
-                        <span className="text-xl font-semibold">
-                          {baby.name}
-                        </span>
-                      </div>
-                      <Icon icon={"arrow"} size={25} xClass="text-indigo-800" />
-                    </a>
+                      </a>
+                    </Link>
                   );
                 })}
               </div>

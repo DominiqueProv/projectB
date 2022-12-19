@@ -4,7 +4,6 @@ const GoogleInput = ({ i, noteType, handleLocation }) => {
   const { ref } = usePlacesWidget({
     apiKey: "AIzaSyCWHCoCVNt6ZW4DUKA3wQo6wFFWhUNATtY",
     onPlaceSelected: (place) => {
-      console.log(place.formatted_address);
       handleLocation(place.formatted_address);
     },
     options: {

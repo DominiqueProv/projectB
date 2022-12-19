@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
 import Icon from "../buttons/Icon";
 import Modal from "./Portal";
@@ -9,6 +9,17 @@ import { useMyFirst } from "../../context/MyFirstContext";
 const AddDateModal = ({ id }) => {
   const [showModal, setShowModal] = useState(false);
   const { date, onChange, setId, setIsReadyToUpload } = useMyFirst();
+
+  useEffect(() => {
+    const close = (e) => {
+      if (e.keyCode === 27) {
+        setShowModal(false);
+      }
+    };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, []);
+
   return (
     <>
       <button

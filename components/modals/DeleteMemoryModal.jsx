@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import Modal from "./Portal";
@@ -8,6 +8,17 @@ import Icon from "../buttons/Icon";
 const DeleteMemoryModal = ({ file, setShowFileModal }) => {
   const [showModal, setShowModal] = useState(false);
   const { deleteFile } = useFiles();
+
+  useEffect(() => {
+    const close = (e) => {
+      if (e.keyCode === 27) {
+        setShowModal(false);
+      }
+    };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, []);
+
   return (
     <>
       <ButtonPrimary

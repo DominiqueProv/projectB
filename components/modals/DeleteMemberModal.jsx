@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import Modal from "./Portal";
@@ -10,6 +10,17 @@ const DeleteMemberModal = ({ baby }) => {
   const [showModal, setShowModal] = useState(false);
   const { deleteBaby } = useBabies();
   const { user } = useAuth();
+
+  useEffect(() => {
+    const close = (e) => {
+      if (e.keyCode === 27) {
+        setShowModal(false);
+      }
+    };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, []);
+
   return (
     <>
       <ButtonPrimary

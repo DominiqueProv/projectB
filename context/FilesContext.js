@@ -29,7 +29,6 @@ const FilesContextProvider = ({ children }) => {
   const [isUpload, setIsUpload] = useState(false);
   const [percent, setPercent] = useState(0);
   const [notesInput, setNotesInput] = useState([]);
-  let listImagesRef = ref(storage, `${user.uid}/${pid}`);
 
   const notify = () => toast.success("File deleted");
 
@@ -58,9 +57,7 @@ const FilesContextProvider = ({ children }) => {
         getDownloadURL(uploadTaskRef.snapshot.ref).then((url) => {
           data.url = url;
         });
-        updateMetadata(storageRef, metadata)
-          .then((metadata) => {})
-          .catch((error) => {});
+        updateMetadata(storageRef, metadata);
         getMetadata(storageRef)
           .then((metadata) => {
             data.metadata = metadata;
@@ -78,7 +75,8 @@ const FilesContextProvider = ({ children }) => {
     );
   };
 
-  const getFiles = () => {
+  const getFiles = (pid) => {
+    let listImagesRef = ref(storage, `${user.uid}/${pid}`);
     listAll(listImagesRef)
       .then((res) => {
         res.items.forEach((itemRef) => {

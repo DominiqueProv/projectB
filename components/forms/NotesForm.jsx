@@ -54,7 +54,6 @@ const NotesForm = ({ file, setShowModal, index }) => {
   };
 
   const handleLocation = (place) => {
-    console.log(place);
     updateFormData({
       ...formData,
       location: place,

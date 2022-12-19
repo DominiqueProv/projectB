@@ -12,6 +12,16 @@ const MyFirstTime = () => {
   const [showModal, setShowModal] = useState(false);
   const { isDeleting, getInfo } = useMyFirst();
 
+  useEffect(() => {
+    const close = (e) => {
+      if (e.keyCode === 27) {
+        setShowModal(false);
+      }
+    };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, []);
+
   return (
     <>
       {!showModal && (
