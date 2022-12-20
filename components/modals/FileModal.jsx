@@ -7,9 +7,9 @@ import DeleteMemoryModal from "./DeleteMemoryModal";
 import NotesModal from "./NotesModal";
 import FileModalSideInfo from "./FileModalSideInfo";
 import ModalTitle from "../text/ModalTitle";
+import Medias from "../Medias";
 
-const FileModal = ({ file, index }) => {
-  const [showModal, setShowModal] = useState(false);
+const FileModal = ({ file, index, showModal, setShowModal }) => {
   const notes = file?.notes || [];
 
   useEffect(() => {
@@ -33,17 +33,8 @@ const FileModal = ({ file, index }) => {
         }}
         className={"absolute inset-0 z-10"}
         type="button"
-      >
-        <div className="rounded-full bg-blue-100 opacity-0 absolute bottom-2 right-2 z-10 p-2 font-bold text-xs group-hover:opacity-100 group-hover:bg-opacity-70 duration-300 ease-out-expo">
-          <Icon
-            icon={"expand"}
-            xClass={
-              "text-indigo-800 scale-75 group-hover:scale-100 duration-300 "
-            }
-            size={20}
-          />
-        </div>
-      </button>
+      />
+      {file && <Medias file={file} />}
       <Modal>
         {showModal && (
           <>

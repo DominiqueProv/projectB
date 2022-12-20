@@ -52,7 +52,7 @@ const UpdateMemberButton = ({ index }) => {
 
   return (
     <div
-      className={`border-2 group ${
+      className={`border group ${
         file.length ? "p-[2px]" : "p-2"
       } h-full rounded-lg border-indigo-800 flex justify-center items-center ease-out-expo relative space-x-[2px] ${
         !file.length ? "lg:hover:bg-blue-100" : ""

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "../../context/AuthContext";
+import { useBabies } from "../../context/BabiesContext";
 
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import Link from "next/link";
@@ -9,7 +10,6 @@ import BurgerMenu from "../buttons/BurgerMenu";
 import BackDrop from "../modals/BackDrop";
 import Icon from "../buttons/Icon";
 import NavLinkPrimary from "../buttons/NavLinkPrimary";
-import { useBabies } from "../../context/BabiesContext";
 import ModalTitle from "../text/ModalTitle";
 import SubTitle from "../text/SubTitle";
 
@@ -34,7 +34,7 @@ const MenuModal = () => {
       <BackDrop setShowModal={setShowModal} showModal={showModal} />
       <aside
         className={`flex justify-end p-2 duration-500 ease-out-expo absolute z-20 right-0 top-0 w-full sm:w-auto ${
-          showModal ? "translate-y-0" : "-translate-y-[100%]"
+          showModal ? "translate-y-0" : "-translate-y-[108%]"
         }`}
       >
         <div className="flex w-full sm:w-420 border-0 rounded-lg p-3 shadow-lg relative flex-col bg-white outline-none focus:outline-none">
@@ -86,8 +86,7 @@ const MenuModal = () => {
               </>
             )}
           </nav>
-
-          {babiesDataList.length > 0 && (
+          {user && babiesDataList?.length > 0 && (
             <div className="mt-4 space-y-3">
               <SubTitle title="Your babies Timeline" />
               <div className="space-y-2">
@@ -95,7 +94,7 @@ const MenuModal = () => {
                   return (
                     <Link key={i} href={`/timeline/${baby.id}`}>
                       <a
-                        className="bg-slate-100 rounded-md p-2 flex items-center justify-between"
+                        className="bg-slate-100 rounded-md p-2 flex items-center justify-between group"
                         onClick={() => setShowModal(false)}
                       >
                         <div className="flex gap-3 items-center">
@@ -111,7 +110,7 @@ const MenuModal = () => {
                         <Icon
                           icon={"arrow"}
                           size={25}
-                          xClass="text-indigo-800"
+                          xClass="text-indigo-800 group-hover:translate-x-1 duration-100"
                         />
                       </a>
                     </Link>

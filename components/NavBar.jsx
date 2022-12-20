@@ -4,13 +4,14 @@ import { MdOutlineBedroomBaby } from "react-icons/md";
 
 const Navbar = () => {
   return (
-    <nav className="bg-indigo-800 p-4 flex justify-between items-center w-full">
+    <nav className="p-4 flex justify-between items-center w-full">
       <Link href="/" passHref>
-        <a className="space-x-3 flex items-center">
-          <MdOutlineBedroomBaby size={45} className="text-blue-100" />
-          <span className="font-bold text-3xl text-blue-100">
-            My Babies Story
+        <a className="gap-3 flex items-center">
+          <MdOutlineBedroomBaby size={45} className="text-indigo-800" />
+          <span className="font-bold text-3xl text-indigo-800">
+            Familly Story
           </span>
+          <div className="border-b ml-6 border-indigo-800 w-[60px]"></div>
         </a>
       </Link>
       <MenuModal />

@@ -9,12 +9,8 @@ const BabiesGrid = () => {
     <>
       {babiesDataList?.map((baby, i) => {
         return (
-          <Link
-            href={`/timeline/${baby.id}`}
-            key={i}
-            className="relative cursor-pointer aspect-square rounded-xl group overflow-hidden flex items-center justify-center"
-          >
-            <a>
+          <Link href={`/timeline/${baby.id}`} key={i}>
+            <a className="relative cursor-pointer aspect-square rounded-xl group overflow-hidden flex items-center justify-center">
               {baby.url ? (
                 <>
                   <img

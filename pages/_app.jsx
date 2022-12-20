@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { AuthContextProvider } from "../context/AuthContext";
 import FilesContextProvider from "../context/FilesContext";
 import { useRouter } from "next/router";
@@ -11,8 +11,6 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Flip } from "react-toastify";
-
-import { CgSpinner } from "react-icons/cg";
 
 const noAuthRequired = ["/", "/login", "/signup"];
 

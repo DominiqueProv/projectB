@@ -22,7 +22,7 @@ const MembersGrid = () => {
                 className="bg-slate-100 rounded-md p-3 flex flex-col md:flex-row md:items-center gap-3 md:gap-0 justify-between"
               >
                 <a
-                  className="flex gap-3 items-center"
+                  className="flex gap-3 items-center group"
                   href={`timeline?id=${baby.id}`}
                 >
                   <img
@@ -31,7 +31,11 @@ const MembersGrid = () => {
                     alt={"user avatar"}
                   />
                   <span className="text-xl font-semibold">{baby.name}</span>
-                  <Icon icon={"arrow"} size={25} xClass="text-indigo-800" />
+                  <Icon
+                    icon={"arrow"}
+                    size={25}
+                    xClass="text-indigo-800 group-hover:translate-x-1 duration-100"
+                  />
                 </a>
                 <div className="flex gap-3 justify-between md:justify-end">
                   <UpdateMemberButton index={i} />

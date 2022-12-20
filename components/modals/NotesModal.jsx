@@ -62,7 +62,7 @@ const NotesModal = ({ isFileModal, file, index }) => {
     <>
       {!file?.notes && !isFileModal && (
         <ButtonSecondary
-          className="text-xs z-40"
+          className="text-xs z-50"
           xClass={
             "px-2 rounded-md hover:bg-indigo-800 hover:text-white duration-300 ease-out-expo flex-shrink-0"
           }
