@@ -37,7 +37,9 @@ const FileModalSideInfo = ({ notes }) => {
                 <TbMoodHappy size={18} />
                 Mood
               </span>
-              <span className="bg-indigo-200 rounded-md p-1">{notes.mood}</span>
+              <span className="bg-indigo-200 rounded-md p-1 text-3xl">
+                {notes.mood}
+              </span>
             </li>
           )}
           {notes.height && (

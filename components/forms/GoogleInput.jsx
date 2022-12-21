@@ -1,6 +1,6 @@
 import { usePlacesWidget } from "react-google-autocomplete";
 
-const GoogleInput = ({ i, noteType, handleLocation }) => {
+const GoogleInput = ({ noteType, handleLocation }) => {
   const { ref } = usePlacesWidget({
     apiKey: "AIzaSyCWHCoCVNt6ZW4DUKA3wQo6wFFWhUNATtY",
     onPlaceSelected: (place) => {

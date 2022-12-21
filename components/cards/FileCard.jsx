@@ -7,6 +7,7 @@ import { MouseParallaxContainer } from "react-parallax-mouse";
 
 const FileCard = ({ file, index, dob }) => {
   const [showModal, setShowModal] = useState(false);
+  console.log(file);
 
   const dateOfFile = formatDate(file?.metadata?.customMetadata?.originalDate);
   const ONEDAY = 1000 * 60 * 60 * 24;
@@ -49,7 +50,14 @@ const FileCard = ({ file, index, dob }) => {
             {dateValue()}
           </span>
         </div>
-        <NotesModal file={file} index={index} />
+        <div className="flex flex-col gap-2">
+          <NotesModal file={file} index={index} />
+          {file?.notes?.mood && (
+            <span className="font-medium text-xs text-indigo-900">
+              Mood <span className="text-xl">{file.notes.mood}</span>
+            </span>
+          )}
+        </div>
       </div>
     </article>
   );

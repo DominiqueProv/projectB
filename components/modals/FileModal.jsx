@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
-import Icon from "../buttons/Icon";
 import MediasFull from "../MediasFull";
 import Modal from "./Portal";
 import DeleteMemoryModal from "./DeleteMemoryModal";

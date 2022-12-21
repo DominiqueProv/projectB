@@ -4,6 +4,7 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useFiles } from "../../context/FilesContext";
 import { useAuth } from "../../context/AuthContext";
 import GoogleInput from "./GoogleInput";
+import EmojiInput from "./EmojiInput";
 
 const NotesForm = ({ file, setShowModal, index }) => {
   const { user } = useAuth();
@@ -127,12 +128,9 @@ const NotesForm = ({ file, setShowModal, index }) => {
                 break;
               case "mood":
                 input = (
-                  <input
-                    key={i}
-                    type="text"
-                    name={noteType}
-                    placeholder={"How are we feeling"}
-                    onChange={handleChange}
+                  <EmojiInput
+                    updateFormData={updateFormData}
+                    formData={formData}
                   />
                 );
                 break;
