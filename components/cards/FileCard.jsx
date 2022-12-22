@@ -7,8 +7,6 @@ import { MouseParallaxContainer } from "react-parallax-mouse";
 
 const FileCard = ({ file, index, dob }) => {
   const [showModal, setShowModal] = useState(false);
-  console.log(file);
-
   const dateOfFile = formatDate(file?.metadata?.customMetadata?.originalDate);
   const ONEDAY = 1000 * 60 * 60 * 24;
   const differenceMs =

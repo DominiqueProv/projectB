@@ -39,13 +39,13 @@ const lengthForAge = [
 const Growth = () => {
   const { filesData } = useFiles();
   const data = filesData
-    .filter(
+    ?.filter(
       (item) =>
         (item.notes && item.notes.weigth) || (item.notes && item.notes.height)
     )
     .map((item) => item.notes)
     .reverse();
-  const updatedData = data.map((item) => ({
+  const updatedData = data?.map((item) => ({
     ...item,
     dateCreated: formatDateShort(item.dateCreated),
   }));

@@ -25,12 +25,13 @@ const FilesContextProvider = ({ children }) => {
   const { user } = useAuth();
   const [files, setFiles] = useState([]);
   const [filesData, setFilesData] = useState([]);
-  const [uploadTask, setUploadTask] = useState({});
+  const [_, setUploadTask] = useState({});
   const [isUpload, setIsUpload] = useState(false);
   const [percent, setPercent] = useState(0);
   const [notesInput, setNotesInput] = useState([]);
 
-  const notify = () => toast.success("File deleted");
+  const notifyDelete = () => toast.success("File deleted");
+  const notifyUpload = () => toast.success("Upload successful");
 
   const putStorageItem = (item) => {
     const ext = item.name.split(".").pop();
@@ -53,6 +54,8 @@ const FilesContextProvider = ({ children }) => {
       },
       (err) => console.error(err.message),
       () => {
+        console.log("upload completed");
+        notifyUpload();
         const data = {};
         getDownloadURL(uploadTaskRef.snapshot.ref).then((url) => {
           data.url = url;
@@ -112,7 +115,7 @@ const FilesContextProvider = ({ children }) => {
       .then(() => {
         const filesURL = filesData.filter((el) => el.url !== file.url);
         setFilesData(filesURL);
-        notify();
+        notifyDelete();
       })
       .catch((error) => {
         console.log(error);

@@ -4,7 +4,7 @@ import UploadButton from "./buttons/UploadButton";
 const MemberTimeline = ({ babyData, filesData }) => {
   return (
     <section className="mt-10">
-      <h2 className="mb-5 text-6xl leading-[100px] _linear-wipe">
+      <h2 className="mb-5 text-6xl leading-[65px] lg:leading-[100px] _linear-wipe">
         {`${babyData?.name}'s story`}
       </h2>
       <div className="flex lg:mt-10 gap-6">

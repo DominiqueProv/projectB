@@ -1,8 +1,14 @@
 import LayoutDefault from "../components/layouts/LayoutDefault";
 import NavLinkPrimary from "../components/buttons/NavLinkPrimary";
-import Icon from "../components/buttons/Icon";
-
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 const Home = () => {
+  const notifyDelete = () => toast.success("File deleted");
+
+  useEffect(() => {
+    notifyDelete();
+  }, []);
+
   return (
     <LayoutDefault>
       <h1 className="mb-5 text-7xl uppercase font-extrabold text-center">
@@ -23,13 +29,13 @@ const Home = () => {
               exact
               url="/signup"
               label="Create an account"
-              xClass={"px-10 py-4 rounded-md"}
+              xClass={"px-6 py-2 md:px-10 md:py-4 rounded-md"}
             />
             <NavLinkPrimary
               exact
               url="/login"
               label="Login"
-              xClass={"px-10 py-4 rounded-md"}
+              xClass={"px-6 py-2 md:px-10 md:py-4 rounded-md"}
             />
           </div>
         </div>

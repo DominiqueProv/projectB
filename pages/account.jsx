@@ -1,4 +1,4 @@
-import LayoutSignedIn from "../components/layouts/LayoutSignedIn";
+import LayoutDefault from "../components/layouts/LayoutDefault";
 import UpdateUser from "../components/user/UpdateUser";
 import PageTitle from "../components/text/PageTitle";
 import UserInfo from "../components/user/UserInfo";
@@ -7,7 +7,7 @@ import AccountWidget from "../components/user/AccountWidget";
 
 const Account = () => {
   return (
-    <LayoutSignedIn>
+    <LayoutDefault>
       <PageTitle title={"Your account"} />
       <section className="flex flex-col-reverse sm:flex-row gap-3 mt-4">
         <UserInfo />
@@ -17,7 +17,7 @@ const Account = () => {
         <MembersGrid />
         <AccountWidget />
       </section>
-    </LayoutSignedIn>
+    </LayoutDefault>
   );
 };
 

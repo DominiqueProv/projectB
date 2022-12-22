@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { AuthContextProvider } from "../context/AuthContext";
 import FilesContextProvider from "../context/FilesContext";
+import BabiesContextProvider from "../context/BabiesContext";
 import { useRouter } from "next/router";
 import NProgress from "nprogress";
 import Head from "next/head";
@@ -10,9 +11,18 @@ import ProtectedRoute from "../components/ProtectedRoute";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Flip } from "react-toastify";
+import { Slide } from "react-toastify";
 
 const noAuthRequired = ["/", "/login", "/signup"];
+
+const contextClass = {
+  success: "bg-slate-50",
+  error: "bg-red-600",
+  info: "bg-gray-600",
+  warning: "bg-orange-400",
+  default: "bg-indigo-600",
+  dark: "bg-white-600 font-gray-300",
+};
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -27,6 +37,7 @@ function MyApp({ Component, pageProps }) {
       NProgress.done(false);
     });
   }, [router]);
+
   return (
     <>
       <Head>
@@ -39,6 +50,11 @@ function MyApp({ Component, pageProps }) {
         />
       </Head>
       <ToastContainer
+        toastClassName={({ type }) =>
+          contextClass[type || "default"] +
+          " rounded-lg flex justify-between p-3 w-[90vw] sm:w-auto mx-auto mb-4 sm:mb-0"
+        }
+        bodyClassName={() => "text-sm text-indigo-800 font-semibold flex"}
         position="bottom-center"
         autoClose={4000}
         hideProgressBar={true}
@@ -46,16 +62,18 @@ function MyApp({ Component, pageProps }) {
         closeOnClick
         rtl={false}
         theme="light"
-        transition={Flip}
+        transition={Slide}
       />
       <AuthContextProvider>
         {noAuthRequired.includes(router.pathname) ? (
           <Component {...pageProps} />
         ) : (
           <FilesContextProvider>
-            <ProtectedRoute>
-              <Component {...pageProps} />
-            </ProtectedRoute>
+            <BabiesContextProvider>
+              <ProtectedRoute>
+                <Component {...pageProps} />
+              </ProtectedRoute>
+            </BabiesContextProvider>
           </FilesContextProvider>
         )}
       </AuthContextProvider>

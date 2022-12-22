@@ -27,14 +27,14 @@ const BabiesContextProvider = ({ children }) => {
   };
 
   const deleteBaby = async (uid, baby) => {
-    const pid = baby.id;
+    const pid = baby?.id;
     const file = baby.url.split("%2F").pop().split("?")[0];
     await deleteDoc(doc(database, `${uid}/${pid}`));
 
     const listRef = ref(storage, `${uid}/${pid}`);
     listAll(listRef).then((res) => {
-      const promises = res.items.map((item) => {
-        return item.delete();
+      const promises = res?.items?.map((item) => {
+        return item?.delete();
       });
       Promise.all(promises);
     });

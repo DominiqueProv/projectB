@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import MemberTimeline from "../../components/MemberTimeline";
-import LayoutSignedIn from "../../components/layouts/LayoutSignedIn";
+import LayoutDefault from "../../components/layouts/LayoutDefault";
 import { database } from "../../lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import MyFirstTime from "../../components/modals/MyFirstTimeModal";
@@ -39,7 +39,7 @@ const TimelineFeed = () => {
   }, [router.isReady, url]);
 
   return (
-    <LayoutSignedIn>
+    <LayoutDefault>
       <MemberTimeline babyData={babyData} filesData={filesData} />
       <div className="fixed z-20 bottom-0 left-0 right-2 flex justify-end p-3">
         <MyFirstContextProvider>
@@ -52,7 +52,7 @@ const TimelineFeed = () => {
           <GrowthCurveWeightModal />
         </MyFirstContextProvider>
       </div>
-    </LayoutSignedIn>
+    </LayoutDefault>
   );
 };
 

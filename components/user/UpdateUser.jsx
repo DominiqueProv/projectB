@@ -12,11 +12,13 @@ const UpdateUser = () => {
   const [file, setFile] = useState([]);
   const [isUpload, setIsUpload] = useState(false);
   const isDisabled = isUpload || !file?.length;
+
   const handleChange = (e) => {
     if (e.target.files) {
       setFile(e.target.files);
     }
   };
+
   const upload = async (file, user, setIsUpload) => {
     const ext = file[0].name.split(".").pop();
     const fileRef = ref(storage, `${user.uid}/userAvatar/${user.uid}.${ext}`);
@@ -52,7 +54,6 @@ const UpdateUser = () => {
             name="username"
             id="updateUserName"
             placeholder="John Smith"
-            required
           />
         </div>
         <div className="flex gap-3">
@@ -64,7 +65,6 @@ const UpdateUser = () => {
               ref={inputFileRef}
               onChange={handleChange}
               accept=".png, .jpeg"
-              required
             />
           </div>
           {!isUpload ? (
