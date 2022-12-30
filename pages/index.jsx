@@ -1,14 +1,8 @@
 import LayoutDefault from "../components/layouts/LayoutDefault";
 import NavLinkPrimary from "../components/buttons/NavLinkPrimary";
-import { toast } from "react-toastify";
-import { useEffect } from "react";
+import GraphBanner from "../components/lottie/graph/GraphBanner";
+
 const Home = () => {
-  const notifyDelete = () => toast.success("File deleted");
-
-  useEffect(() => {
-    notifyDelete();
-  }, []);
-
   return (
     <LayoutDefault>
       <h1 className="mb-5 text-7xl uppercase font-extrabold text-center">
@@ -40,7 +34,9 @@ const Home = () => {
           </div>
         </div>
         <div className="grid sm:grid-cols-3 gap-8 my-8">
-          <div className="aspect-square bg-slate-100 rounded-xl"></div>
+          <div className="aspect-square bg-slate-100 border-indigo-800 border-2 shadow-lg rounded-xl overflow-hidden">
+            <GraphBanner />
+          </div>
           <div className="aspect-square bg-slate-100 rounded-xl"></div>
           <div className="aspect-square bg-slate-100 rounded-xl"></div>
         </div>
