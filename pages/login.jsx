@@ -65,7 +65,6 @@ const Login = () => {
       await login(email, password);
       router.push("/dashboard");
     } catch (err) {
-      console.dir(err);
       setFormError(err.code);
     }
   };

@@ -1,45 +1,20 @@
-import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import SectionTitle from "../text/SectionTitle";
 import { MdVerified } from "react-icons/md";
 import ButtonSecondary from "../buttons/ButtonSecondary";
-import { getAuth, sendSignInLinkToEmail } from "firebase/auth";
+import { sendEmailVerification } from "firebase/auth";
+import { toast } from "react-toastify";
+import { auth } from "../../lib/firebase";
 
 const UserInfo = () => {
   const { user } = useAuth();
   const date = new Date(user.lastLoginDay).toLocaleString();
-
-  const actionCodeSettings = {
-    // URL you want to redirect back to. The domain (www.example.com) for this
-    // URL must be in the authorized domains list in the Firebase Console.
-    url: "https://project-baby-phi.vercel.app/",
-    handleCodeInApp: true,
-    iOS: {
-      bundleId: "com.example.ios",
-    },
-    android: {
-      packageName: "com.example.android",
-      installApp: true,
-      minimumVersion: "12",
-    },
-    dynamicLinkDomain: "https://project-baby-phi.vercel.app/",
-  };
+  console.log(auth.currentUser);
+  const notifyVerifyEmailSent = () => toast.success("Notification email sent");
 
   const handleVerifyWithEmail = () => {
-    const auth = getAuth();
-    sendSignInLinkToEmail(auth, user.email, actionCodeSettings)
-      .then(() => {
-        console.log("success");
-        // The link was successfully sent. Inform the user.
-        // Save the email locally so you don't need to ask the user for it again
-        // if they open the link on the same device.
-        window.localStorage.setItem("emailForSignIn", email);
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
+    sendEmailVerification(auth.currentUser);
+    notifyVerifyEmailSent();
   };
 
   return (
@@ -47,24 +22,25 @@ const UserInfo = () => {
       <SectionTitle title="Info" />
       <div className="grid lg:grid-cols-2">
         <div className="lg:border-r-[1px] lg:border-r-slate-300 lg:pr-5 space-y-3">
-          <div className="flex gap-x-3">
-            <span>User Name:</span>
-            <span>{<span>{user.userName}</span>}</span>
-          </div>
+          {user.userName && (
+            <div className="flex gap-x-3">
+              <span>User Name:</span>
+              <span>{<span>{auth.currentUser.displayName}</span>}</span>
+            </div>
+          )}
           <div className="flex gap-x-3">
             <span>Email:</span>
             <span>{<span>{user.email}</span>}</span>
           </div>
         </div>
         <div className="lg:pl-5 space-y-3 mt-5 md:mt-0">
-          <div className="flex space-x-3 md:flex-row">
+          <div className="flex space-x-3 md:flex-row items-center">
             <span className="">
               {user.emailVerified ? "Verified" : "Account not verified"}
             </span>
             {user.emailVerified ? (
-              <MdVerified />
+              <MdVerified className="text-blue-500" />
             ) : (
-              //TODO autheticate with email
               <ButtonSecondary
                 label={"Verify with email"}
                 xClass={"py-1 px-2 rounded-md flex-shrink-0"}

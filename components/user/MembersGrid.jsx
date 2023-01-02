@@ -8,14 +8,15 @@ const MembersGrid = () => {
   const { babiesDataList } = useBabies();
 
   return (
-    <section
-      className={
-        "w-full rounded-md bg-slate-100/30 flex-grow flex flex-col gap-y-5 p-3 md:p-5"
-      }
-    >
-      <SectionTitle title="Babies List" />
-      {babiesDataList
-        ? babiesDataList.map((baby, i) => {
+    <>
+      {babiesDataList.length > 0 && (
+        <section
+          className={
+            "w-full rounded-md bg-slate-100/30 flex-grow flex flex-col gap-y-5 p-3 md:p-5"
+          }
+        >
+          <SectionTitle title="Babies List" />
+          {babiesDataList?.map((baby, i) => {
             return (
               <div
                 key={i}
@@ -43,9 +44,10 @@ const MembersGrid = () => {
                 </div>
               </div>
             );
-          })
-        : null}
-    </section>
+          })}
+        </section>
+      )}
+    </>
   );
 };
 

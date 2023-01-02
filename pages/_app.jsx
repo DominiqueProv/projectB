@@ -17,7 +17,7 @@ const noAuthRequired = ["/", "/login", "/signup"];
 
 const contextClass = {
   success: "bg-slate-50",
-  error: "bg-red-600",
+  error: "bg-red-50",
   info: "bg-gray-600",
   warning: "bg-orange-400",
   default: "bg-indigo-600",
@@ -56,7 +56,7 @@ function MyApp({ Component, pageProps }) {
         }
         bodyClassName={() => "text-sm text-indigo-800 font-semibold flex"}
         position="bottom-center"
-        autoClose={4000}
+        autoClose={1000000}
         hideProgressBar={true}
         newestOnTop={false}
         closeOnClick

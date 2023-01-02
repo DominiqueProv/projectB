@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
@@ -10,6 +11,7 @@ import LinkSecondary from "../components/buttons/LinkSecondary";
 const SignUp = () => {
   const router = useRouter();
   const { signup } = useAuth();
+  const [formError, setFormError] = useState("");
   const errorLabelClass = "text-xs text-indigo-500 pt-2";
 
   const validate = (values) => {
@@ -68,9 +70,8 @@ const SignUp = () => {
     try {
       await signup(email, password);
     } catch (err) {
-      console.log(err);
+      setFormError(err.code);
     }
-
     router.push("/dashboard");
   };
 
@@ -83,6 +84,11 @@ const SignUp = () => {
             onSubmit={formik.handleSubmit}
             className="flex flex-col space-y-5 pt-3"
           >
+            {formError && (
+              <div className="rounded-lg p-2 text-red-500 text-center bg-red-50">
+                {formError}
+              </div>
+            )}
             <div className="flex flex-col">
               <label htmlFor="signUpEmail">Email</label>
               <input

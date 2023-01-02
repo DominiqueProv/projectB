@@ -7,6 +7,7 @@ import {
   signOut,
   updateProfile,
   sendPasswordResetEmail,
+  sendEmailVerification,
 } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import { toast } from "react-toastify";
@@ -18,14 +19,24 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const notifyPasswordResetSuccess = () =>
     toast.success("Password reset email sent");
   const notifyPasswordResetError = () =>
     toast.error("There was a problem with the operation");
+  const notifyVerifyEmailSent = () => toast.success("Notification email sent");
+  const notifyEmailNotVerified = () =>
+    toast.error(
+      "You must verified you email address to access your account, Dont forget to check your spam folder"
+    );
 
   const signup = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+    return createUserWithEmailAndPassword(auth, email, password).then(
+      (userCredential) => {
+        sendEmailVerification(userCredential.user);
+        notifyVerifyEmailSent();
+        auth.signOut();
+      }
+    );
   };
 
   const updateUser = async (displayName, photoURL) => {
@@ -44,7 +55,15 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const login = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password).then(
+      (userCredential) => {
+        if (!userCredential.user.emailVerified) {
+          notifyEmailNotVerified();
+          auth.signOut();
+          return;
+        }
+      }
+    );
   };
 
   const logout = async () => {
