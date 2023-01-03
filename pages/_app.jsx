@@ -56,7 +56,7 @@ function MyApp({ Component, pageProps }) {
         }
         bodyClassName={() => "text-sm text-indigo-800 font-semibold flex"}
         position="bottom-center"
-        autoClose={1000000}
+        autoClose={5000}
         hideProgressBar={true}
         newestOnTop={false}
         closeOnClick

@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { CgSpinner } from "react-icons/cg";
 import Video from "./medias/Video";
-import {
-  MouseParallaxContainer,
-  MouseParallaxChild,
-} from "react-parallax-mouse";
 
 const Medias = ({ file }) => {
   const type = file.metadata.contentType;
@@ -34,16 +30,14 @@ const Medias = ({ file }) => {
             </div>
           )}
           <div className="relative rounded-t-md overflow-hidden aspect-card ">
-            <MouseParallaxChild factorX={0.1} factorY={0.1}>
-              <img
-                src={file.url}
-                alt={file.name}
-                className={`object-cover w-full h-full scale-110 ${
-                  loaded ? "block" : "hidden"
-                }`}
-                onLoad={() => setLoaded(true)}
-              />
-            </MouseParallaxChild>
+            <img
+              src={file.url}
+              alt={file.name}
+              className={`object-cover w-full h-full scale-110 ${
+                loaded ? "block" : "hidden"
+              }`}
+              onLoad={() => setLoaded(true)}
+            />
           </div>
         </>
       )

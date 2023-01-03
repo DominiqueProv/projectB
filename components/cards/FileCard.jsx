@@ -3,10 +3,8 @@ import { formatDate } from "../../utils/date";
 import { BsCalendar3 } from "react-icons/bs";
 import NotesModal from "../modals/NotesModal";
 import FileModal from "../modals/FileModal";
-import { MouseParallaxContainer } from "react-parallax-mouse";
 
 const FileCard = ({ file, index, dob }) => {
-  const [showModal, setShowModal] = useState(false);
   const dateOfFile = formatDate(file?.metadata?.customMetadata?.originalDate);
   const ONEDAY = 1000 * 60 * 60 * 24;
   const differenceMs =
@@ -28,18 +26,9 @@ const FileCard = ({ file, index, dob }) => {
 
   return (
     <article className="flex flex-col h-full lg:hover:scale-105 transform duration-300 ease-out-expo lg:hover:drop-shadow-xl">
-      <MouseParallaxContainer
-        enabled={showModal ? false : true}
-        resetOnLeave
-        className="parallax w-full lg:aspect-card rounded-t-md overflow-hidden group relative"
-      >
-        <FileModal
-          file={file}
-          index={index}
-          showModal={showModal}
-          setShowModal={setShowModal}
-        />
-      </MouseParallaxContainer>
+      <div className="relative">
+        <FileModal file={file} index={index} />
+      </div>
       <div className="flex justify-between items-center bg-slate-100 p-2 rounded-b-md">
         <div className="flex gap-2">
           <BsCalendar3 size={14} className="text-blue-300" />

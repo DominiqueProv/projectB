@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
 import MediasFull from "../MediasFull";
 import Modal from "./Portal";
@@ -8,7 +8,8 @@ import FileModalSideInfo from "./FileModalSideInfo";
 import ModalTitle from "../text/ModalTitle";
 import Medias from "../Medias";
 
-const FileModal = ({ file, index, showModal, setShowModal }) => {
+const FileModal = ({ file, index }) => {
+  const [showModal, setShowModal] = useState(false);
   const notes = file?.notes || [];
 
   useEffect(() => {
