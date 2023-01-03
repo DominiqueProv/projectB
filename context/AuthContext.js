@@ -1,5 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
-
+import { createContext, useContext, useEffect, useState, useMemo } from "react";
 import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
@@ -19,6 +18,7 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
   const notifyPasswordResetSuccess = () =>
     toast.success("Password reset email sent");
   const notifyPasswordResetError = () =>
@@ -40,18 +40,15 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const updateUser = async (displayName, photoURL) => {
-    updateProfile(auth.currentUser, {
+    await updateProfile(auth.currentUser, {
       displayName,
       photoURL,
     });
-    const userUpdate = auth.currentUser;
-    if (userUpdate !== null) {
-      setUser({
-        ...user,
-        photoUrl: userUpdate.photoURL,
-        userName: userUpdate.displayName,
-      });
-    }
+    setUser((prev) => ({
+      ...prev,
+      userName: auth.currentUser.displayName,
+      photoUrl: auth.currentUser.photoURL,
+    }));
   };
 
   const login = (email, password) => {
@@ -83,6 +80,7 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log(user);
         setUser({
           uid: user.uid,
           email: user.email,

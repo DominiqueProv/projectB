@@ -10,6 +10,7 @@ import Icon from "../buttons/Icon";
 
 const UpdateUser = () => {
   const inputFileRef = useRef();
+  const inputUserNameRef = useRef();
   const { user, updateUser, setUser } = useAuth();
   const [file, setFile] = useState([]);
   const [isUpload, setIsUpload] = useState(false);
@@ -36,12 +37,15 @@ const UpdateUser = () => {
     if (file.length > 0) {
       upload(file, user, setIsUpload);
     } else {
-      updateUser(user.userName);
+      updateUser(e.target[0].value);
     }
     inputFileRef.current.value = "";
+    inputUserNameRef.current.value = "";
   };
   //TODO remove user avatar
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    updateUser(user.userName, "");
+  };
 
   return (
     <>
@@ -56,11 +60,8 @@ const UpdateUser = () => {
           </label>
           <input
             className="w-full rounded-md"
+            ref={inputUserNameRef}
             type="text"
-            onChange={(e) => {
-              setUser({ ...user, userName: e.target.value });
-            }}
-            value={user.userName ? user.userName : ""}
             name="username"
             id="updateUserName"
             placeholder="John Smith"
@@ -85,12 +86,11 @@ const UpdateUser = () => {
                   className={`rounded-full overflow-hidden object-cover w-16 h-16`}
                   alt={"user avatar"}
                 />
-                <div className="absolute top-0 right-0 bg-blue-200 text-blue-500 rounded-full p-1">
-                  <Icon
-                    icon={"delete"}
-                    xClass="w-3 h-3 cursor-pointer"
-                    onClick={handleDelete}
-                  />
+                <div
+                  className="absolute z-50 top-0 right-0 bg-blue-200 text-blue-500 rounded-full p-1"
+                  onClick={handleDelete}
+                >
+                  <Icon icon={"delete"} xClass="w-3 h-3 cursor-pointer" />
                 </div>
               </div>
             ) : (
