@@ -111,7 +111,12 @@ const MenuModal = () => {
                     <Link key={i} href={`/timeline/${baby.id}`}>
                       <a
                         className="bg-slate-100 rounded-md p-2 flex items-center justify-between group"
-                        onClick={() => setShowModal(false)}
+                        onClick={() => {
+                          setShowModal(false);
+                          if (typeof window != "undefined" && window.document) {
+                            document.body.style.overflow = "unset";
+                          }
+                        }}
                       >
                         <div className="flex gap-3 items-center">
                           <img

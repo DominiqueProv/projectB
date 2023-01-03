@@ -34,7 +34,9 @@ const UserInfo = () => {
         <div className="lg:pl-5 space-y-3 mt-5 md:mt-0">
           <div className="flex space-x-3 md:flex-row items-center">
             <span className="">
-              {emailVerified ? "Verified" : "Account not verified"}
+              {emailVerified
+                ? "Account email Verified"
+                : "Account not verified"}
             </span>
             {emailVerified ? (
               <MdVerified className="text-blue-500" />

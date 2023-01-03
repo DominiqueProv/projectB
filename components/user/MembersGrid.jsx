@@ -3,6 +3,7 @@ import DeleteMemberModal from "../modals/DeleteMemberModal";
 import SectionTitle from "../text/SectionTitle";
 import UpdateMemberButton from "../buttons/UpdateMemberButton";
 import Icon from "../buttons/Icon";
+import Link from "next/link";
 
 const MembersGrid = () => {
   const { babiesDataList } = useBabies();
@@ -22,22 +23,21 @@ const MembersGrid = () => {
                 key={i}
                 className="bg-slate-100 rounded-md p-3 flex flex-col md:flex-row md:items-center gap-3 md:gap-0 justify-between"
               >
-                <a
-                  className="flex gap-3 items-center group"
-                  href={`timeline?id=${baby.id}`}
-                >
-                  <img
-                    src={baby.url + "?" + Math.random()}
-                    className={`rounded-full overflow-hidden object-cover flex-shrink-0 w-12 h-12`}
-                    alt={"user avatar"}
-                  />
-                  <span className="text-xl font-semibold">{baby.name}</span>
-                  <Icon
-                    icon={"arrow"}
-                    size={25}
-                    xClass="text-indigo-800 group-hover:translate-x-1 duration-100"
-                  />
-                </a>
+                <Link href={`/timeline/${baby.id}`} key={i}>
+                  <a className="flex gap-3 items-center group">
+                    <img
+                      src={baby.url + "?" + Math.random()}
+                      className={`rounded-full overflow-hidden object-cover flex-shrink-0 w-12 h-12`}
+                      alt={"user avatar"}
+                    />
+                    <span className="text-xl font-semibold">{baby.name}</span>
+                    <Icon
+                      icon={"arrow"}
+                      size={25}
+                      xClass="text-indigo-800 group-hover:translate-x-1 duration-100"
+                    />
+                  </a>
+                </Link>
                 <div className="flex gap-3 justify-between md:justify-end">
                   <UpdateMemberButton index={i} />
                   <DeleteMemberModal baby={baby} />

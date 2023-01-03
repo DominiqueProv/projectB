@@ -11,6 +11,9 @@ const UserButton = ({ setShowModal }) => {
       className="relative overflow-hidden group"
       onClick={() => {
         setShowModal(false);
+        if (typeof window != "undefined" && window.document) {
+          document.body.style.overflow = "unset";
+        }
         router.push("/account");
       }}
     >
