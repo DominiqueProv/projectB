@@ -58,6 +58,10 @@ const MenuModal = () => {
                     type={"button"}
                     handleClick={() => {
                       logout();
+                      if (typeof window != "undefined" && window.document) {
+                        document.body.style.overflow = "unset";
+                      }
+                      setShowModal(false);
                       router.push("/");
                     }}
                   >
@@ -72,6 +76,12 @@ const MenuModal = () => {
                   url="/signup"
                   label="Signup"
                   xClass={"px-2 sm:px-4 rounded-md"}
+                  handleClick={() => {
+                    if (typeof window != "undefined" && window.document) {
+                      document.body.style.overflow = "unset";
+                    }
+                    setShowModal(false);
+                  }}
                 >
                   <Icon icon={"signup"} />
                 </NavLinkPrimary>
@@ -80,6 +90,12 @@ const MenuModal = () => {
                   url="/login"
                   label="Login"
                   xClass={"px-2 sm:px-4 rounded-md"}
+                  handleClick={() => {
+                    if (typeof window != "undefined" && window.document) {
+                      document.body.style.overflow = "unset";
+                    }
+                    setShowModal(false);
+                  }}
                 >
                   <Icon icon={"login"} />
                 </NavLinkPrimary>

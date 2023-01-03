@@ -42,7 +42,7 @@ const UpdateUser = () => {
     inputFileRef.current.value = "";
     inputUserNameRef.current.value = "";
   };
-  //TODO remove user avatar
+
   const handleDelete = () => {
     updateUser(user.userName, "");
   };

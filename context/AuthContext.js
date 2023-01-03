@@ -28,6 +28,10 @@ export const AuthContextProvider = ({ children }) => {
     toast.error(
       "You must verified you email address to access your account, Dont forget to check your spam folder"
     );
+  const notifyLogoutSuccess = () =>
+    toast.success("You have been logged out successfully");
+  const notifyLogoutError = () =>
+    toast.error("There was a problem during logout");
 
   const signup = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password).then(
@@ -65,7 +69,12 @@ export const AuthContextProvider = ({ children }) => {
 
   const logout = async () => {
     setUser(null);
-    await signOut(auth);
+    try {
+      await signOut(auth);
+      notifyLogoutSuccess();
+    } catch (err) {
+      notifyLogoutError();
+    }
   };
 
   const resetPassword = async (email) => {
@@ -80,7 +89,6 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user);
         setUser({
           uid: user.uid,
           email: user.email,
