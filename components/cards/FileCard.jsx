@@ -29,19 +29,25 @@ const FileCard = ({ file, index, dob }) => {
       <div className="relative">
         <FileModal file={file} index={index} />
       </div>
-      <div className="flex justify-between items-center bg-slate-100 p-2 rounded-b-md">
-        <div className="flex gap-2">
-          <BsCalendar3 size={14} className="text-blue-300" />
+      <div className="flex justify-between gap-2 bg-slate-50 rounded-b-md p-2">
+        <div className="flex flex-col flex-grow justify-center bg-blue-50 p-2 rounded-md">
+          <span className="font-medium text-xs text-indigo-900 mb-1">
+            {dateOfFile}
+          </span>
           <span className="font-medium text-xs text-indigo-900">
-            {dateOfFile} <br />
             {dateValue()}
           </span>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col">
           <NotesModal file={file} index={index} />
           {file?.notes?.mood && (
-            <span className="font-medium text-xs text-indigo-900">
-              Mood <span className="text-xl">{file.notes.mood}</span>
+            <span className="font-medium text-xs text-indigo-900 self-end">
+              Feeling <span className="text-xl">{file.notes.mood}</span>
+            </span>
+          )}
+          {file?.notes?.location && (
+            <span className="font-medium text-xs text-indigo-900 self-end bg-indigo-100 rounded-md p-2">
+              {file.notes.location.split(",")[0]}
             </span>
           )}
         </div>
