@@ -9,7 +9,7 @@ const Navbar = () => {
         <a className="gap-3 flex items-center">
           <MdOutlineBedroomBaby size={45} className="text-indigo-800" />
           <span className="font-bold text-3xl text-indigo-800">
-            Familly Story
+            Family Story
           </span>
           <div className="hidden sm:block border-b ml-6 border-indigo-800 w-[60px]"></div>
         </a>

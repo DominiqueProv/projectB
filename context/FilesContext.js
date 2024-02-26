@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { v4 } from "uuid";
 import { doc, deleteDoc, getDoc } from "firebase/firestore";
@@ -25,15 +25,59 @@ const FilesContextProvider = ({ children }) => {
   const { user } = useAuth();
   const [files, setFiles] = useState([]);
   const [filesData, setFilesData] = useState([]);
-  const [_, setUploadTask] = useState({});
+  const [uploadTask, setUploadTask] = useState({});
   const [isUpload, setIsUpload] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [percent, setPercent] = useState(0);
   const [notesInput, setNotesInput] = useState([]);
+  const [sources, setSources] = useState([]);
 
   const notifyDelete = () => toast.success("File deleted");
   const notifyUpload = () => toast.success("Upload successful");
+  const notifyCancelled = () => toast.success("Upload cancelled");
 
-  const putStorageItem = (item) => {
+  function showPreview(e) {
+    if (e.target.files.length > 0) {
+      Object.entries(e.target.files).forEach((file) => {
+        const [_, value] = file;
+        if (value.type === "video/quicktime") {
+          setSources((prev) => [...prev, "video"]);
+        } else {
+          const src = URL.createObjectURL(value);
+          setSources((prev) => [...prev, src]);
+        }
+      });
+    }
+  }
+
+  const handleChange = (event) => {
+    const chosenFiles = Array.from(event.target.files);
+    const uploaded = [...files];
+    chosenFiles.some((file) => {
+      if (uploaded.findIndex((f) => f.name === file.name) === -1) {
+        uploaded.push(file);
+      }
+    });
+    setFiles(uploaded);
+    showPreview(event);
+    event.target.value = null;
+  };
+
+  const handleCancelUpload = (setShowModal) => {
+    if (isUpload && uploadTask) {
+      uploadTask.cancel();
+      setUploadTask(null);
+      setIsUpload(false);
+      setIsSuccess(false);
+      setPercent(0);
+      notifyCancelled();
+    }
+    setFiles([]);
+    setSources([]);
+    setShowModal(false);
+  };
+
+  const putStorageItem = (item, setShowModal) => {
     const ext = item.name.split(".").pop();
     const metadata = {
       customMetadata: {
@@ -54,7 +98,8 @@ const FilesContextProvider = ({ children }) => {
       },
       (err) => console.error(err.message),
       () => {
-        console.log("upload completed");
+        setIsSuccess(true);
+        setShowModal(false);
         notifyUpload();
         const data = {};
         getDownloadURL(uploadTaskRef.snapshot.ref).then((url) => {
@@ -74,6 +119,7 @@ const FilesContextProvider = ({ children }) => {
           .catch((error) => console.error(error.message));
         setFiles([]);
         setIsUpload(false);
+        setIsSuccess(false);
       }
     );
   };
@@ -140,6 +186,7 @@ const FilesContextProvider = ({ children }) => {
         files,
         filesData,
         isUpload,
+        isSuccess,
         percent,
         notesInput,
         getFiles,
@@ -149,6 +196,10 @@ const FilesContextProvider = ({ children }) => {
         putStorageItem,
         getNote,
         setNotesInput,
+        handleCancelUpload,
+        sources,
+        setSources,
+        handleChange,
       }}
     >
       {children}

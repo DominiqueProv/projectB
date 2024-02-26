@@ -10,6 +10,7 @@ import GrowthCurveWeightModal from "../../components/modals/GrowthCurveWeightMod
 import { useRouter } from "next/router";
 import { useAuth } from "../../context/AuthContext";
 import { useFiles } from "../../context/FilesContext";
+import UploadButton from "../../components/buttons/UploadButton";
 
 const TimelineFeed = () => {
   const { filesData, setFilesData, getFiles } = useFiles();
@@ -41,12 +42,13 @@ const TimelineFeed = () => {
   return (
     <LayoutDefault>
       <MemberTimeline babyData={babyData} filesData={filesData} />
-      <div className="fixed z-20 bottom-0 left-0 right-2 flex justify-end p-3">
+      <div className="fixed z-20 bottom-0 right-2 flex justify-end p-3">
+        <UploadButton />
         <MyFirstContextProvider>
           <MyFirstTime />
         </MyFirstContextProvider>
       </div>
-      <div className="fixed z-20 bottom-0 left-0 right-20 flex justify-end gap-3 p-3">
+      <div className="fixed z-20 bottom-0 right-20 flex justify-end gap-3 p-3">
         <MyFirstContextProvider>
           <GrowthCurveHeightModal />
           <GrowthCurveWeightModal />

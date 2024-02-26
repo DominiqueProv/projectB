@@ -47,8 +47,8 @@ const MenuModal = () => {
                   <NavLinkPrimary
                     exact
                     url="/dashboard"
-                    label="Add a new members"
-                    xClass={"px-2 sm:px-4 rounded-md flex-grow"}
+                    label="Add a family member"
+                    xClass={"px-2 sm:px-4 rounded-md flex-grow justify-center"}
                   >
                     <Icon icon={"members"} />
                   </NavLinkPrimary>
@@ -104,7 +104,7 @@ const MenuModal = () => {
           </nav>
           {user && babiesDataList?.length > 0 && (
             <div className="mt-4 space-y-3">
-              <SubTitle title="Your babies Timeline" />
+              <SubTitle title="Your family members timelines" />
               <div className="space-y-2">
                 {babiesDataList?.map((baby, i) => {
                   return (

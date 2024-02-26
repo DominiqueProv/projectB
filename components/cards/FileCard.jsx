@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { formatDate } from "../../utils/date";
-import { BsCalendar3 } from "react-icons/bs";
 import NotesModal from "../modals/NotesModal";
 import FileModal from "../modals/FileModal";
 
 const FileCard = ({ file, index, dob }) => {
+  const [date, setDateValue] = useState();
   const dateOfFile = formatDate(file?.metadata?.customMetadata?.originalDate);
   const ONEDAY = 1000 * 60 * 60 * 24;
   const differenceMs =
     file?.metadata?.customMetadata?.originalDate - dob?.seconds * 1000;
   const differenceInDays = Math.round(differenceMs / ONEDAY);
-  const dateValue = () => {
+
+  const dateValue = useCallback(() => {
     if (differenceInDays > 60 && differenceInDays < 365) {
       return `${Math.floor(differenceInDays / 30)} month${
         differenceInDays / 30 > 1 ? "s" : ""
@@ -22,7 +23,11 @@ const FileCard = ({ file, index, dob }) => {
     } else {
       return `${differenceInDays} day${differenceInDays > 1 ? "s" : ""} old`;
     }
-  };
+  }, [differenceInDays]);
+
+  useEffect(() => {
+    setDateValue(dateValue());
+  }, [file, dob, dateValue]);
 
   return (
     <article className="flex flex-col h-full lg:hover:scale-105 transform duration-300 ease-out-expo lg:hover:drop-shadow-xl">
@@ -34,9 +39,7 @@ const FileCard = ({ file, index, dob }) => {
           <span className="font-medium text-xs text-indigo-900 mb-1">
             {dateOfFile}
           </span>
-          <span className="font-medium text-xs text-indigo-900">
-            {dateValue()}
-          </span>
+          <span className="font-medium text-xs text-indigo-900">{date}</span>
         </div>
         <div className="flex flex-col">
           <NotesModal file={file} index={index} />
