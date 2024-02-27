@@ -33,6 +33,14 @@ const FileCard = ({ file, index, dob }) => {
     <article className="flex flex-col h-full lg:hover:scale-105 transform duration-300 ease-out-expo lg:hover:drop-shadow-xl">
       <div className="relative">
         <FileModal file={file} index={index} />
+        {file && file.notes && (
+          <div className="absolute bottom-0 w-full p-2 pt-4 font-semibold text-white bg-gradient-to-t from-black/60 to-transparent">
+            {file.notes.title}
+          </div>
+        )}
+        <div className="absolute top-2 right-2 z-50">
+          <NotesModal file={file} index={index} />
+        </div>
       </div>
       <div className="flex justify-between gap-2 bg-slate-50 rounded-b-md p-2">
         <div className="flex flex-col flex-grow justify-center bg-blue-50 p-2 rounded-md">
@@ -42,7 +50,6 @@ const FileCard = ({ file, index, dob }) => {
           <span className="font-medium text-xs text-indigo-900">{date}</span>
         </div>
         <div className="flex flex-col">
-          <NotesModal file={file} index={index} />
           {file?.notes?.mood && (
             <span className="font-medium text-xs text-indigo-900 self-end">
               Feeling <span className="text-xl">{file.notes.mood}</span>

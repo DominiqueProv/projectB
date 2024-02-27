@@ -10,11 +10,13 @@ const Medias = ({ file }) => {
 
   if (isVideo) {
     return (
-      <Video
-        file={file}
-        loaded
-        loaderHeight={"aspect-square lg:aspect-video"}
-      />
+      <div className="relative rounded-t-lg overflow-hidden aspect-card ">
+        <Video
+          file={file}
+          loaded
+          loaderHeight={"aspect-square lg:aspect-video"}
+        />
+      </div>
     );
   } else {
     return (
