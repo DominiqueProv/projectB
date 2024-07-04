@@ -10,6 +10,7 @@ import Modal from "./Portal";
 import Calendar from "react-calendar";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import ModalTitle from "../text/ModalTitle";
+import imageCompression from "browser-image-compression";
 
 const AddBabyModal = () => {
   const { setIsUpload, reload, setReload } = useBabies();
@@ -25,9 +26,27 @@ const AddBabyModal = () => {
     const ext = file[0].name.split(".").pop();
     const fileRef = ref(storage, `${user.uid}/babiesAvatar/${babyId}.${ext}`);
     setIsUpload(true);
-    const snapshot = await uploadBytes(fileRef, file[0]);
-    const photoURL = await getDownloadURL(fileRef);
-    babiesData.url = photoURL;
+
+    let processedFile = file[0];
+
+    const options = {
+      maxSizeMB: 1,
+      useWebWorker: true,
+    };
+
+    try {
+      if (processedFile.size > 1048576) {
+        processedFile = await imageCompression(processedFile, options);
+      }
+
+      const snapshot = await uploadBytes(fileRef, processedFile);
+      const photoURL = await getDownloadURL(fileRef);
+      babiesData.url = photoURL;
+    } catch (error) {
+      console.error("Error compressing the image", error);
+    } finally {
+      setIsUpload(false);
+    }
   };
 
   const saveBabyData = async () => {
