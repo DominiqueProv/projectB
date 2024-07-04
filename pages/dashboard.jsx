@@ -2,15 +2,11 @@ import LayoutDefault from "../components/layouts/LayoutDefault";
 import AddBabyModal from "../components/modals/AddBabyModal";
 import BabiesGrid from "../components/BabiesGrid";
 import { useBabies } from "../context/BabiesContext";
+import { CgSpinner } from "react-icons/cg";
+import useGridClasses from "../utils/gridClasses";
 
 const Dashboard = () => {
-  const { babiesDataList } = useBabies();
-  const gridClasses =
-    babiesDataList?.length > 0
-      ? `grid-cols-${babiesDataList.length + 1} mx-3 lg:mx-0`
-      : "grid-cols-1 w-[35vw] md:w-[20vw] lg:w-[10vw]";
-
-  // grid-cols-2 grid-cols-3
+  const { isUpload } = useBabies();
 
   return (
     <LayoutDefault>
@@ -18,9 +14,17 @@ const Dashboard = () => {
         <h2 className="text-center _linear-wipe font-bold text-3xl">
           Your Family Members
         </h2>
-        <div className={`grid ${gridClasses} mx-auto gap-2 sm:gap-6 mt-4`}>
+        <div className={`grid ${useGridClasses()} mx-auto gap-2 sm:gap-6 mt-4`}>
           <AddBabyModal />
-          <BabiesGrid />
+          {!isUpload ? (
+            <BabiesGrid />
+          ) : (
+            <CgSpinner
+              className="animate-spin"
+              color={"dodgerblue"}
+              size={20}
+            />
+          )}
         </div>
       </section>
     </LayoutDefault>

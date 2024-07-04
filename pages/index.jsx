@@ -5,14 +5,13 @@ import { useAuth } from "../context/AuthContext";
 import { CgSpinner } from "react-icons/cg";
 import Link from "next/link";
 import { useBabies } from "../context/BabiesContext";
+import useGridClasses from "../utils/gridClasses";
 
 const Home = () => {
   const { user } = useAuth();
   const { babiesDataList } = useBabies();
-  const gridClasses =
-    babiesDataList?.length > 0
-      ? `grid-cols-${babiesDataList.length} lg:mx-0`
-      : "grid-cols-1 w-[35vw] md:w-[20vw] lg:w-[10vw]";
+  const classesGrid = useGridClasses();
+
   return (
     <LayoutDefault>
       <h1 className="mb-5 text-7xl uppercase font-extrabold text-center">
@@ -24,16 +23,16 @@ const Home = () => {
       </h1>
       <section>
         {user ? (
-          <div className=" my-10 sm:my-20 aspect-square flex flex-col justify-center items-center bg-slate-100 sm:bg-transparent sm:border-none sm:shadow-none sm:rounded-none sm:aspect-auto border-indigo-800 border-2 shadow-lg rounded-xl">
+          <div className=" my-10 sm:my-20 flex flex-col justify-center items-center bg-slate-100 sm:bg-transparent sm:border-none sm:shadow-none sm:rounded-none border-indigo-800 border-2 shadow-lg rounded-xl p-4">
             <h3 className="text-center font-medium text-xl">
-              Visit one of your loved one timeline. 🥰
+              Visit one of your loved one timeline.
             </h3>
             <div
-              className={`grid ${gridClasses} mx-auto gap-6 place-items-center mt-4`}
+              className={`grid ${classesGrid} mx-auto gap-6 place-items-center mt-4`}
             >
               {babiesDataList?.map((baby) => (
                 <Link href={`/timeline/${baby.id}`} key={baby.id}>
-                  <div className="relative cursor-pointer aspect-square h-32 rounded-full overflow-hidden group flex items-center justify-center">
+                  <div className="relative cursor-pointer aspect-square h-20 lg:h-32 rounded-full overflow-hidden group flex items-center justify-center">
                     {baby.url ? (
                       <>
                         <img

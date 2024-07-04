@@ -26,9 +26,7 @@ const AddBabyModal = () => {
     const ext = file[0].name.split(".").pop();
     const fileRef = ref(storage, `${user.uid}/babiesAvatar/${babyId}.${ext}`);
     setIsUpload(true);
-
     let processedFile = file[0];
-
     const options = {
       maxSizeMB: 1,
       useWebWorker: true,
