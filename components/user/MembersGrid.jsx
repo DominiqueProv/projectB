@@ -4,6 +4,7 @@ import SectionTitle from "../text/SectionTitle";
 import UpdateMemberButton from "../buttons/UpdateMemberButton";
 import Icon from "../buttons/Icon";
 import Link from "next/link";
+import NavLinkPrimary from "../buttons/NavLinkPrimary";
 
 const MembersGrid = () => {
   const { babiesDataList } = useBabies();
@@ -45,6 +46,14 @@ const MembersGrid = () => {
               </div>
             );
           })}
+          <NavLinkPrimary
+            exact
+            url="/dashboard"
+            label="Add a family member"
+            xClass="px-2 sm:px-4 rounded-md justify-center self-start"
+          >
+            <Icon icon="members" />
+          </NavLinkPrimary>
         </section>
       )}
     </>

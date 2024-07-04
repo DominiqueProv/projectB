@@ -29,7 +29,7 @@ const UpdateUser = () => {
     try {
       await uploadBytes(fileRef, file);
       const photoURL = await getDownloadURL(fileRef);
-      await updateUser(user.userName, photoURL);
+      await updateUser(user.displayName, photoURL);
       setUser((prevUser) => ({ ...prevUser, photoURL }));
     } catch (error) {
       console.error("Failed to upload file:", error.message);
@@ -62,7 +62,7 @@ const UpdateUser = () => {
       <SectionTitle title="Manage" />
       <div className="flex flex-col">
         <label htmlFor="updateUserName">
-          {user.userName ? "Change your username" : "Create a username"}
+          {user.displayName ? "Change your username" : "Create a username"}
         </label>
         <input
           className="w-full rounded-md"

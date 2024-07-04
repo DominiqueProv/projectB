@@ -30,19 +30,28 @@ const BabiesContextProvider = ({ children }) => {
   const deleteBaby = async (uid, baby) => {
     const pid = baby?.id;
     const file = baby?.url?.split("%2F").pop().split("?")[0];
-    await deleteDoc(doc(database, `${uid}/${pid}`));
+    try {
+      await deleteDoc(doc(database, `${uid}/${pid}`));
 
-    const listRef = ref(storage, `${uid}/${pid}`);
-    const res = await listAll(listRef);
-    const promises = res.items.map((item) => deleteObject(item));
-    await Promise.all(promises);
+      const listRef = ref(storage, `${uid}/${pid}`);
+      const res = await listAll(listRef);
+      const promises = res.items.map((item) => deleteObject(item));
+      await Promise.all(promises);
 
-    if (file) {
-      const avatarRef = ref(storage, `${uid}/babiesAvatar/${file}`);
-      await deleteObject(avatarRef);
+      if (file) {
+        const avatarRef = ref(storage, `${uid}/babiesAvatar/${file}`);
+        await deleteObject(avatarRef);
+      }
+
+      setReload(!reload);
+    } catch (error) {
+      if (error.code === "storage/object-not-found") {
+        console.error("The object does not exist.");
+        // Handle the specific error here if needed
+      } else {
+        console.error("An error occurred:", error);
+      }
     }
-
-    setReload(!reload);
   };
 
   useEffect(() => {

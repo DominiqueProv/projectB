@@ -4,11 +4,16 @@ import PageTitle from "../components/text/PageTitle";
 import UserInfo from "../components/user/UserInfo";
 import MembersGrid from "../components/user/MembersGrid";
 import AccountWidget from "../components/user/AccountWidget";
+import { useAuth } from "../context/AuthContext";
 
 const Account = () => {
+  const { user } = useAuth();
+
   return (
     <LayoutDefault>
-      <PageTitle title="Your account" />
+      <PageTitle
+        title={`${user.displayName ? user.displayName + "'s" : "Your"} account`}
+      />
       <section className="flex flex-col-reverse sm:flex-row gap-3 mt-4">
         <UserInfo />
         <UpdateUser />
