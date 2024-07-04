@@ -20,10 +20,11 @@ const BabiesContextProvider = ({ children }) => {
     }
     const q = query(collection(database, `${user.uid}`));
     const querySnapshot = await getDocs(q);
-    setBabiesDataList([]);
+    const babiesList = [];
     querySnapshot.forEach((doc) => {
-      setBabiesDataList((prev) => [...prev, { ...doc.data(), id: doc.id }]);
+      babiesList.push({ ...doc.data(), id: doc.id });
     });
+    setBabiesDataList(babiesList);
   };
 
   const deleteBaby = async (uid, baby) => {
@@ -46,7 +47,7 @@ const BabiesContextProvider = ({ children }) => {
 
   useEffect(() => {
     getBabies();
-  }, [reload]);
+  }, [user, reload]);
 
   return (
     <BabiesContext.Provider

@@ -1,9 +1,25 @@
+import { useEffect, useState } from "react";
 import { useBabies } from "../context/BabiesContext";
 import { CgSpinner } from "react-icons/cg";
 import Link from "next/link";
 
 const BabiesGrid = () => {
   const { babiesDataList } = useBabies();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (babiesDataList) {
+      setIsLoading(false);
+    }
+  }, [babiesDataList]);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center">
+        <CgSpinner className="animate-spin" color={"dodgerblue"} size={40} />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -14,7 +30,7 @@ const BabiesGrid = () => {
               <>
                 <img
                   src={baby.url}
-                  alt=""
+                  alt={baby.name}
                   className="object-cover w-full h-full"
                 />
                 <div className="absolute inset-0 bg-indigo-800/50 duration-300 opacity-0 group-hover:opacity-100"></div>
