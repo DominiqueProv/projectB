@@ -10,68 +10,73 @@ export default function NoteOperations() {
   const [noteDesc, setNoteDesc] = useState("");
   const [notesArray, setNotesArray] = useState([]);
 
-  // useEffect(() => {
-  //   getNotes();
-  // }, []);
+  useEffect(() => {
+    getNotes();
+  }, []);
 
   const inputToggle = () => {
     setInputVisible(!isInputVisible);
   };
 
-  // const saveNote = () => {
-  //   addDoc(dbInstance, {
-  //     noteTitle: noteTitle,
-  //     noteDesc: noteDesc,
-  //   }).then(() => {
-  //     setNoteTitle("");
-  //     setNoteDesc("");
-  //     getNotes();
-  //   });
-  // };
+  const saveNote = async () => {
+    try {
+      await addDoc(dbInstance, {
+        noteTitle: noteTitle,
+        noteDesc: noteDesc,
+      });
+      setNoteTitle("");
+      setNoteDesc("");
+      getNotes();
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  };
 
-  // const getNotes = () => {
-  //   getDocs(dbInstance).then((data) => {
-  //     setNotesArray(
-  //       data.docs.map((item) => {
-  //         return { ...item.data(), id: item.id };
-  //       })
-  //     );
-  //   });
-  // };
+  const getNotes = async () => {
+    try {
+      const data = await getDocs(dbInstance);
+      const notes = data.docs.map((item) => ({ ...item.data(), id: item.id }));
+      setNotesArray(notes);
+    } catch (error) {
+      console.error("Error fetching documents: ", error);
+    }
+  };
 
   return (
     <>
-      <div className="">
+      <div>
         <button className="_button-auth" onClick={inputToggle}>
           Add a New Note
         </button>
       </div>
 
-      {isInputVisible ? (
-        <div className="">
+      {isInputVisible && (
+        <div>
           <input
             className=""
             placeholder="Enter the Title.."
             onChange={(e) => setNoteTitle(e.target.value)}
             value={noteTitle}
           />
+          <textarea
+            className=""
+            placeholder="Enter the Description.."
+            onChange={(e) => setNoteDesc(e.target.value)}
+            value={noteDesc}
+          />
           <button onClick={saveNote} className="">
             Save Note
           </button>
         </div>
-      ) : (
-        <></>
       )}
 
       <div>
-        {notesArray.map((note) => {
-          return (
-            <div key={note.id}>
-              <h3>{note.noteTitle}</h3>
-              <p>{note.noteDesc}</p>
-            </div>
-          );
-        })}
+        {notesArray.map((note) => (
+          <div key={note.id}>
+            <h3>{note.noteTitle}</h3>
+            <p>{note.noteDesc}</p>
+          </div>
+        ))}
       </div>
     </>
   );

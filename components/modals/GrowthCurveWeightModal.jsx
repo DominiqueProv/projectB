@@ -4,8 +4,6 @@ import CloseButton from "../buttons/CloseButton";
 import Modal from "./Portal";
 import { TbScaleOutline } from "react-icons/tb";
 import {
-  LineChart,
-  Line,
   AreaChart,
   Tooltip,
   Area,
@@ -21,26 +19,30 @@ const GrowthCurveWeightModal = () => {
   const data = Growth();
 
   useEffect(() => {
-    const close = (e) => {
-      if (e.keyCode === 27) {
-        setShowModal(false);
-      }
+    const closeOnEscapeKey = (e) => {
+      if (e.keyCode === 27) setShowModal(false);
     };
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
+    window.addEventListener("keydown", closeOnEscapeKey);
+    return () => window.removeEventListener("keydown", closeOnEscapeKey);
   }, []);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+    if (typeof window !== "undefined" && window.document) {
+      document.body.style.overflow = "hidden";
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    document.body.style.overflow = "unset";
+  };
 
   return (
     <>
       <button
-        onClick={() => {
-          setShowModal(true);
-          if (typeof window != "undefined" && window.document) {
-            document.body.style.overflow = "hidden";
-          }
-        }}
-        className="bg-white z-30 group
-  p-3 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none"
+        onClick={handleOpenModal}
+        className="bg-white z-30 group p-3 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none"
         type="button"
       >
         <TbScaleOutline size={35} className="text-blue-300 _scale-rotate" />
@@ -50,21 +52,16 @@ const GrowthCurveWeightModal = () => {
         {showModal && (
           <>
             <div
-              onClick={() => {
-                setShowModal(false);
-                document.body.style.overflow = "unset";
-              }}
-              className={`inset-0 fixed bg-black bg-opacity-30 z-20 backdrop-blur-sm ${
-                showModal ? "block" : "hidden"
-              }`}
+              onClick={handleCloseModal}
+              className="inset-0 fixed bg-black bg-opacity-30 z-20 backdrop-blur-sm"
             ></div>
             <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
               <div className="flex w-[90vw] h-[90vh] sm:w-[80vw] rounded-lg p-3 relative flex-col bg-white overflow-auto pb-[85px]">
                 <div className="flex justify-between mb-4">
-                  <ModalTitle title="Growth Weight curve (kg)" />
+                  <ModalTitle title="Growth Weight Curve (kg)" />
                   <CloseButton
                     showModal={showModal}
-                    setShowModal={setShowModal}
+                    setShowModal={handleCloseModal}
                   />
                 </div>
                 <ResponsiveContainer width="100%" height="100%">

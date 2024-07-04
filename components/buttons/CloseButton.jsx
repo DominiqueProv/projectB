@@ -1,12 +1,14 @@
 import { IoMdClose } from "react-icons/io";
 
-const CloseButton = ({ showModal, setShowModal }) => {
+const CloseButton = ({ setShowModal }) => {
+  const handleClose = () => {
+    document.body.style.overflow = "unset";
+    setShowModal(false);
+  };
+
   return (
     <button
-      onClick={() => {
-        document.body.style.overflow = "unset";
-        setShowModal(!showModal);
-      }}
+      onClick={handleClose}
       className="bg-blue-200 flex-shrink-0 self-start z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
       type="button"
     >

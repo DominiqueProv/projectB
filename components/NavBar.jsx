@@ -11,7 +11,7 @@ const Navbar = () => {
           <span className="font-bold text-3xl text-indigo-800">
             Family Story
           </span>
-          <div className="hidden sm:block border-b ml-6 border-indigo-800 w-[60px]"></div>
+          <div className="hidden sm:block border-b ml-6 border-indigo-800 w-[60px]" />
         </a>
       </Link>
       <MenuModal />

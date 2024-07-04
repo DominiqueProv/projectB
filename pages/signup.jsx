@@ -16,10 +16,10 @@ const SignUp = () => {
 
   const validate = (values) => {
     const errors = {};
-    let passValidation = !/^(?=.*[\d])(?=.*[!@#$%^&*])[\w!@#$%^&*]{6,16}$/.test(
+    const passValidation = !/^(?=.*\d)(?=.*[!@#$%^&*])[\w!@#$%^&*]{6,16}$/.test(
       values.passwordOne
     );
-    let emailValidation = !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
+    const emailValidation = !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
       values.email
     );
 
@@ -27,10 +27,10 @@ const SignUp = () => {
       errors.passwordOne = "Required";
     } else if (passValidation) {
       errors.passwordOne = parse(`
-      Minimum 6 characters<br />
-      Maximum 16 characters<br />
-      Must contain at least one special character !@#$%^&*<br />
-      Must contain at least one number
+        Minimum 6 characters<br />
+        Maximum 16 characters<br />
+        Must contain at least one special character !@#$%^&*<br />
+        Must contain at least one number
       `);
     }
 
@@ -45,11 +45,9 @@ const SignUp = () => {
     } else if (emailValidation) {
       errors.email = "Invalid email address";
     }
-    if (!Object.entries(errors).length) {
-      values.isValid = true;
-    } else {
-      values.isValid = false;
-    }
+
+    values.isValid = Object.keys(errors).length === 0;
+
     return errors;
   };
 
@@ -61,96 +59,110 @@ const SignUp = () => {
       isValid: false,
     },
     validate,
-    onSubmit: (values) => {
-      handleSignup(values.email, values.passwordOne);
-    },
+    onSubmit: (values) => handleSignup(values.email, values.passwordOne),
   });
 
   const handleSignup = async (email, password) => {
     try {
       await signup(email, password);
+      router.push("/dashboard");
     } catch (err) {
-      setFormError(err.code);
+      setFormError(err.message);
     }
-    router.push("/dashboard");
   };
 
   return (
-    <>
-      <LayoutDefault>
-        <PageTitle title={"Sign Up"} />
-        <div className="mx-auto w-full rounded-md sm:max-w-md bg-slate-100/30 flex flex-col space-y-5 p-5 mt-4">
-          <form
-            onSubmit={formik.handleSubmit}
-            className="flex flex-col space-y-5 pt-3"
-          >
-            {formError && (
-              <div className="rounded-lg p-2 text-red-500 text-center bg-red-50">
-                {formError}
+    <LayoutDefault>
+      <PageTitle title="Sign Up" />
+      <div className="mx-auto w-full rounded-md sm:max-w-md bg-slate-100/30 flex flex-col space-y-5 p-5 mt-4">
+        <form
+          onSubmit={formik.handleSubmit}
+          className="flex flex-col space-y-5 pt-3"
+        >
+          {formError && (
+            <div className="rounded-lg p-2 text-red-500 text-center bg-red-50">
+              {formError}
+            </div>
+          )}
+          <div className="flex flex-col">
+            <label htmlFor="signUpEmail">Email</label>
+            <input
+              type="email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+              name="email"
+              id="signUpEmail"
+              placeholder="Valid Email"
+              aria-describedby="emailError"
+              aria-invalid={
+                formik.touched.email && formik.errors.email ? "true" : "false"
+              }
+            />
+            {formik.touched.email && formik.errors.email && (
+              <div id="emailError" className={errorLabelClass}>
+                {formik.errors.email}
               </div>
             )}
-            <div className="flex flex-col">
-              <label htmlFor="signUpEmail">Email</label>
-              <input
-                type="email"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.email}
-                name="email"
-                id="signUpEmail"
-                placeholder="Valid Email"
-              />
-              {formik.touched.email && formik.errors.email ? (
-                <div className={errorLabelClass}>{formik.errors.email}</div>
-              ) : null}
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="signUpPassword">Password</label>
-              <input
-                type="password"
-                name="passwordOne"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.passwordOne}
-                id="signUpPassword"
-                placeholder="Minimum 6 characters"
-              />
-              {formik.touched.passwordOne && formik.errors.passwordOne ? (
-                <div className={errorLabelClass}>
-                  {formik.errors.passwordOne}
-                </div>
-              ) : null}
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="signUpPassword2">Confirm Password</label>
-              <input
-                type="password"
-                name="passwordTwo"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.passwordTwo}
-                id="signUpPassword2"
-                placeholder="Must be identical"
-              />
-              {formik.touched.passwordTwo && formik.errors.passwordTwo ? (
-                <div className={errorLabelClass}>
-                  {formik.errors.passwordTwo}
-                </div>
-              ) : null}
-            </div>
-            <ButtonForm
-              label={formik.isValid ? "Let's get started" : "Fill the form"}
-              type={"submit"}
-              isValid={formik.isValid}
-            ></ButtonForm>
-            <div className="flex items-center gap-x-3">
-              <h3 className="">Already have an account?</h3>
-              <LinkSecondary url={"/login"} label={"Login"} />
-            </div>
-          </form>
-        </div>
-      </LayoutDefault>
-    </>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="signUpPassword">Password</label>
+            <input
+              type="password"
+              name="passwordOne"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.passwordOne}
+              id="signUpPassword"
+              placeholder="Minimum 6 characters"
+              aria-describedby="passwordOneError"
+              aria-invalid={
+                formik.touched.passwordOne && formik.errors.passwordOne
+                  ? "true"
+                  : "false"
+              }
+            />
+            {formik.touched.passwordOne && formik.errors.passwordOne && (
+              <div id="passwordOneError" className={errorLabelClass}>
+                {formik.errors.passwordOne}
+              </div>
+            )}
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="signUpPassword2">Confirm Password</label>
+            <input
+              type="password"
+              name="passwordTwo"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.passwordTwo}
+              id="signUpPassword2"
+              placeholder="Must be identical"
+              aria-describedby="passwordTwoError"
+              aria-invalid={
+                formik.touched.passwordTwo && formik.errors.passwordTwo
+                  ? "true"
+                  : "false"
+              }
+            />
+            {formik.touched.passwordTwo && formik.errors.passwordTwo && (
+              <div id="passwordTwoError" className={errorLabelClass}>
+                {formik.errors.passwordTwo}
+              </div>
+            )}
+          </div>
+          <ButtonForm
+            label={formik.isValid ? "Let's get started" : "Fill the form"}
+            type="submit"
+            isValid={formik.isValid}
+          />
+          <div className="flex items-center gap-x-3">
+            <h3>Already have an account?</h3>
+            <LinkSecondary url="/login" label="Login" />
+          </div>
+        </form>
+      </div>
+    </LayoutDefault>
   );
 };
 

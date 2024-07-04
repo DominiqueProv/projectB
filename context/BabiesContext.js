@@ -28,24 +28,19 @@ const BabiesContextProvider = ({ children }) => {
 
   const deleteBaby = async (uid, baby) => {
     const pid = baby?.id;
-    const file = baby.url.split("%2F").pop().split("?")[0];
+    const file = baby?.url?.split("%2F").pop().split("?")[0];
     await deleteDoc(doc(database, `${uid}/${pid}`));
 
     const listRef = ref(storage, `${uid}/${pid}`);
-    listAll(listRef).then((res) => {
-      const promises = res?.items?.map((item) => {
-        return item?.delete();
-      });
-      Promise.all(promises);
-    });
-    const avatarRef = ref(storage, `${uid}/babiesAvatar/${file}`);
-    await deleteObject(avatarRef)
-      .then(() => {
-        console.log("success");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await listAll(listRef);
+    const promises = res.items.map((item) => deleteObject(item));
+    await Promise.all(promises);
+
+    if (file) {
+      const avatarRef = ref(storage, `${uid}/babiesAvatar/${file}`);
+      await deleteObject(avatarRef);
+    }
+
     setReload(!reload);
   };
 

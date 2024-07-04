@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "../../context/AuthContext";
 import { useBabies } from "../../context/BabiesContext";
-
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import Link from "next/link";
 import UserButton from "../buttons/UserButton";
@@ -20,14 +19,24 @@ const MenuModal = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const close = (e) => {
-      if (e.keyCode === 27) {
-        setShowModal(false);
-      }
+    const closeOnEscapeKey = (e) => {
+      if (e.keyCode === 27) setShowModal(false);
     };
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
+    window.addEventListener("keydown", closeOnEscapeKey);
+    return () => window.removeEventListener("keydown", closeOnEscapeKey);
   }, []);
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    document.body.style.overflow = "unset";
+  };
+
+  const handleLogout = () => {
+    logout();
+    handleCloseModal();
+    router.push("/");
+  };
+
   return (
     <>
       <BurgerMenu setShowModal={setShowModal} showModal={showModal} />
@@ -48,24 +57,17 @@ const MenuModal = () => {
                     exact
                     url="/dashboard"
                     label="Add a family member"
-                    xClass={"px-2 sm:px-4 rounded-md flex-grow justify-center"}
+                    xClass="px-2 sm:px-4 rounded-md flex-grow justify-center"
                   >
-                    <Icon icon={"members"} />
+                    <Icon icon="members" />
                   </NavLinkPrimary>
                   <ButtonPrimary
-                    xClass={"px-2 sm:px-4 sm:gap-2 flex-grow justify-center"}
-                    label={"Logout"}
-                    type={"button"}
-                    handleClick={() => {
-                      logout();
-                      if (typeof window != "undefined" && window.document) {
-                        document.body.style.overflow = "unset";
-                      }
-                      setShowModal(false);
-                      router.push("/");
-                    }}
+                    xClass="px-2 sm:px-4 sm:gap-2 flex-grow justify-center"
+                    label="Logout"
+                    type="button"
+                    handleClick={handleLogout}
                   >
-                    <Icon icon={"signout"} />
+                    <Icon icon="signout" />
                   </ButtonPrimary>
                 </div>
               </div>
@@ -75,29 +77,19 @@ const MenuModal = () => {
                   exact
                   url="/signup"
                   label="Signup"
-                  xClass={"px-2 sm:px-4 rounded-md"}
-                  handleClick={() => {
-                    if (typeof window != "undefined" && window.document) {
-                      document.body.style.overflow = "unset";
-                    }
-                    setShowModal(false);
-                  }}
+                  xClass="px-2 sm:px-4 rounded-md"
+                  handleClick={handleCloseModal}
                 >
-                  <Icon icon={"signup"} />
+                  <Icon icon="signup" />
                 </NavLinkPrimary>
                 <NavLinkPrimary
                   exact
                   url="/login"
                   label="Login"
-                  xClass={"px-2 sm:px-4 rounded-md"}
-                  handleClick={() => {
-                    if (typeof window != "undefined" && window.document) {
-                      document.body.style.overflow = "unset";
-                    }
-                    setShowModal(false);
-                  }}
+                  xClass="px-2 sm:px-4 rounded-md"
+                  handleClick={handleCloseModal}
                 >
-                  <Icon icon={"login"} />
+                  <Icon icon="login" />
                 </NavLinkPrimary>
               </>
             )}
@@ -106,37 +98,30 @@ const MenuModal = () => {
             <div className="mt-4 space-y-3">
               <SubTitle title="Your family members timelines" />
               <div className="space-y-2">
-                {babiesDataList?.map((baby, i) => {
-                  return (
-                    <Link key={i} href={`/timeline/${baby.id}`}>
-                      <a
-                        className="bg-slate-100 rounded-md p-2 flex items-center justify-between group"
-                        onClick={() => {
-                          setShowModal(false);
-                          if (typeof window != "undefined" && window.document) {
-                            document.body.style.overflow = "unset";
-                          }
-                        }}
-                      >
-                        <div className="flex gap-3 items-center">
-                          <img
-                            src={baby.url + "?" + Math.random()}
-                            className={`rounded-full overflow-hidden object-cover flex-shrink-0 w-12 h-12`}
-                            alt={"user avatar"}
-                          />
-                          <span className="text-xl font-semibold">
-                            {baby.name}
-                          </span>
-                        </div>
-                        <Icon
-                          icon={"arrow"}
-                          size={25}
-                          xClass="text-indigo-800 group-hover:translate-x-1 duration-100"
+                {babiesDataList.map((baby, i) => (
+                  <Link key={i} href={`/timeline/${baby.id}`}>
+                    <a
+                      className="bg-slate-100 rounded-md p-2 flex items-center justify-between group"
+                      onClick={handleCloseModal}
+                    >
+                      <div className="flex gap-3 items-center">
+                        <img
+                          src={`${baby.url}?${Math.random()}`}
+                          className="rounded-full overflow-hidden object-cover flex-shrink-0 w-12 h-12"
+                          alt="user avatar"
                         />
-                      </a>
-                    </Link>
-                  );
-                })}
+                        <span className="text-xl font-semibold">
+                          {baby.name}
+                        </span>
+                      </div>
+                      <Icon
+                        icon="arrow"
+                        size={25}
+                        xClass="text-indigo-800 group-hover:translate-x-1 duration-100"
+                      />
+                    </a>
+                  </Link>
+                ))}
               </div>
             </div>
           )}

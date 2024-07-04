@@ -1,13 +1,15 @@
 const BackDrop = ({ setShowModal, showModal }) => {
+  const handleCloseModal = () => {
+    if (typeof window !== "undefined" && window.document) {
+      document.body.style.overflow = "unset";
+    }
+    setShowModal(false);
+  };
+
   return (
     <div
-      onClick={() => {
-        if (typeof window != "undefined" && window.document) {
-          document.body.style.overflow = "unset";
-        }
-        setShowModal(false);
-      }}
-      className={`inset-0 absolute bg-black bg-opacity-30 z-10 backdrop-blur-sm ${
+      onClick={handleCloseModal}
+      className={`inset-0 fixed bg-black bg-opacity-30 z-10 backdrop-blur-sm ${
         showModal ? "block" : "hidden"
       }`}
     ></div>

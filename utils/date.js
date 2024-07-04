@@ -1,6 +1,7 @@
 const pluralRules = new Intl.PluralRules("en-US", {
   type: "ordinal",
 });
+
 const suffixes = {
   one: "st",
   two: "nd",
@@ -44,7 +45,7 @@ export const formatDateShort = (date) => {
 };
 
 export const formatDateFirst = (date) => {
-  var d = new Date(date.seconds * 1000);
+  const d = new Date(date.seconds * 1000);
   return longEnUSFormatter
     .formatToParts(d)
     .map(extractValueAndCustomizeDayOfMonth)

@@ -97,7 +97,7 @@ const AddBabyModal = () => {
             <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
               <div className="flex w-[90vw] sm:w-[420px] rounded-lg p-3 relative flex-col bg-white">
                 <div className="flex justify-between items-center">
-                  <ModalTitle title="Add a bambino" />
+                  <ModalTitle title="Add a loved one" />
                   <button
                     onClick={() => {
                       setShowModal(false);

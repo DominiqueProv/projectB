@@ -16,7 +16,7 @@ import { IoAddSharp } from "react-icons/io5";
 import { FiHeart } from "react-icons/fi";
 import { IoMdRemove } from "react-icons/io";
 
-const components = {
+const iconComponents = {
   title: MdTitle,
   signout: VscSignOut,
   login: FiLogIn,
@@ -36,14 +36,11 @@ const components = {
   minus: IoMdRemove,
 };
 
-const Icon = ({ icon, xClass, size }) => {
-  const IconDisplay = components[icon];
-  return (
-    <IconDisplay
-      size={size || 18}
-      className={`flex-shrink-0 ${xClass || "text-indigo-100"}`}
-    />
-  );
+const Icon = ({ icon, xClass = "text-indigo-100", size = 18 }) => {
+  const IconComponent = iconComponents[icon];
+  return IconComponent ? (
+    <IconComponent size={size} className={`flex-shrink-0 ${xClass}`} />
+  ) : null;
 };
 
 export default Icon;

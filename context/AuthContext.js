@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, useMemo } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
@@ -23,56 +23,63 @@ export const AuthContextProvider = ({ children }) => {
     toast.success("Password reset email sent");
   const notifyPasswordResetError = () =>
     toast.error("There was a problem with the operation");
-  const notifyVerifyEmailSent = () => toast.success("Notification email sent");
+  const notifyVerifyEmailSent = () => toast.success("Verification email sent");
   const notifyEmailNotVerified = () =>
-    toast.error(
-      "You must verified you email address to access your account, Dont forget to check your spam folder"
-    );
-  const notifyLogoutSuccess = () =>
-    toast.success("You have been logged out successfully");
-  const notifyLogoutError = () =>
-    toast.error("There was a problem during logout");
+    toast.error("Please verify your email address to access your account.");
+  const notifyLogoutSuccess = () => toast.success("Logged out successfully");
+  const notifyLogoutError = () => toast.error("Error during logout");
 
-  const signup = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password).then(
-      (userCredential) => {
-        sendEmailVerification(userCredential.user);
-        notifyVerifyEmailSent();
-        auth.signOut();
-      }
-    );
+  const signup = async (email, password) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      await sendEmailVerification(userCredential.user);
+      notifyVerifyEmailSent();
+      await auth.signOut();
+    } catch (error) {
+      console.error("Signup Error: ", error);
+    }
   };
 
   const updateUser = async (displayName, photoURL) => {
-    await updateProfile(auth.currentUser, {
-      displayName,
-      photoURL,
-    });
-    setUser((prev) => ({
-      ...prev,
-      userName: auth.currentUser.displayName,
-      photoUrl: auth.currentUser.photoURL,
-    }));
+    try {
+      await updateProfile(auth.currentUser, { displayName, photoURL });
+      setUser((prev) => ({
+        ...prev,
+        displayName: auth.currentUser.displayName,
+        photoURL: auth.currentUser.photoURL,
+      }));
+    } catch (error) {
+      console.error("Update User Error: ", error);
+    }
   };
 
-  const login = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password).then(
-      (userCredential) => {
-        if (!userCredential.user.emailVerified) {
-          notifyEmailNotVerified();
-          auth.signOut();
-          return;
-        }
+  const login = async (email, password) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if (!userCredential.user.emailVerified) {
+        notifyEmailNotVerified();
+        await auth.signOut();
       }
-    );
+    } catch (error) {
+      console.error("Login Error: ", error);
+    }
   };
 
   const logout = async () => {
-    setUser(null);
     try {
       await signOut(auth);
+      setUser(null);
       notifyLogoutSuccess();
-    } catch (err) {
+    } catch (error) {
+      console.error("Logout Error: ", error);
       notifyLogoutError();
     }
   };
@@ -81,26 +88,27 @@ export const AuthContextProvider = ({ children }) => {
     try {
       await sendPasswordResetEmail(auth, email);
       notifyPasswordResetSuccess();
-    } catch (err) {
+    } catch (error) {
+      console.error("Reset Password Error: ", error);
       notifyPasswordResetError();
     }
   };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser({
-          uid: user.uid,
-          email: user.email,
-          userName: user.displayName,
-          photoUrl: user.photoURL,
-          emailVerified: user.emailVerified,
-          lastLoginTime: user.metadata.lastLoginAt,
-          lastLoginDay: user.metadata.lastSignInTime,
-        });
-      } else {
-        setUser(null);
-      }
+      setUser(
+        user
+          ? {
+              uid: user.uid,
+              email: user.email,
+              displayName: user.displayName,
+              photoURL: user.photoURL,
+              emailVerified: user.emailVerified,
+              lastLoginTime: user.metadata.lastLoginAt,
+              lastLoginDay: user.metadata.lastSignInTime,
+            }
+          : null
+      );
       setLoading(false);
     });
     return () => unsubscribe();
@@ -118,7 +126,7 @@ export const AuthContextProvider = ({ children }) => {
         resetPassword,
       }}
     >
-      {loading ? null : children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };

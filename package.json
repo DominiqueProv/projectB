@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.9.8",
+    "browser-image-compression": "^2.0.2",
     "firebase": "^9.9.0",
     "formik": "^2.2.9",
     "html-react-parser": "^3.0.6",

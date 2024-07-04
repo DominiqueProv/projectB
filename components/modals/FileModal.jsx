@@ -13,25 +13,30 @@ const FileModal = ({ file, index }) => {
   const notes = file?.notes || [];
 
   useEffect(() => {
-    const close = (e) => {
-      if (e.keyCode === 27) {
-        setShowModal(false);
-      }
+    const closeOnEscapeKey = (e) => {
+      if (e.keyCode === 27) setShowModal(false);
     };
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
+    window.addEventListener("keydown", closeOnEscapeKey);
+    return () => window.removeEventListener("keydown", closeOnEscapeKey);
   }, []);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+    if (typeof window !== "undefined" && window.document) {
+      document.body.style.overflow = "hidden";
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    document.body.style.overflow = "unset";
+  };
 
   return (
     <>
       <button
-        onClick={() => {
-          setShowModal(true);
-          if (typeof window != "undefined" && window.document) {
-            document.body.style.overflow = "hidden";
-          }
-        }}
-        className={"absolute inset-0 z-10"}
+        onClick={handleOpenModal}
+        className="absolute inset-0 z-10"
         type="button"
       />
       {file && <Medias file={file} />}
@@ -39,23 +44,15 @@ const FileModal = ({ file, index }) => {
         {showModal && (
           <>
             <div
-              onClick={() => {
-                setShowModal(false);
-                document.body.style.overflow = "unset";
-              }}
-              className={`inset-0 fixed bg-black bg-opacity-30 z-40 backdrop-blur-sm ${
-                showModal ? "block" : "hidden"
-              }`}
+              onClick={handleCloseModal}
+              className="inset-0 fixed bg-black bg-opacity-30 z-40 backdrop-blur-sm"
             ></div>
             <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
               <div className="flex w-[90vw] h-[90vh] sm:w-[80vw] rounded-lg p-3 relative flex-col bg-white overflow-auto lg:overflow-hidden pb-[85px]">
                 <div className="flex justify-between items-center">
                   <ModalTitle title={notes?.title} />
                   <button
-                    onClick={() => {
-                      setShowModal(false);
-                      document.body.style.overflow = "unset";
-                    }}
+                    onClick={handleCloseModal}
                     className="bg-blue-200 self-start flex-shrink-0 z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
                     type="button"
                   >

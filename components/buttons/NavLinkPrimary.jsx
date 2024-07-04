@@ -2,9 +2,17 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const LinkPrimary = ({ url, label, children, xClass, exact, handleClick }) => {
+const LinkPrimary = ({
+  url,
+  label,
+  children,
+  xClass = "",
+  exact = false,
+  handleClick,
+}) => {
   const { pathname } = useRouter();
   const isActive = exact ? pathname === url : pathname.startsWith(url);
+
   return (
     <Link href={url} passHref>
       <a

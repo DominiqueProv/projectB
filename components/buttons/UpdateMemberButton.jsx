@@ -61,9 +61,9 @@ const UpdateMemberButton = ({ index }) => {
       {file.length ? (
         <>
           <ButtonPrimary
-            xClass={`px-4 flex-shrink-0`}
+            xClass="px-4 flex-shrink-0"
             handleClick={handleUploadFiles}
-            type={"button"}
+            type="button"
             label="Upload"
           >
             <IoCloudUploadOutline size={18} />
@@ -71,9 +71,9 @@ const UpdateMemberButton = ({ index }) => {
           <button
             className="bg-transparent"
             onClick={handleCancel}
-            type={"button"}
+            type="button"
           >
-            <MdOutlineCancel size={30} className={"text-indigo-800"} />
+            <MdOutlineCancel size={30} className="text-indigo-800" />
           </button>
         </>
       ) : (
@@ -81,12 +81,11 @@ const UpdateMemberButton = ({ index }) => {
           <label
             htmlFor={`file-upload-${index}`}
             role="upload"
-            className="w-full h-full flex justify-center items-center cursor-pointer group gap-2"
+            className="w-full h-full flex justify-center items-center cursor-pointer gap-2"
           >
             <span className="flex-shrink-0 text-indigo-800 font-semibold">
               Update Avatar
             </span>
-
             <Icon
               icon="add"
               size={25}
@@ -97,9 +96,8 @@ const UpdateMemberButton = ({ index }) => {
             className="hidden"
             id={`file-upload-${index}`}
             type="file"
-            multiple="multiple"
             onChange={handleChange}
-            accept=".png, .jpeg, video/*"
+            accept=".png, .jpeg, .jpg"
           />
         </>
       )}

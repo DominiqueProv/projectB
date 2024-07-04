@@ -8,7 +8,7 @@ import AccountWidget from "../components/user/AccountWidget";
 const Account = () => {
   return (
     <LayoutDefault>
-      <PageTitle title={"Your account"} />
+      <PageTitle title="Your account" />
       <section className="flex flex-col-reverse sm:flex-row gap-3 mt-4">
         <UserInfo />
         <UpdateUser />

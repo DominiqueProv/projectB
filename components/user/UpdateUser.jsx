@@ -12,111 +12,109 @@ const UpdateUser = () => {
   const inputFileRef = useRef();
   const inputUserNameRef = useRef();
   const { user, updateUser, setUser } = useAuth();
-  const [file, setFile] = useState([]);
+  const [file, setFile] = useState(null);
   const [isUpload, setIsUpload] = useState(false);
-  const isDisabled = isUpload || !file?.length;
+  const isDisabled = isUpload || !file;
 
   const handleChange = (e) => {
-    if (e.target.files) {
-      setFile(e.target.files);
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
     }
   };
 
-  const upload = async (file, user, setIsUpload) => {
-    const ext = file[0].name.split(".").pop();
+  const upload = async (file) => {
+    const ext = file.name.split(".").pop();
     const fileRef = ref(storage, `${user.uid}/userAvatar/${user.uid}.${ext}`);
     setIsUpload(true);
-    await uploadBytes(fileRef, file[0]);
-    const photoURL = await getDownloadURL(fileRef);
-    updateUser(user.userName, photoURL);
-    setIsUpload(false);
+    try {
+      await uploadBytes(fileRef, file);
+      const photoURL = await getDownloadURL(fileRef);
+      await updateUser(user.userName, photoURL);
+      setUser((prevUser) => ({ ...prevUser, photoURL }));
+    } catch (error) {
+      console.error("Failed to upload file:", error.message);
+    } finally {
+      setIsUpload(false);
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (file.length > 0) {
-      upload(file, user, setIsUpload);
+    if (file) {
+      await upload(file);
     } else {
-      updateUser(e.target[0].value);
+      await updateUser(inputUserNameRef.current.value);
     }
     inputFileRef.current.value = "";
     inputUserNameRef.current.value = "";
   };
 
-  const handleDelete = () => {
-    updateUser(user.userName, "");
+  const handleDelete = async () => {
+    await updateUser(user.userName, "");
+    setUser((prevUser) => ({ ...prevUser, photoURL: "" }));
   };
 
   return (
-    <>
-      <form
-        className="w-full rounded-md bg-slate-100/30 sm:max-w-[500px] flex flex-col gap-y-5 p-3 md:p-5"
-        onSubmit={handleSubmit}
-      >
-        <SectionTitle title="Manage" />
-        <div className="flex flex-col">
-          <label htmlFor="updateUserName">
-            {user.userName ? "Change your username" : "Create a username"}
-          </label>
+    <form
+      className="w-full rounded-md bg-slate-100/30 sm:max-w-[500px] flex flex-col gap-y-5 p-3 md:p-5"
+      onSubmit={handleSubmit}
+    >
+      <SectionTitle title="Manage" />
+      <div className="flex flex-col">
+        <label htmlFor="updateUserName">
+          {user.userName ? "Change your username" : "Create a username"}
+        </label>
+        <input
+          className="w-full rounded-md"
+          ref={inputUserNameRef}
+          type="text"
+          name="username"
+          id="updateUserName"
+          placeholder="John Smith"
+        />
+      </div>
+      <div className="flex gap-3 relative">
+        <div className="flex flex-col w-full">
+          <label htmlFor="updateUserAvatar">Update your avatar</label>
           <input
-            className="w-full rounded-md"
-            ref={inputUserNameRef}
-            type="text"
-            name="username"
-            id="updateUserName"
-            placeholder="John Smith"
+            className="rounded-md w-full"
+            type="file"
+            ref={inputFileRef}
+            onChange={handleChange}
+            accept=".png, .jpeg"
           />
         </div>
-        <div className="flex gap-3 relative ">
-          <div className="flex flex-col w-full">
-            <label htmlFor="signUpPassword">Update your avatar</label>
-            <input
-              className="rounded-md w-full"
-              type="file"
-              ref={inputFileRef}
-              onChange={handleChange}
-              accept=".png, .jpeg"
-            />
-          </div>
-          {!isUpload ? (
-            user.photoUrl ? (
-              <div className="flex-shrink-0 group">
-                <img
-                  src={user.photoUrl + "?" + Math.random()}
-                  className={`rounded-full overflow-hidden object-cover w-16 h-16`}
-                  alt={"user avatar"}
-                />
-                <div
-                  className="absolute z-50 top-0 right-0 bg-blue-200 text-blue-500 rounded-full p-1"
-                  onClick={handleDelete}
-                >
-                  <Icon icon={"delete"} xClass="w-3 h-3 cursor-pointer" />
-                </div>
+        {!isUpload ? (
+          user.photoURL ? (
+            <div className="relative flex-shrink-0 group">
+              <img
+                src={`${user.photoURL}?${Math.random()}`}
+                className="rounded-full overflow-hidden object-cover w-16 h-16"
+                alt="user avatar"
+              />
+              <div
+                className="absolute top-0 right-0 bg-blue-200 text-blue-500 rounded-full p-1 cursor-pointer"
+                onClick={handleDelete}
+              >
+                <Icon icon="delete" xClass="w-3 h-3" />
               </div>
-            ) : (
-              <HiOutlineUserCircle
-                size={50}
-                className="text-blue-500 self-end"
-              />
-            )
-          ) : (
-            <div className="w-16 rounded-full h-16 flex justify-center items-center flex-shrink-0 bg-slate-100">
-              <CgSpinner
-                className="animate-spin"
-                color={"dodgerblue"}
-                size={20}
-              />
             </div>
-          )}
-        </div>
-        <ButtonPrimary
-          xClass={"w-full"}
-          label={"Update your profile"}
-          type={"submit"}
-          isDisabled={isDisabled}
-        ></ButtonPrimary>
-      </form>
-    </>
+          ) : (
+            <HiOutlineUserCircle size={50} className="text-blue-500 self-end" />
+          )
+        ) : (
+          <div className="w-16 rounded-full h-16 flex justify-center items-center flex-shrink-0 bg-slate-100">
+            <CgSpinner className="animate-spin" color="dodgerblue" size={20} />
+          </div>
+        )}
+      </div>
+      <ButtonPrimary
+        xClass="w-full"
+        label="Update your profile"
+        type="submit"
+        isDisabled={isDisabled}
+      />
+    </form>
   );
 };
 

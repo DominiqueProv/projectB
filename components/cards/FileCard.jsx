@@ -4,14 +4,14 @@ import NotesModal from "../modals/NotesModal";
 import FileModal from "../modals/FileModal";
 
 const FileCard = ({ file, index, dob }) => {
-  const [date, setDateValue] = useState();
+  const [date, setDate] = useState("");
   const dateOfFile = formatDate(file?.metadata?.customMetadata?.originalDate);
-  const ONEDAY = 1000 * 60 * 60 * 24;
+  const ONE_DAY = 1000 * 60 * 60 * 24;
   const differenceMs =
     file?.metadata?.customMetadata?.originalDate - dob?.seconds * 1000;
-  const differenceInDays = Math.round(differenceMs / ONEDAY);
+  const differenceInDays = Math.round(differenceMs / ONE_DAY);
 
-  const dateValue = useCallback(() => {
+  const calculateDateValue = useCallback(() => {
     if (differenceInDays > 60 && differenceInDays < 365) {
       return `${Math.floor(differenceInDays / 30)} month${
         differenceInDays / 30 > 1 ? "s" : ""
@@ -26,14 +26,14 @@ const FileCard = ({ file, index, dob }) => {
   }, [differenceInDays]);
 
   useEffect(() => {
-    setDateValue(dateValue());
-  }, [file, dob, dateValue]);
+    setDate(calculateDateValue());
+  }, [file, dob, calculateDateValue]);
 
   return (
     <article className="flex flex-col h-full lg:hover:scale-105 transform duration-300 ease-out-expo lg:hover:drop-shadow-xl">
       <div className="relative">
         <FileModal file={file} index={index} />
-        {file && file.notes && (
+        {file?.notes?.title && (
           <div className="absolute bottom-0 w-full p-2 pt-4 font-semibold text-white bg-gradient-to-t from-black/60 to-transparent">
             {file.notes.title}
           </div>
@@ -56,7 +56,7 @@ const FileCard = ({ file, index, dob }) => {
             </span>
           )}
           {file?.notes?.location && (
-            <span className="font-medium text-xs text-indigo-900 self-end bg-indigo-100 rounded-md p-2">
+            <span className="font-medium text-xs text-indigo-900 self-end bg-indigo-100 rounded-md px-2 py-1">
               {file.notes.location.split(",")[0]}
             </span>
           )}

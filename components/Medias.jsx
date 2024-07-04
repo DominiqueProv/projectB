@@ -4,8 +4,7 @@ import Video from "./medias/Video";
 
 const Medias = ({ file }) => {
   const type = file.metadata.contentType;
-  const regex = new RegExp("video");
-  const isVideo = regex.test(type);
+  const isVideo = type.includes("video");
   const [loaded, setLoaded] = useState(false);
 
   if (isVideo) {
@@ -26,7 +25,7 @@ const Medias = ({ file }) => {
             <div className="w-full flex justify-center items-center aspect-square lg:aspect-video">
               <CgSpinner
                 className="animate-spin"
-                color={"dodgerblue"}
+                color="dodgerblue"
                 size={40}
               />
             </div>

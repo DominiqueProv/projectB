@@ -8,9 +8,11 @@ const MyFirstField = ({ item }) => {
   const { id, name } = item;
   const { date, formDataFromDb, handleDelete } = useMyFirst();
 
+  const hasData = formDataFromDb[id];
+
   return (
     <div className="flex gap-3 items-center bg-slate-100 p-1 pl-3 justify-between rounded-md">
-      {!formDataFromDb[id] ? (
+      {!hasData ? (
         <>
           <span className="text-indigo-800 font-semibold">{name}</span>
           <AddDateModal date={date} id={id} />
@@ -26,7 +28,7 @@ const MyFirstField = ({ item }) => {
             onClick={handleDelete}
             name={id}
           >
-            <Icon icon={"minus"} size={25} xClass="text-slate-500" />
+            <Icon icon="minus" size={25} xClass="text-slate-500" />
           </button>
         </>
       )}

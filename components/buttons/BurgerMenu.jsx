@@ -2,20 +2,17 @@ import { TbMenu2 } from "react-icons/tb";
 import { IoMdClose } from "react-icons/io";
 
 const BurgerMenu = ({ setShowModal, showModal }) => {
+  const toggleModal = () => {
+    setShowModal(!showModal);
+    if (typeof window !== "undefined" && window.document) {
+      document.body.style.overflow = showModal ? "unset" : "hidden";
+    }
+  };
+
   return (
     <button
-      onClick={() => {
-        setShowModal(!showModal);
-        if (typeof window != "undefined" && window.document) {
-          if (!showModal) {
-            document.body.style.overflow = "hidden";
-          } else {
-            document.body.style.overflow = "unset";
-          }
-        }
-      }}
-      className="bg-blue-200 z-30
-  p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
+      onClick={toggleModal}
+      className="bg-blue-200 z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
       type="button"
     >
       {showModal ? (

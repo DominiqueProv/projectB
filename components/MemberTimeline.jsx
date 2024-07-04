@@ -1,7 +1,6 @@
 import FileCard from "./cards/FileCard";
 
 const MemberTimeline = ({ babyData, filesData }) => {
-  console.log(filesData);
   return (
     <section className="mt-10">
       <h2 className="mb-5 text-6xl leading-[65px] lg:leading-[100px] _linear-wipe">

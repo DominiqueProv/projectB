@@ -14,30 +14,32 @@ import UploadButton from "../../components/buttons/UploadButton";
 
 const TimelineFeed = () => {
   const { filesData, setFilesData, getFiles } = useFiles();
-  const [babyData, setBabyData] = useState();
+  const [babyData, setBabyData] = useState(null);
   const router = useRouter();
   const { user } = useAuth();
-  const url = window.location.pathname.split("/").pop();
+  const babyId = router.query.id;
 
-  const getBabyData = async (babyId) => {
-    const docRef = doc(database, `${user.uid}/${babyId}`);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      setBabyData(docSnap.data());
-    } else {
-      console.log("No such document!");
+  const getBabyData = async (id) => {
+    try {
+      const docRef = doc(database, `${user.uid}/${id}`);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setBabyData(docSnap.data());
+      } else {
+        console.error("No such document!");
+      }
+    } catch (error) {
+      console.error("Error fetching baby data:", error);
     }
   };
 
   useEffect(() => {
-    if (router.isReady) {
-      const id = router.query.id;
-      if (!id) return null;
+    if (router.isReady && babyId) {
       setFilesData([]);
-      getFiles(id);
-      getBabyData(id);
+      getFiles(babyId);
+      getBabyData(babyId);
     }
-  }, [router.isReady, url]);
+  }, [router.isReady, babyId]);
 
   return (
     <LayoutDefault>
