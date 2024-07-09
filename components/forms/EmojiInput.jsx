@@ -21,7 +21,7 @@ const EmojiInput = ({ formData, updateFormData }) => {
       setEmojies({ list: displayData });
       setData(displayData);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 

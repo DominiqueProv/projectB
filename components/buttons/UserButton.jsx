@@ -8,8 +8,6 @@ const UserButton = ({ setShowModal }) => {
   const { user } = useAuth();
   const router = useRouter();
 
-  console.log(user.photoURL);
-
   const handleButtonClick = () => {
     setShowModal(false);
     if (typeof window !== "undefined" && window.document) {

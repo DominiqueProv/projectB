@@ -4,7 +4,7 @@ import GoogleInput from "./GoogleInput";
 import EmojiInput from "./EmojiInput";
 
 const NotesForm = ({ file, setShowModal, index }) => {
-  const { filesData, notesInput, setNotesInput, saveNote, formData, updateFormData } =
+  const { filesData, notesInput, setNotesInput, saveNote, formData, updateFormData, setTempFormData } =
     useFiles();
   useEffect(() => {
     setNotesInput(notesInput);
@@ -19,6 +19,7 @@ const NotesForm = ({ file, setShowModal, index }) => {
     e.preventDefault();
     saveNote(file);
     setShowModal(false);
+    setTempFormData(formData);
     updateFormData({});
   };
 

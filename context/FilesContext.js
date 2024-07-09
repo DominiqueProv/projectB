@@ -36,6 +36,7 @@ const FilesContextProvider = ({ children }) => {
     const [sources, setSources] = useState([]);
     const [totalPercent, setTotalPercent] = useState(0);
     const [formData, updateFormData] = useState({});
+    const [tempFormData, setTempFormData] = useState({});
 
     const notifyDelete = () => toast.success('File deleted');
     const notifyUpload = () => toast.success('Upload successful');
@@ -220,14 +221,13 @@ const FilesContextProvider = ({ children }) => {
         if (docSnap.exists()) {
             return docSnap.data();
         } else {
-            console.log('No such document!');
+            console.error('No such document!');
             return null;
         }
     };
 
     const saveNote = async (file, index) => {
         const fileRefName = file?.metadata?.name?.split('.')[0];
-        console.log(formData);
         const docRef = doc(database, `${user.uid}/${pid}/notes/${fileRefName}`);
         await setDoc(docRef, formData, {
             merge: true
@@ -242,7 +242,7 @@ const FilesContextProvider = ({ children }) => {
             setFilesData(newfilesData);
             setNotesInput([]);
         } else {
-            console.log('No such document!');
+            console.error('No such document!');
         }
     };
 
@@ -262,7 +262,6 @@ const FilesContextProvider = ({ children }) => {
                 setFilesData,
                 deleteFile,
                 putStorageItem,
-                getNote,
                 saveNote,
                 setNotesInput,
                 handleCancelUpload,
@@ -270,7 +269,9 @@ const FilesContextProvider = ({ children }) => {
                 setSources,
                 handleChange,
                 formData,
-                updateFormData
+                updateFormData,
+                tempFormData,
+                setTempFormData
             }}
         >
             {children}

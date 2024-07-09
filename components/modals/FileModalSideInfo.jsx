@@ -1,49 +1,52 @@
 import { TbFileDescription, TbMoodHappy } from "react-icons/tb";
 import { MdOutlinePlace, MdOutlineMonitorWeight } from "react-icons/md";
 import { AiOutlineColumnHeight } from "react-icons/ai";
+import { useFiles } from "../../context/FilesContext";
 
 const FileModalSideInfo = ({ notes }) => {
+  const { tempFormData } = useFiles();
+  const mergedFormData = {...notes, ...tempFormData};
   if (!notes) return null;
 
   const infoItems = [
     {
-      condition: notes.description,
+      condition: mergedFormData.description,
       icon: <TbFileDescription size={18} />,
       label: "Informations",
-      value: notes.description,
+      value: mergedFormData.description,
       bgColor: "bg-blue-100",
       valueBgColor: "bg-blue-200",
     },
     {
-      condition: notes.location,
+      condition: mergedFormData.location,
       icon: <MdOutlinePlace size={18} />,
       label: "Location",
-      value: notes.location,
+      value: mergedFormData.location,
       bgColor: "bg-teal-100",
       valueBgColor: "bg-teal-200",
     },
     {
-      condition: notes.mood,
+      condition: mergedFormData.mood,
       icon: <TbMoodHappy size={18} />,
       label: "Mood",
-      value: notes.mood,
+      value: mergedFormData.mood,
       valueClass: "text-3xl",
       bgColor: "bg-indigo-100",
       valueBgColor: "bg-indigo-200",
     },
     {
-      condition: notes.height,
+      condition: mergedFormData.height,
       icon: <AiOutlineColumnHeight size={18} />,
       label: "Height",
-      value: `${notes.height} cm`,
+      value: `${mergedFormData.height} cm`,
       bgColor: "bg-gray-100",
       valueBgColor: "bg-gray-200",
     },
     {
-      condition: notes.weight,
+      condition: mergedFormData.weight,
       icon: <MdOutlineMonitorWeight size={18} />,
       label: "Weight",
-      value: `${notes.weight} kg`,
+      value: `${mergedFormData.weight} kg`,
       bgColor: "bg-white",
       valueBgColor: "bg-gray-100",
     },
