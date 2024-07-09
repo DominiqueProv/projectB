@@ -15,6 +15,8 @@ import { MdTitle } from "react-icons/md";
 import { IoAddSharp } from "react-icons/io5";
 import { FiHeart } from "react-icons/fi";
 import { IoMdRemove } from "react-icons/io";
+import { BsCheck2 } from "react-icons/bs";
+
 
 const iconComponents = {
   title: MdTitle,
@@ -25,6 +27,7 @@ const iconComponents = {
   update: FiUserCheck,
   arrow: FiChevronRight,
   edit: AiFillEdit,
+  save: BsCheck2,
   height: AiOutlineColumnHeight,
   weight: MdOutlineMonitorWeight,
   description: TbFileDescription,

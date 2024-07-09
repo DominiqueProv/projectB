@@ -5,8 +5,8 @@ import ButtonNotesStyle from "../buttons/ButtonNotesStyle";
 import NotesForm from "../forms/NotesForm";
 import CloseButton from "../buttons/CloseButton";
 import ButtonPrimary from "../buttons/ButtonPrimary";
-import { useFiles } from "../../context/FilesContext";
 import Icon from "../buttons/Icon";
+import { useFiles } from "../../context/FilesContext";
 import Modal from "./Portal";
 import ModalTitle from "../text/ModalTitle";
 
@@ -15,7 +15,6 @@ const NotesModal = ({ isFileModal, file, index }) => {
   const { notesInput, setNotesInput } = useFiles();
 
   const notesStyle = [
-    "title",
     "description",
     "location",
     "mood",

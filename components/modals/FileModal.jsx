@@ -5,7 +5,7 @@ import Modal from "./Portal";
 import DeleteMemoryModal from "./DeleteMemoryModal";
 import NotesModal from "./NotesModal";
 import FileModalSideInfo from "./FileModalSideInfo";
-import ModalTitle from "../text/ModalTitle";
+import EditableField from "../text/EditableField";
 import Medias from "../Medias";
 
 const FileModal = ({ file, index }) => {
@@ -50,7 +50,7 @@ const FileModal = ({ file, index }) => {
             <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
               <div className="flex w-[90vw] h-[90vh] sm:w-[80vw] rounded-lg p-3 relative flex-col bg-white overflow-auto lg:overflow-hidden pb-[85px]">
                 <div className="flex justify-between items-center">
-                  <ModalTitle title={notes?.title} />
+                  <EditableField file={file} index={index}/>
                   <button
                     onClick={handleCloseModal}
                     className="bg-blue-200 self-start flex-shrink-0 z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"

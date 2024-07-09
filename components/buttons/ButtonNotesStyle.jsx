@@ -8,7 +8,7 @@ const ButtonNotesStyle = ({
   xClass = "",
   notesInput,
 }) => {
-  const isDisabled = notesInput.includes(label);
+  const isDisabled = notesInput?.includes(label);
   const buttonStyles = isDisabled
     ? "bg-gray-100 text-gray-300"
     : "bg-gray-200 text-indigo-800 hover:bg-indigo-200";
