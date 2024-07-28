@@ -4,8 +4,14 @@ import GoogleInput from "./GoogleInput";
 import EmojiInput from "./EmojiInput";
 
 const NotesForm = ({ file, setShowModal, index }) => {
-  const { filesData, notesInput, setNotesInput, saveNote, formData, updateFormData, setTempFormData } =
-    useFiles();
+  const {
+    filesData,
+    notesInput,
+    setNotesInput,
+    saveNote,
+    formData,
+    updateFormData,
+  } = useFiles();
   useEffect(() => {
     setNotesInput(notesInput);
     updateFormData((prev) => ({
@@ -14,12 +20,10 @@ const NotesForm = ({ file, setShowModal, index }) => {
     }));
   }, [notesInput]);
 
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    saveNote(file);
+    await saveNote(file, index);
     setShowModal(false);
-    setTempFormData(formData);
     updateFormData({});
   };
 
