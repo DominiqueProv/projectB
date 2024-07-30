@@ -42,14 +42,18 @@ const FileCard = ({ file, index, dob }) => {
           <NotesModal file={file} index={index} />
         </div>
       </div>
-      <div className="flex justify-between gap-2 bg-slate-50 rounded-b-md p-2">
+      <div
+        className={`flex justify-between ${
+          file?.notes?.mood || file?.notes?.location ? "gap-2" : ""
+        } bg-slate-50 rounded-b-md p-2`}
+      >
         <div className="flex flex-col flex-grow justify-center bg-blue-50 p-2 rounded-md">
           <span className="font-medium text-xs text-indigo-900 mb-1">
             {dateOfFile}
           </span>
           <span className="font-medium text-xs text-indigo-900">{date}</span>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col self-end">
           {file?.notes?.mood && (
             <span className="font-medium text-xs text-indigo-900 self-end">
               Feeling <span className="text-xl">{file.notes.mood}</span>

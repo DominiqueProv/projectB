@@ -70,17 +70,6 @@ const NotesModal = ({ isFileModal, file, index }) => {
           label="Add Notes"
         />
       )}
-      {isFileModal && (
-        <ButtonPrimary
-          handleClick={handleOpenModal}
-          label={file?.notes ? "Edit Notes" : "Add Notes"}
-          xClass="px-3 flex-grow"
-        >
-          <div className="lg:hidden">
-            <Icon icon="edit" size={25} xClass="hidden lg:block" />
-          </div>
-        </ButtonPrimary>
-      )}
       <Modal>
         {showModal && (
           <>

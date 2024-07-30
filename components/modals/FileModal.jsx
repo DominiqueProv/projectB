@@ -50,7 +50,13 @@ const FileModal = ({ file, index }) => {
             <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
               <div className="flex w-[90vw] h-[90vh] sm:w-[80vw] rounded-lg p-3 relative flex-col bg-white overflow-auto lg:overflow-hidden pb-[85px]">
                 <div className="flex justify-between items-center">
-                  <EditableField file={file} index={index}/>
+                  <EditableField
+                    file={file}
+                    fileIndex={index}
+                    noteValue={notes.title}
+                    isTitle
+                    noteType="title"
+                  />
                   <button
                     onClick={handleCloseModal}
                     className="bg-blue-200 self-start flex-shrink-0 z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
@@ -74,7 +80,7 @@ const FileModal = ({ file, index }) => {
                         : null
                     }`}
                   >
-                    <FileModalSideInfo notes={notes} />
+                    <FileModalSideInfo file={file} fileIndex={index} />
                     <div className="justify-between gap-3 hidden lg:flex">
                       <NotesModal isFileModal file={file} index={index} />
                       <DeleteMemoryModal

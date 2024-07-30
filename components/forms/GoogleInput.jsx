@@ -14,6 +14,7 @@ const GoogleInput = ({ noteType, handleLocation }) => {
 
   return (
     <input
+      className="w-full lg:w-[170px]"
       ref={ref}
       key={1000}
       name={noteType}

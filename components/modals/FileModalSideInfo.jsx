@@ -1,51 +1,58 @@
+import React from "react";
 import { TbFileDescription, TbMoodHappy } from "react-icons/tb";
 import { MdOutlinePlace, MdOutlineMonitorWeight } from "react-icons/md";
 import { AiOutlineColumnHeight } from "react-icons/ai";
+import EditableField from "../text/EditableField";
 
-const FileModalSideInfo = ({ notes }) => {
-  if (!notes) return null;
+const FileModalSideInfo = ({ file, fileIndex }) => {
+  if (!file || !file.notes) return null;
+  const { notes } = file;
 
   const infoItems = [
     {
-      condition: notes.description,
+      condition: true,
       icon: <TbFileDescription size={18} />,
       label: "Description",
       value: notes.description,
       bgColor: "bg-blue-100",
       valueBgColor: "bg-blue-200",
+      noteType: "description",
     },
     {
-      condition: notes.location,
+      condition: true,
       icon: <MdOutlinePlace size={18} />,
       label: "Location",
       value: notes.location,
       bgColor: "bg-teal-100",
       valueBgColor: "bg-teal-200",
+      noteType: "location",
     },
     {
-      condition: notes.mood,
+      condition: true,
       icon: <TbMoodHappy size={18} />,
       label: "Mood",
       value: notes.mood,
-      valueClass: "text-3xl",
       bgColor: "bg-indigo-100",
       valueBgColor: "bg-indigo-200",
+      noteType: "mood",
     },
     {
-      condition: notes.height,
+      condition: true,
       icon: <AiOutlineColumnHeight size={18} />,
-      label: "Height",
-      value: `${notes.height} cm`,
+      label: "Height (cm)",
+      value: notes.height ? `${notes.height} cm` : "",
       bgColor: "bg-gray-100",
       valueBgColor: "bg-gray-200",
+      noteType: "height",
     },
     {
-      condition: notes.weight,
+      condition: true,
       icon: <MdOutlineMonitorWeight size={18} />,
-      label: "Weight",
-      value: `${notes.weight} kg`,
+      label: "Weight (kg)",
+      value: notes.weight ? `${notes.weight} kg` : "",
       bgColor: "bg-white",
       valueBgColor: "bg-gray-100",
+      noteType: "weight",
     },
   ];
 
@@ -62,12 +69,15 @@ const FileModalSideInfo = ({ notes }) => {
                 {item.icon}
                 {item.label}
               </span>
-              <span
-                className={`${item.valueBgColor} rounded-md p-1 ${
-                  item.valueClass || ""
-                }`}
-              >
-                {item.value}
+              <span className={`${item.valueBgColor} rounded-md p-1`}>
+                <EditableField
+                  file={file}
+                  fileIndex={fileIndex}
+                  notes={notes}
+                  noteType={item.noteType}
+                  noteValue={item.value}
+                  isTitle={item.noteType === "title"}
+                />
               </span>
             </li>
           )

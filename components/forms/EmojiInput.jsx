@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { uuidv4 } from "@firebase/util";
-import ButtonPrimary from "../buttons/ButtonPrimary";
-import Icon from "../buttons/Icon";
+import ButtonNoteStyle from "../buttons/ButtonNotesStyle";
 
-const EmojiInput = ({ formData, updateFormData }) => {
+const EmojiInput = ({
+  formData,
+  updateFormData,
+  handleSave,
+  file,
+  fileIndex,
+}) => {
   const [data, setData] = useState([]);
   const [isSelected, setIsSelected] = useState(false);
-  const [selectedEmoji, setSelectedEmoji] = useState("");
+  const [selectedEmoji, setSelectedEmoji] = useState(formData.mood || "");
   const [emojies, setEmojies] = useState({
     query: "",
     list: [],
   });
+
   const fetchData = async () => {
     try {
       const response = await fetch(
@@ -45,13 +51,9 @@ const EmojiInput = ({ formData, updateFormData }) => {
     });
   };
 
-  const handleReset = () => {
+  const handleSaveClick = () => {
+    handleSave(file, fileIndex);
     setIsSelected(false);
-    setSelectedEmoji("");
-    updateFormData({
-      ...formData,
-      mood: "",
-    });
   };
 
   useEffect(() => {
@@ -59,22 +61,21 @@ const EmojiInput = ({ formData, updateFormData }) => {
   }, []);
 
   return (
-    <div key={1010}>
+    <div key={1010} className="w-full">
       {isSelected ? (
-        <div className="flex justify-between _fake-input-container">
+        <div className="flex justify-between items-center _fake-input-container">
           <span className="text-3xl">{selectedEmoji}</span>
-          <ButtonPrimary
-            handleClick={handleReset}
-            xClass={"px-2 bg-indigo-300 aspect-square"}
-          >
-            <Icon icon={"delete"} size={20} />
-          </ButtonPrimary>
+          <ButtonNoteStyle
+            handleClick={handleSaveClick}
+            xClass="px-3"
+            label="save"
+          />
         </div>
       ) : (
         <>
           <input
             className="w-full mb-4"
-            placeholder="Search emojies"
+            placeholder="Search emojis"
             type="text"
             onKeyUp={handleSearch}
           />
