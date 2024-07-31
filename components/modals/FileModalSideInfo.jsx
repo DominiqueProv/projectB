@@ -5,7 +5,6 @@ import { AiOutlineColumnHeight } from "react-icons/ai";
 import EditableField from "../text/EditableField";
 
 const FileModalSideInfo = ({ file, fileIndex }) => {
-  if (!file || !file.notes) return null;
   const { notes } = file;
 
   const infoItems = [
@@ -13,7 +12,7 @@ const FileModalSideInfo = ({ file, fileIndex }) => {
       condition: true,
       icon: <TbFileDescription size={18} />,
       label: "Description",
-      value: notes.description,
+      value: notes?.description,
       bgColor: "bg-blue-100",
       valueBgColor: "bg-blue-200",
       noteType: "description",
@@ -22,7 +21,7 @@ const FileModalSideInfo = ({ file, fileIndex }) => {
       condition: true,
       icon: <MdOutlinePlace size={18} />,
       label: "Location",
-      value: notes.location,
+      value: notes?.location,
       bgColor: "bg-teal-100",
       valueBgColor: "bg-teal-200",
       noteType: "location",
@@ -31,7 +30,7 @@ const FileModalSideInfo = ({ file, fileIndex }) => {
       condition: true,
       icon: <TbMoodHappy size={18} />,
       label: "Mood",
-      value: notes.mood,
+      value: notes?.mood,
       bgColor: "bg-indigo-100",
       valueBgColor: "bg-indigo-200",
       noteType: "mood",
@@ -40,7 +39,7 @@ const FileModalSideInfo = ({ file, fileIndex }) => {
       condition: true,
       icon: <AiOutlineColumnHeight size={18} />,
       label: "Height (cm)",
-      value: notes.height ? `${notes.height} cm` : "",
+      value: notes?.height ? `${notes?.height} cm` : "",
       bgColor: "bg-gray-100",
       valueBgColor: "bg-gray-200",
       noteType: "height",
@@ -49,7 +48,7 @@ const FileModalSideInfo = ({ file, fileIndex }) => {
       condition: true,
       icon: <MdOutlineMonitorWeight size={18} />,
       label: "Weight (kg)",
-      value: notes.weight ? `${notes.weight} kg` : "",
+      value: notes?.weight ? `${notes?.weight} kg` : "",
       bgColor: "bg-white",
       valueBgColor: "bg-gray-100",
       noteType: "weight",

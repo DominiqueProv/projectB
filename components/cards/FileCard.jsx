@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import { formatDate } from "../../utils/date";
-import NotesModal from "../modals/NotesModal";
 import FileModal from "../modals/FileModal";
 
 const FileCard = ({ file, index, dob }) => {
@@ -29,6 +28,8 @@ const FileCard = ({ file, index, dob }) => {
     setDate(calculateDateValue());
   }, [file, dob, calculateDateValue]);
 
+  console.log(file.notes);
+
   return (
     <article className="flex flex-col h-full lg:hover:scale-105 transform duration-300 ease-out-expo lg:hover:drop-shadow-xl">
       <div className="relative">
@@ -38,10 +39,19 @@ const FileCard = ({ file, index, dob }) => {
             {file.notes.title}
           </div>
         )}
-        <div className="absolute top-2 right-2 z-50">
-          <NotesModal file={file} index={index} />
-        </div>
+        {!file?.notes ? (
+          <div className="absolute top-2 right-2 z-50">
+            <div
+              className={`cursor-pointer bg-blue-100 font-medium text-xs text-blue-500 self-start flex items-center px-2 rounded-md hover:bg-indigo-800 hover:text-white duration-300 ease-out-expo flex-shrink-0`}
+            >
+              <div className={`flex space-x-2 items-center`}>
+                <span>Add Notes</span>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
+
       <div
         className={`flex justify-between ${
           file?.notes?.mood || file?.notes?.location ? "gap-2" : ""
