@@ -3,7 +3,6 @@ import { IoMdClose } from "react-icons/io";
 import MediasFull from "../MediasFull";
 import Modal from "./Portal";
 import DeleteMemoryModal from "./DeleteMemoryModal";
-import NotesModal from "./NotesModal";
 import FileModalSideInfo from "./FileModalSideInfo";
 import EditableField from "../text/EditableField";
 import Medias from "../Medias";
@@ -81,8 +80,7 @@ const FileModal = ({ file, index }) => {
                     }`}
                   >
                     <FileModalSideInfo file={file} fileIndex={index} />
-                    <div className="justify-between gap-3 hidden lg:flex">
-                      <NotesModal isFileModal file={file} index={index} />
+                    <div className="justify-end gap-3 hidden lg:flex">
                       <DeleteMemoryModal
                         file={file}
                         setShowFileModal={setShowModal}
@@ -91,7 +89,6 @@ const FileModal = ({ file, index }) => {
                   </div>
                 </div>
                 <div className="flex justify-between gap-3 p-3 fixed bottom-0 left-0 right-0 lg:hidden bg-slate-700/20 backdrop-blur">
-                  <NotesModal isFileModal file={file} index={index} />
                   <DeleteMemoryModal
                     file={file}
                     setShowFileModal={setShowModal}

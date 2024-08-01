@@ -36,15 +36,16 @@ const DeleteMemoryModal = ({ file, setShowFileModal }) => {
 
   return (
     <>
-      <ButtonPrimary
-        handleClick={handleOpenModal}
-        label="Delete Memory"
-        xClass="px-3 flex-grow"
+      <button
+        onClick={handleDelete}
+        className="text-black/50 font-medium underline underline-offset-4 text-xs"
+        type="button"
       >
+        Delete
         <div className="lg:hidden">
           <Icon icon="delete" size={30} xClass="hidden lg:block" />
         </div>
-      </ButtonPrimary>
+      </button>
       <Modal>
         {showModal && (
           <>
