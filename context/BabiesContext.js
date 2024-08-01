@@ -11,6 +11,7 @@ const BabiesContextProvider = ({ children }) => {
   const { user } = useAuth();
   const [babiesDataList, setBabiesDataList] = useState([]);
   const [babiesData, setBabiesData] = useState({});
+  const [babyData, setBabyData] = useState(null);
   const [isUpload, setIsUpload] = useState(false);
   const [reload, setReload] = useState(false);
 
@@ -71,6 +72,8 @@ const BabiesContextProvider = ({ children }) => {
         deleteBaby,
         reload,
         setReload,
+        babyData,
+        setBabyData,
       }}
     >
       {children}

@@ -3,14 +3,22 @@ import ModalTitle from "../text/ModalTitle";
 import CloseButton from "../buttons/CloseButton";
 import Modal from "./Portal";
 import { CgSmileMouthOpen } from "react-icons/cg";
-import MyFirstField from "../MyFirstField";
+import MyFirstFieldTimeline from "../MyFirstsTimes/MyFirstFieldTimeline";
 import { myFirstfields } from "../../data/my_first_fields";
 import { CgSpinner } from "react-icons/cg";
 import { useMyFirst } from "../../context/MyFirstContext";
+import { useBabies } from "../../context/BabiesContext";
+import { formattedDate } from "../../utils/date";
+import AddFirstTimesModal from "./AddFirstTimesModal";
 
 const MyFirstTime = () => {
   const [showModal, setShowModal] = useState(false);
   const { isDeleting, getInfo } = useMyFirst();
+  const { babyData } = useBabies();
+
+  const date = new Date(babyData?.date?.seconds * 1000);
+
+  const formattedDob = formattedDate(date);
 
   useEffect(() => {
     const close = (e) => {
@@ -56,7 +64,7 @@ const MyFirstTime = () => {
             <aside
               className={`flex justify-end p-2 duration-500 ease-out-expo fixed z-20 right-0 bottom-0`}
             >
-              <div className="flex w-full sm:w-420 border-0 rounded-lg p-3 shadow-lg relative gap-3 flex-col bg-white outline-none focus:outline-none">
+              <div className="flex w-[calc(100vw-15px)] h-[calc(100vh-15px)] border-0 rounded-lg p-3 shadow-lg relative gap-3 flex-col bg-white outline-none focus:outline-none">
                 <div className="flex justify-between">
                   <ModalTitle title="First times" />
                   <CloseButton
@@ -80,9 +88,15 @@ const MyFirstTime = () => {
                     isDeleting ? "hidden" : "block"
                   }`}
                 >
+                  <div className="w-full text-center">
+                    Date of birth {formattedDob}
+                  </div>
                   {myFirstfields.map((item) => (
-                    <MyFirstField key={item.id} item={item} />
+                    <MyFirstFieldTimeline key={item.id} item={item} />
                   ))}
+                </div>
+                <div className="absolute bottom-3 right-3">
+                  <AddFirstTimesModal myFirstfields={myFirstfields} />
                 </div>
               </div>
             </aside>

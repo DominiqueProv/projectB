@@ -10,11 +10,12 @@ import GrowthCurveWeightModal from "../../components/modals/GrowthCurveWeightMod
 import { useRouter } from "next/router";
 import { useAuth } from "../../context/AuthContext";
 import { useFiles } from "../../context/FilesContext";
+import { useBabies } from "../../context/BabiesContext";
 import UploadButton from "../../components/buttons/UploadButton";
 
 const TimelineFeed = () => {
   const { filesData, setFilesData, getFiles } = useFiles();
-  const [babyData, setBabyData] = useState(null);
+  const { babyData, setBabyData } = useBabies();
   const router = useRouter();
   const { user } = useAuth();
   const babyId = router.query.id;

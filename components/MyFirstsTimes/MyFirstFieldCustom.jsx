@@ -1,8 +1,8 @@
 import React from "react";
-import AddDateModal from "../components/modals/AddDateModal";
-import Icon from "./buttons/Icon";
-import { useMyFirst } from "../context/MyFirstContext";
-import { formatDateFirst } from "../utils/date";
+import AddDateModal from "../modals/AddDateModal";
+import Icon from "../buttons/Icon";
+import { useMyFirst } from "../../context/MyFirstContext";
+import { formatDateFirst } from "../../utils/date";
 
 const MyFirstField = ({ item }) => {
   const { id, name } = item;

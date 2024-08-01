@@ -28,8 +28,6 @@ const FileCard = ({ file, index, dob }) => {
     setDate(calculateDateValue());
   }, [file, dob, calculateDateValue]);
 
-  console.log(file.notes);
-
   return (
     <article className="flex flex-col h-full lg:hover:scale-105 transform duration-300 ease-out-expo lg:hover:drop-shadow-xl">
       <div className="relative">

@@ -2,17 +2,15 @@ import { useState, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
 import Icon from "../buttons/Icon";
 import Modal from "./Portal";
-import Calendar from "react-calendar";
 import ModalTitle from "../text/ModalTitle";
 import { useMyFirst } from "../../context/MyFirstContext";
 import { useBabies } from "../../context/BabiesContext";
+import MyFirstField from "../MyFirstsTimes/MyFirstField";
 
-const AddDateModal = ({ id, setShowAddMyFirstModal }) => {
+const AddFirstTimesModal = ({ myFirstfields }) => {
   const [showModal, setShowModal] = useState(false);
   const { date, onChange, setId, setIsReadyToUpload } = useMyFirst();
   const { babyData } = useBabies();
-
-  const minDate = new Date(babyData.date.seconds * 1000);
 
   useEffect(() => {
     const close = (e) => {
@@ -29,13 +27,12 @@ const AddDateModal = ({ id, setShowAddMyFirstModal }) => {
       <button
         onClick={() => {
           setShowModal(true);
-          setId(id);
           if (typeof window != "undefined" && window.document) {
             document.body.style.overflow = "hidden";
           }
         }}
         className={
-          "border-2 flex-shrink-0 p-1 group w-12 h-12 rounded-lg border-indigo-800 flex justify-center items-center duration-300 ease-out-expo relative space-x-2"
+          "border-2 p-1 group w-12 h-12 rounded-lg border-indigo-800 flex justify-center items-center duration-300 ease-out-expo relative space-x-2"
         }
         type="button"
       >
@@ -59,9 +56,9 @@ const AddDateModal = ({ id, setShowAddMyFirstModal }) => {
               }`}
             ></div>
             <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
-              <div className="flex w-[90vw] sm:w-[420px] rounded-lg p-3 relative flex-col bg-white">
+              <div className="flex w-[90vw] rounded-lg p-3 relative flex-col bg-white">
                 <div className="flex justify-between items-center">
-                  <ModalTitle title="Add a date" />
+                  <ModalTitle title="Add a first time" />
                   <button
                     onClick={() => {
                       setShowModal(false);
@@ -75,17 +72,14 @@ const AddDateModal = ({ id, setShowAddMyFirstModal }) => {
                     />
                   </button>
                 </div>
-                <div className="rounded-lg border-indigo-800 border-[1px] overflow-hidden mt-3">
-                  <Calendar
-                    value={date}
-                    minDate={minDate}
-                    onClickDay={(value) => {
-                      setIsReadyToUpload(true);
-                      onChange(value);
-                      setShowModal(false);
-                      setShowAddMyFirstModal(false);
-                    }}
-                  />
+                <div className="grid lg:grid-cols-4 gap-4 pt-8">
+                  {myFirstfields.map((item) => (
+                    <MyFirstField
+                      key={item.id}
+                      item={item}
+                      setShowAddMyFirstModal={setShowModal}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -96,4 +90,4 @@ const AddDateModal = ({ id, setShowAddMyFirstModal }) => {
   );
 };
 
-export default AddDateModal;
+export default AddFirstTimesModal;

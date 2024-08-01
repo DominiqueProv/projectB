@@ -51,3 +51,13 @@ export const formatDateFirst = (date) => {
     .map(extractValueAndCustomizeDayOfMonth)
     .join("");
 };
+
+export const formattedDate = (date) => {
+  const d = date.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  return d;
+};
