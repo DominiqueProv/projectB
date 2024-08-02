@@ -62,9 +62,9 @@ const MyFirstTime = () => {
               }`}
             ></div>
             <aside
-              className={`flex justify-end p-2 duration-500 ease-out-expo fixed z-20 right-0 bottom-0`}
+              className={`flex justify-end p-2 duration-500 ease-out-expo fixed z-20 inset-0`}
             >
-              <div className="flex w-[calc(100vw-15px)] h-[calc(100vh-15px)] border-0 rounded-lg p-3 shadow-lg relative gap-3 flex-col bg-white outline-none focus:outline-none">
+              <div className="flex w-full lg:w-[70vw] h-[calc(100vh-15px)] border-0 rounded-lg p-3 shadow-lg relative gap-3 flex-col bg-white outline-none focus:outline-none">
                 <div className="flex justify-between">
                   <ModalTitle title="First times" />
                   <CloseButton
@@ -84,15 +84,22 @@ const MyFirstTime = () => {
                   />
                 </div>
                 <div
-                  className={` flex flex-col gap-2 ${
+                  className={`flex flex-col gap-2 ${
                     isDeleting ? "hidden" : "block"
                   }`}
                 >
                   <div className="w-full text-center">
                     Date of birth {formattedDob}
                   </div>
-                  {myFirstfields.map((item) => (
-                    <MyFirstFieldTimeline key={item.id} item={item} />
+                  {myFirstfields.map((item, index) => (
+                    <div
+                      key={item.id}
+                      className={`w-full flex ${
+                        index % 2 === 0 ? "justify-start" : "justify-end"
+                      }`}
+                    >
+                      <MyFirstFieldTimeline item={item} />
+                    </div>
                   ))}
                 </div>
                 <div className="absolute bottom-3 right-3">

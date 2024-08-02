@@ -73,10 +73,11 @@ const AddFirstTimesModal = ({ myFirstfields }) => {
                   </button>
                 </div>
                 <div className="grid lg:grid-cols-4 gap-4 pt-8">
-                  {myFirstfields.map((item) => (
+                  {myFirstfields.map((item, index) => (
                     <MyFirstField
                       key={item.id}
                       item={item}
+                      index={index}
                       setShowAddMyFirstModal={setShowModal}
                     />
                   ))}
