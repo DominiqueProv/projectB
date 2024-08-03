@@ -12,11 +12,11 @@ import {
   YAxis,
   ResponsiveContainer,
 } from "recharts";
-import Growth from "../../data/growth";
+import useGrowth from "../../data/useGrowth";
 
 const GrowthCurveWeightModal = () => {
   const [showModal, setShowModal] = useState(false);
-  const data = Growth();
+  const data = useGrowth();
 
   useEffect(() => {
     const closeOnEscapeKey = (e) => {
