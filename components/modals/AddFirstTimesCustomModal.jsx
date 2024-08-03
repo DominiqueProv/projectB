@@ -3,14 +3,9 @@ import { IoMdClose } from "react-icons/io";
 import Icon from "../buttons/Icon";
 import Modal from "./Portal";
 import ModalTitle from "../text/ModalTitle";
-import { useMyFirst } from "../../context/MyFirstContext";
-import { useBabies } from "../../context/BabiesContext";
-import MyFirstField from "../MyFirstsTimes/MyFirstField";
 
-const AddFirstTimesModal = ({ myFirstfields }) => {
+const AddFirstTimesModal = () => {
   const [showModal, setShowModal] = useState(false);
-  const { date, onChange, setId, setIsReadyToUpload } = useMyFirst();
-  const { babyData } = useBabies();
 
   useEffect(() => {
     const close = (e) => {
@@ -34,13 +29,11 @@ const AddFirstTimesModal = ({ myFirstfields }) => {
         className={"flex items-center gap-3 group"}
         type="button"
       >
-        <span className="font-medium">Create you own</span>
-        <div className="border-2 group h-10 aspect-square rounded-lg border-indigo-800 flex justify-center items-center duration-300 ease-out-expo relative">
+        <span className="font-medium text-blue-500">Create your own</span>
+        <div className="border-2 group h-10 aspect-square rounded-lg bg-blue-50 border-blue-500 flex justify-center items-center duration-300 ease-out-expo relative">
           <Icon
             icon={"add"}
-            xClass={
-              "text-indigo-800 scale-75 group-hover:scale-100 duration-300 "
-            }
+            xClass={"text-blue-500 scale-75 group-hover:scale-90 duration-300 "}
             size={50}
           />
         </div>
@@ -60,7 +53,7 @@ const AddFirstTimesModal = ({ myFirstfields }) => {
             <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90vw] lg:max-w-[80vw]">
               <div className="flex w-full rounded-lg relative flex-col bg-white max-h-[80vh]">
                 <div className="flex justify-between items-center p-3 border-b border-gray-200">
-                  <ModalTitle title="Add a first time" />
+                  <ModalTitle title="Add a custom first time" />
                   <button
                     onClick={() => {
                       setShowModal(false);
@@ -75,18 +68,8 @@ const AddFirstTimesModal = ({ myFirstfields }) => {
                     />
                   </button>
                 </div>
-                <div className="pt-4 max-h-[calc(100vh-30px)] overflow-y-auto">
-                  <div className="grid lg:grid-cols-4 gap-4 p-3">
-                    {myFirstfields.map((item, index) => (
-                      <MyFirstField
-                        key={item.id}
-                        item={item}
-                        index={index}
-                        setShowAddMyFirstModal={setShowModal}
-                      />
-                    ))}
-                  </div>
-                </div>
+                Content - input field to add the name max 80 char. - calendar
+                button to add a date - save button to complete the action
               </div>
             </div>
           </>

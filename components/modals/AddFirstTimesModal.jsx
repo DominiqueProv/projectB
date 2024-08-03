@@ -3,14 +3,10 @@ import { IoMdClose } from "react-icons/io";
 import Icon from "../buttons/Icon";
 import Modal from "./Portal";
 import ModalTitle from "../text/ModalTitle";
-import { useMyFirst } from "../../context/MyFirstContext";
-import { useBabies } from "../../context/BabiesContext";
 import MyFirstField from "../MyFirstsTimes/MyFirstField";
 
 const AddFirstTimesModal = ({ myFirstfields }) => {
   const [showModal, setShowModal] = useState(false);
-  const { date, onChange, setId, setIsReadyToUpload } = useMyFirst();
-  const { babyData } = useBabies();
 
   useEffect(() => {
     const close = (e) => {
@@ -34,12 +30,12 @@ const AddFirstTimesModal = ({ myFirstfields }) => {
         className={"flex items-center gap-3 group"}
         type="button"
       >
-        <span className="font-medium">Suggestions</span>
-        <div className="border-2 group h-10 aspect-square rounded-lg border-indigo-800 flex justify-center items-center duration-300 ease-out-expo relative">
+        <span className="font-medium text-violet-500">Suggestions</span>
+        <div className="border-2 bg-violet-50 group h-10 aspect-square rounded-lg border-violet-500 flex justify-center items-center duration-300 ease-out-expo relative">
           <Icon
             icon={"add"}
             xClass={
-              "text-indigo-800 scale-75 group-hover:scale-100 duration-300 "
+              "text-violet-500 scale-75 group-hover:scale-100 duration-300 "
             }
             size={50}
           />

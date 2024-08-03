@@ -17,8 +17,8 @@ const MyFirstTime = () => {
   const { isDeleting, getInfo, formDataFromDb } = useMyFirst();
   const { babyData } = useBabies();
 
-  const date = new Date(babyData?.date?.seconds * 1000);
-  const formattedDob = formattedDate(date);
+  const dob = new Date(babyData?.date?.seconds * 1000);
+  const formattedDob = formattedDate(dob);
 
   useEffect(() => {
     const close = (e) => {
@@ -102,7 +102,7 @@ const MyFirstTime = () => {
                   />
                 </div>
 
-                <div className="w-full flex flex-col items-center justify-center text-center font-semibold bg-gray-50 py-5">
+                <div className="w-full flex flex-col items-center justify-center text-center font-semibold bg-gray-100 py-5">
                   <div className="flex gap-3 p-2 bg-indigo-50 rounded-md">
                     <BsCalendarHeart size={20} color={"indigo"} />
                     <span className="text-indigo-950">Date of birth</span>
