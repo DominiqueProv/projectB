@@ -3,28 +3,27 @@ import Icon from "../buttons/Icon";
 import { useMyFirst } from "../../context/MyFirstContext";
 import { formatDateFirst } from "../../utils/date";
 
-const MyFirstField = ({ item }) => {
+const MyFirstFieldTimeline = ({ item }) => {
   const { id, name } = item;
-  const { date, formDataFromDb, handleDelete } = useMyFirst();
-
+  const { formDataFromDb, handleDelete } = useMyFirst();
   const hasData = formDataFromDb[id];
 
   return (
     hasData && (
-      <div className="flex gap-3 items-center bg-slate-100 p-1 pl-3 justify-between rounded-md lg:w-[400px]">
+      <div className="flex gap-3 items-center bg-indigo-800 text-white p-1 pl-3 justify-between rounded-md w-full sm:w-[400px] mt-4">
         <span className="flex-grow flex flex-col rounded-md">
-          <span className="text-indigo-800 font-semibold">{name}</span>
+          <span className="text-white font-semibold">{name}</span>
           {formatDateFirst(formDataFromDb[id])}
         </span>
         <button
-          className="group bg-slate-50 cursor-pointer text-white rounded-full max-h-[50px] py-2 flex items-center justify-center aspect-square h-full hover:bg-slate-300 duration-300 ease-out-expo"
+          className="group bg-indigo-700 cursor-pointer text-white rounded-full max-h-[30px] py-2 flex items-center justify-center aspect-square h-full hover:bg-slate-300 duration-300 ease-out-expo"
           onClick={handleDelete}
           name={id}
         >
           <Icon
             icon="minus"
-            size={25}
-            xClass="text-slate-300 group-hover:text-indigo-500 duration-300"
+            size={15}
+            xClass="text-slate-500 group-hover:text-indigo-500 duration-300"
           />
         </button>
       </div>
@@ -32,4 +31,4 @@ const MyFirstField = ({ item }) => {
   );
 };
 
-export default MyFirstField;
+export default MyFirstFieldTimeline;

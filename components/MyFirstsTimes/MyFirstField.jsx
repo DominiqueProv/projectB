@@ -2,8 +2,6 @@ import React from "react";
 import AddDateModal from "../modals/AddDateModal";
 import { useMyFirst } from "../../context/MyFirstContext";
 
-const colors = ["#3730a3", "#6366f1", "#90d8e4", "#f472b6", "#3730a3"];
-
 const MyFirstField = ({ item, setShowAddMyFirstModal, index }) => {
   const { id, name, description, funFact } = item;
   const { date, formDataFromDb } = useMyFirst();
@@ -12,28 +10,21 @@ const MyFirstField = ({ item, setShowAddMyFirstModal, index }) => {
 
   return (
     !hasData && (
-      <div
-        className="flex gap-3 items-center p-1 pl-3 justify-between rounded-md"
-        style={{
-          borderColor: colors[index % colors.length],
-          borderWidth: "2px",
-          borderStyle: "solid",
-        }}
-      >
-        <>
-          <span className="text-indigo-800 font-semibold relative group">
+      <div className="rounded-md p-2 border-2 border-[#90d8e4]">
+        <div className="flex items-center justify-between gap-3">
+          <span className="text-indigo-800 font-semibold relative group leading-5">
             {name}
-            <div className="text-xs text-slate-500">
-              <p>{description}</p>
-              <p>{funFact}</p>
-            </div>
           </span>
           <AddDateModal
             date={date}
             id={id}
             setShowAddMyFirstModal={setShowAddMyFirstModal}
           />
-        </>
+        </div>
+        <div className="text-xs font-light text-slate-500 mt-2">
+          <p className="font-medium">{description}</p>
+          <p>{funFact}</p>
+        </div>
       </div>
     )
   );
