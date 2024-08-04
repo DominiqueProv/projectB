@@ -51,10 +51,10 @@ const GrowthCurveHeightModal = () => {
     <>
       <button
         onClick={handleOpenModal}
-        className="bg-white z-30 group p-3 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none"
+        className="flex items-center justify-center bg-indigo-50 border-2 border-indigo-400 h-[50px] w-[50px] z-30 group p-3 rounded-xl outline-none focus:outline-none"
         type="button"
       >
-        <VscSymbolRuler size={35} className="text-teal-300 _scale-rotate" />
+        <VscSymbolRuler size={35} className="text-indigo-400 _scale-rotate" />
       </button>
 
       <Modal>

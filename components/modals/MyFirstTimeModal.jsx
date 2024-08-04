@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import ModalTitle from "../text/ModalTitle";
 import CloseButton from "../buttons/CloseButton";
 import Modal from "./Portal";
-import { CgSmileMouthOpen, CgSpinner } from "react-icons/cg";
+import { CgSpinner } from "react-icons/cg";
+import { GoTrophy } from "react-icons/go";
 import MyFirstFieldTimeline from "../MyFirstsTimes/MyFirstFieldTimeline";
 import { myFirstfields } from "../../data/my_first_fields";
 import { useMyFirst } from "../../context/MyFirstContext";
@@ -71,10 +72,10 @@ const MyFirstTime = () => {
               document.body.style.overflow = "hidden";
             }
           }}
-          className="bg-white z-30 group p-3 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none"
+          className="bg-blue-50 aspect-square h-[50px] w-[50px] border-2 border-blue-400 group p-3 rounded-xl outline-none focus:outline-none"
           type="button"
         >
-          <CgSmileMouthOpen size={35} className="text-pink-400 _scale-rotate" />
+          <GoTrophy size={25} className="text-blue-400 _scale-rotate" />
         </button>
       )}
 

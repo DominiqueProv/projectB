@@ -56,7 +56,7 @@ const FileModalSideInfo = ({ file, fileIndex }) => {
   ];
 
   return (
-    <ul className="space-y-2 lg:overflow-auto lg:max-h-[65vh] rounded-md">
+    <ul className="space-y-2 lg:overflow-auto lg:max-h-[70vh] rounded-md">
       {infoItems.map(
         (item, index) =>
           item.condition && (

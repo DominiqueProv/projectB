@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import MemberTimeline from "../../components/MemberTimeline";
 import LayoutDefault from "../../components/layouts/LayoutDefault";
 import { database } from "../../lib/firebase";
@@ -45,17 +45,17 @@ const TimelineFeed = () => {
   return (
     <LayoutDefault>
       <MemberTimeline babyData={babyData} filesData={filesData} />
-      <div className="fixed z-20 bottom-0 right-2 flex justify-end p-3">
+      <div className="backdrop-blur-lg fixed z-20 bottom-0 flex justify-between items-center p-3 left-0 right-0 bg-white/70">
         <UploadButton />
-        <MyFirstContextProvider>
-          <MyFirstTime />
-        </MyFirstContextProvider>
-      </div>
-      <div className="fixed z-20 bottom-0 right-20 flex justify-end gap-3 p-3">
-        <MyFirstContextProvider>
-          <GrowthCurveHeightModal />
-          <GrowthCurveWeightModal />
-        </MyFirstContextProvider>
+        <div className="flex gap-3">
+          <MyFirstContextProvider>
+            <MyFirstTime />
+          </MyFirstContextProvider>
+          <MyFirstContextProvider>
+            <GrowthCurveHeightModal />
+            <GrowthCurveWeightModal />
+          </MyFirstContextProvider>
+        </div>
       </div>
     </LayoutDefault>
   );

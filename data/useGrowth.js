@@ -1,7 +1,7 @@
 import { useFiles } from "../context/FilesContext";
 import { formatDateShort } from "../utils/date";
 
-const lengthForAge = [
+const lengthForAgeOrg = [
   { age: 0, p3: 46.1, p15: 50.4, p50: 52.5, p85: 53.6, p97: 54.7 },
   { age: 1, p3: 71.3, p15: 74.5, p50: 77.3, p85: 80.3, p97: 83.3 },
   { age: 2, p3: 81.7, p15: 84.5, p50: 88, p85: 90.2, p97: 92.4 },
@@ -9,7 +9,16 @@ const lengthForAge = [
   { age: 4, p3: 95, p15: 98.2, p50: 100.5, p85: 105.2, p97: 108.6 },
 ];
 
-export const combineData = (growthData, dob) => {
+const weightForAge = [
+  { age: 0, p3: 2.5, p15: 3.2, p50: 3.6, p85: 4.1, p97: 4.5 },
+  { age: 1, p3: 4.4, p15: 5.0, p50: 5.7, p85: 6.4, p97: 6.9 },
+  { age: 2, p3: 5.2, p15: 5.9, p50: 6.6, p85: 7.4, p97: 8.0 },
+  { age: 3, p3: 6.0, p15: 6.8, p50: 7.5, p85: 8.3, p97: 8.9 },
+  { age: 4, p3: 6.7, p15: 7.5, p50: 8.3, p85: 9.2, p97: 9.8 },
+];
+
+export const combineData = (growthData, dob, type = "height") => {
+  const lengthForAge = type === "height" ? lengthForAgeOrg : weightForAge;
   const monthlyData = [];
 
   lengthForAge.forEach((percentile, yearIndex) => {
@@ -33,18 +42,18 @@ export const combineData = (growthData, dob) => {
         );
       });
 
-      let height = matchingGrowthData
-        ? parseFloat(matchingGrowthData.height)
+      let measurement = matchingGrowthData
+        ? parseFloat(matchingGrowthData[type])
         : null;
 
-      if (height === null && monthlyData.length > 0) {
-        const prevHeight = monthlyData[monthlyData.length - 1].height;
+      if (measurement === null && monthlyData.length > 0) {
+        const prevMeasurement = monthlyData[monthlyData.length - 1][type];
         const nextYear = lengthForAge[yearIndex + 1];
-        const nextHeight =
+        const nextMeasurement =
           nextYear && month === 11 ? nextYear.p50 : percentile.p50;
 
-        if (prevHeight !== null && nextYear) {
-          height = (prevHeight + nextHeight) / 2;
+        if (prevMeasurement !== null && nextYear) {
+          measurement = (prevMeasurement + nextMeasurement) / 2;
         }
       }
 
@@ -73,12 +82,20 @@ export const combineData = (growthData, dob) => {
           percentile.p97 +
           (month / 12) *
             (lengthForAge[yearIndex + 1]?.p97 - percentile.p97 || 0),
-        height,
+        [type]: measurement,
       });
     }
   });
 
-  return monthlyData;
+  // Filter out data beyond the latest recorded date
+  const latestDate = new Date(
+    Math.max(...growthData.map((item) => new Date(item.dateCreated)))
+  );
+  const filteredData = monthlyData.filter(
+    (item) => new Date(item.date) <= latestDate
+  );
+
+  return filteredData;
 };
 
 const useGrowth = () => {
@@ -86,7 +103,7 @@ const useGrowth = () => {
   const data = filesData
     ?.filter(
       (item) =>
-        (item.notes && item.notes.weigth) || (item.notes && item.notes.height)
+        (item.notes && item.notes.weight) || (item.notes && item.notes.height)
     )
     .map((item) => item.notes)
     .reverse();
