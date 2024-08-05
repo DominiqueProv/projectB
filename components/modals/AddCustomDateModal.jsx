@@ -7,7 +7,7 @@ import ModalTitle from "../text/ModalTitle";
 import { useMyFirst } from "../../context/MyFirstContext";
 import { useBabies } from "../../context/BabiesContext";
 
-const AddCustomDateModal = ({ date, onChange, id }) => {
+const AddCustomDateModal = ({ date, onChange, id, setChosenDate }) => {
   const [showModal, setShowModal] = useState(false);
   const { setId } = useMyFirst();
   const { babyData } = useBabies();
@@ -34,18 +34,19 @@ const AddCustomDateModal = ({ date, onChange, id }) => {
             document.body.style.overflow = "hidden";
           }
         }}
-        className={
-          "border-2 flex-shrink-0 group w-8 h-8 rounded-lg border-indigo-800 flex justify-center items-center duration-300 ease-out-expo relative space-x-2"
-        }
+        className={""}
         type="button"
       >
-        <Icon
-          icon={"add"}
-          xClass={
-            "text-indigo-800 scale-75 group-hover:scale-100 duration-300 "
-          }
-          size={50}
-        />
+        <div className="pr-3 gap-1 flex justify-center items-center duration-300 rounded-lg border-2 border-indigo-800 ease-out-expo relative group bg-indigo-50">
+          <Icon
+            icon={"add"}
+            xClass={
+              "text-indigo-800 scale-75 group-hover:scale-90 duration-300 "
+            }
+            size={40}
+          />
+          <span className="flex-shrink-0 text-indigo-800">Add a date</span>
+        </div>
       </button>
       <Modal>
         {showModal && (
@@ -80,6 +81,7 @@ const AddCustomDateModal = ({ date, onChange, id }) => {
                     value={date}
                     minDate={minDate}
                     onClickDay={(value) => {
+                      setChosenDate(value);
                       onChange(value);
                       setShowModal(false);
                     }}

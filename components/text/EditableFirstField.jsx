@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import ButtonNoteStyle from "../buttons/ButtonNotesStyle";
 
-const EditableFirstField = ({ tempText, setTempText }) => {
+const EditableFirstField = ({
+  tempText,
+  setTempText,
+  defaultText,
+  text,
+  setText,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [text, setText] = useState(defaultText);
 
   useEffect(() => {
     setText(defaultText);
     setTempText(defaultText);
-  }, [setTempText]);
+  }, []);
 
   const handleInputChange = (e) => {
     const newText = e.target.value;
@@ -33,7 +38,7 @@ const EditableFirstField = ({ tempText, setTempText }) => {
   };
 
   const handleButtonClick = () => {
-    if (tempText.length === 0 || tempText.match("Add a description")) {
+    if (tempText.length === 0 || tempText.startsWith("Add ")) {
       setTempText(defaultText);
       setIsEditing(false);
       return;
@@ -41,6 +46,18 @@ const EditableFirstField = ({ tempText, setTempText }) => {
     if (isEditing) {
       setText(tempText);
       setIsEditing(false);
+    } else {
+      setIsEditing(true);
+    }
+  };
+
+  const handleButtonClickEdit = () => {
+    if (isEditing) {
+      setText(tempText);
+      setIsEditing(false);
+      if (tempText.length === 0 || tempText.startsWith("Add ")) {
+        setText(defaultText);
+      }
     } else {
       setIsEditing(true);
     }
@@ -60,7 +77,7 @@ const EditableFirstField = ({ tempText, setTempText }) => {
   };
 
   return (
-    <div className="pr-0">
+    <div>
       {isEditing ? (
         <div className="flex gap-3 w-full">
           <input
@@ -80,9 +97,9 @@ const EditableFirstField = ({ tempText, setTempText }) => {
           />
         </div>
       ) : (
-        <div className="flex gap-3 group justify-between relative">
+        <div className="flex gap-3 group justify-between relative bg-indigo-50 rounded-md px-2">
           <span
-            className={`py-2 text-md ${
+            className={`py-2 text-md w-full ${
               text && !text.startsWith("Add ") ? "text-black" : "text-black/15"
             }`}
             onClick={handleEditClick}
@@ -90,7 +107,7 @@ const EditableFirstField = ({ tempText, setTempText }) => {
             {text}
           </span>
           <ButtonNoteStyle
-            handleClick={handleButtonClick}
+            handleClick={handleButtonClickEdit}
             xClass="px-2 absolute right-0 min-h-[40px] group-hover:opacity-100 opacity-0 duration-300 self-start"
             label="edit"
           />

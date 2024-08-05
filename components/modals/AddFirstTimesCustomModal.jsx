@@ -7,6 +7,7 @@ import EditableFirstField from "../text/EditableFirstField";
 import AddCustomDateModal from "./AddCustomDateModal";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import { useMyFirst } from "../../context/MyFirstContext";
+import { formattedDate } from "../../utils/date";
 
 const AddFirstTimesModal = () => {
   const [showModal, setShowModal] = useState(false);
@@ -15,6 +16,8 @@ const AddFirstTimesModal = () => {
 
   const [isInvalid, setIsInvalid] = useState(true);
   const [tempText, setTempText] = useState();
+  const [text, setText] = useState(null);
+  const [chosenDate, setChosenDate] = useState(null);
   const [id, setId] = useState();
   const defaultText = `Add a description`;
 
@@ -26,14 +29,18 @@ const AddFirstTimesModal = () => {
   };
 
   useEffect(() => {
+    setText(tempText);
+  }, [text, tempText]);
+
+  useEffect(() => {
     setId(generateId(tempText));
   }, [tempText]);
 
   useEffect(() => {
-    if (date && tempText) {
+    if (date && text?.length > 0 && !text?.startsWith("Add ")) {
       setIsInvalid(false);
     }
-  }, [date, tempText]);
+  }, [date, text]);
 
   useEffect(() => {
     const close = (e) => {
@@ -53,6 +60,8 @@ const AddFirstTimesModal = () => {
         description: tempText,
       },
     }));
+    setChosenDate(null);
+    setShowModal(false);
   };
 
   return (
@@ -95,6 +104,7 @@ const AddFirstTimesModal = () => {
                   <button
                     onClick={() => {
                       setShowModal(false);
+                      setChosenDate(null);
                       document.body.style.overflow = "unset";
                     }}
                     className="bg-blue-200 self-end z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
@@ -106,20 +116,39 @@ const AddFirstTimesModal = () => {
                     />
                   </button>
                 </div>
-                <EditableFirstField
-                  setTempText={setTempText}
-                  tempText={tempText}
-                  defaultText={defaultText}
-                />
-                <AddCustomDateModal onChange={onChange} date={date} id={id} />
-                <ButtonPrimary
-                  label="Save"
-                  isInvalid={isInvalid}
-                  handleClick={handleSubmit}
-                />
-                Content - input field to add the name max 80 char. - calendar
-                button to add a date - save button to complete the action -
-                disable if no date or input field is empty
+                <div className="p-3 pt-5">
+                  <EditableFirstField
+                    setTempText={setTempText}
+                    tempText={tempText}
+                    text={text}
+                    setText={setText}
+                    defaultText={defaultText}
+                  />
+                  <div className="flex gap-3 items-center mt-4">
+                    {!text?.startsWith("Add ") && text?.length > 0 && (
+                      <div>
+                        <AddCustomDateModal
+                          onChange={onChange}
+                          setChosenDate={setChosenDate}
+                          date={date}
+                          id={id}
+                        />
+                      </div>
+                    )}
+
+                    {chosenDate && (
+                      <span className="bg-gray-50 rounded-md py-2 px-4 font-semibold text-indigo-800">
+                        {formattedDate(chosenDate)}
+                      </span>
+                    )}
+                  </div>
+                  <ButtonPrimary
+                    label="Save"
+                    isInvalid={isInvalid}
+                    handleClick={handleSubmit}
+                    xClass={"py-2 px-10 mt-3"}
+                  />
+                </div>
               </div>
             </div>
           </>

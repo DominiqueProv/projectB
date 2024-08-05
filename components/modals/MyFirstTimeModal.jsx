@@ -102,7 +102,6 @@ const MyFirstTime = () => {
                     setShowModal={setShowModal}
                   />
                 </div>
-
                 <div className="w-full flex flex-col items-center justify-center text-center font-semibold bg-gray-100 py-5">
                   <div className="flex gap-3 p-2 bg-indigo-50 rounded-md">
                     <BsCalendarHeart size={20} color={"indigo"} />
