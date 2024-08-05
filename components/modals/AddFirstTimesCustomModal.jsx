@@ -3,9 +3,37 @@ import { IoMdClose } from "react-icons/io";
 import Icon from "../buttons/Icon";
 import Modal from "./Portal";
 import ModalTitle from "../text/ModalTitle";
+import EditableFirstField from "../text/EditableFirstField";
+import AddCustomDateModal from "./AddCustomDateModal";
+import ButtonPrimary from "../buttons/ButtonPrimary";
+import { useMyFirst } from "../../context/MyFirstContext";
 
 const AddFirstTimesModal = () => {
   const [showModal, setShowModal] = useState(false);
+  const { updateFormData } = useMyFirst();
+  const [date, onChange] = useState(new Date());
+
+  const [isInvalid, setIsInvalid] = useState(true);
+  const [tempText, setTempText] = useState();
+  const [id, setId] = useState();
+  const defaultText = `Add a description`;
+
+  const generateId = (input) => {
+    const cleaned = input?.replace(/[^a-zA-Z0-9]/g, "");
+    const id = cleaned?.substring(0, 15);
+
+    return id;
+  };
+
+  useEffect(() => {
+    setId(generateId(tempText));
+  }, [tempText]);
+
+  useEffect(() => {
+    if (date && tempText) {
+      setIsInvalid(false);
+    }
+  }, [date, tempText]);
 
   useEffect(() => {
     const close = (e) => {
@@ -16,6 +44,16 @@ const AddFirstTimesModal = () => {
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
   }, []);
+
+  const handleSubmit = () => {
+    updateFormData((prev) => ({
+      ...prev,
+      [id]: {
+        date: date,
+        description: tempText,
+      },
+    }));
+  };
 
   return (
     <>
@@ -68,8 +106,20 @@ const AddFirstTimesModal = () => {
                     />
                   </button>
                 </div>
+                <EditableFirstField
+                  setTempText={setTempText}
+                  tempText={tempText}
+                  defaultText={defaultText}
+                />
+                <AddCustomDateModal onChange={onChange} date={date} id={id} />
+                <ButtonPrimary
+                  label="Save"
+                  isInvalid={isInvalid}
+                  handleClick={handleSubmit}
+                />
                 Content - input field to add the name max 80 char. - calendar
-                button to add a date - save button to complete the action
+                button to add a date - save button to complete the action -
+                disable if no date or input field is empty
               </div>
             </div>
           </>

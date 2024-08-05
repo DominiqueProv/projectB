@@ -45,6 +45,7 @@ export const formatDateShort = (date) => {
 };
 
 export const formatDateFirst = (date) => {
+  console.log(date);
   const d = new Date(date.seconds * 1000);
   return longEnUSFormatter
     .formatToParts(d)

@@ -40,7 +40,7 @@ const MyFirstTime = () => {
   // Helper function to group items by year
   const groupByYear = (items) => {
     const grouped = items.reduce((acc, item) => {
-      const year = new Date(item.seconds * 1000).getFullYear();
+      const year = new Date(item.date.seconds * 1000).getFullYear();
       if (!acc[year]) {
         acc[year] = [];
       }

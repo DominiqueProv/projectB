@@ -2,9 +2,9 @@ import React from "react";
 import AddDateModal from "../modals/AddDateModal";
 import { useMyFirst } from "../../context/MyFirstContext";
 
-const MyFirstField = ({ item, setShowAddMyFirstModal, index }) => {
+const MyFirstField = ({ item, setShowAddMyFirstModal }) => {
   const { id, name, description, funFact } = item;
-  const { date, formDataFromDb } = useMyFirst();
+  const { formDataFromDb } = useMyFirst();
 
   const hasData = formDataFromDb[id];
 
@@ -16,7 +16,6 @@ const MyFirstField = ({ item, setShowAddMyFirstModal, index }) => {
             {name}
           </span>
           <AddDateModal
-            date={date}
             id={id}
             setShowAddMyFirstModal={setShowAddMyFirstModal}
           />
