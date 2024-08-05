@@ -72,7 +72,7 @@ const AddFirstTimesModal = ({ myFirstfields }) => {
                   </button>
                 </div>
                 <div className="pt-4 max-h-[calc(100vh-30px)] overflow-y-auto">
-                  <div className="grid lg:grid-cols-4 gap-4 p-3">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-3">
                     {myFirstfields.map((item, index) => (
                       <MyFirstField
                         key={item.id}

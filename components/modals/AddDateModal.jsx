@@ -7,7 +7,7 @@ import ModalTitle from "../text/ModalTitle";
 import { useMyFirst } from "../../context/MyFirstContext";
 import { useBabies } from "../../context/BabiesContext";
 
-const AddDateModal = ({ id, setShowAddMyFirstModal }) => {
+const AddDateModal = ({ id, setShowAddMyFirstModal, isFirstField }) => {
   const [showModal, setShowModal] = useState(false);
   const { date, onChange, setId, setIsReadyToUpload } = useMyFirst();
   const { babyData } = useBabies();
@@ -34,9 +34,9 @@ const AddDateModal = ({ id, setShowAddMyFirstModal }) => {
             document.body.style.overflow = "hidden";
           }
         }}
-        className={
-          "border-2 flex-shrink-0 group w-8 h-8 rounded-lg border-indigo-800 flex justify-center items-center duration-300 ease-out-expo relative space-x-2"
-        }
+        className={`${
+          isFirstField ? "self-start" : ""
+        } border-2 flex-shrink-0 group w-8 h-8 rounded-lg border-indigo-800 flex justify-center items-center duration-300 ease-out-expo relative space-x-2`}
         type="button"
       >
         <Icon

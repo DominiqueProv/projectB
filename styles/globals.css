@@ -93,3 +93,7 @@
 ::-webkit-scrollbar {
   display: none;
 }
+
+.react-calendar__navigation__label {
+  @apply text-xs lg:text-base;
+}

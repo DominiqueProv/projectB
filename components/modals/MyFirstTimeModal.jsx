@@ -94,7 +94,7 @@ const MyFirstTime = () => {
             <aside
               className={`flex justify-end p-2 duration-500 ease-out-expo fixed z-20 inset-0`}
             >
-              <div className="flex w-full lg:w-[70vw] h-[calc(100vh-15px)] border-0 rounded-lg shadow-lg relative flex-col bg-white outline-none focus:outline-none">
+              <div className="flex flex-col w-full lg:w-[70vw] h-[calc(100vh-15px)] border-0 rounded-lg shadow-lg relative bg-white outline-none focus:outline-none">
                 <div className="flex justify-between p-3 border-b border-gray-200">
                   <ModalTitle title="First times" />
                   <CloseButton
@@ -121,7 +121,7 @@ const MyFirstTime = () => {
                   />
                 </div>
                 <div
-                  className={`flex flex-col p-3 max-h-[calc(100vh-30px)] overflow-y-auto ${
+                  className={`flex-grow flex flex-col p-3 overflow-y-auto ${
                     isDeleting ? "hidden" : "block"
                   }`}
                 >
@@ -143,7 +143,7 @@ const MyFirstTime = () => {
                     </div>
                   ))}
                 </div>
-                <div className="flex justify-end p-3 border-t border-gray-200 w-full gap-5">
+                <div className="flex justify-end p-3 border-t border-gray-200 w-full gap-3 sm:gap-5">
                   <AddFirstTimesModal myFirstfields={myFirstfields} />
                   <AddFirstTimesCustomModal />
                 </div>

@@ -12,10 +12,11 @@ const MyFirstField = ({ item, setShowAddMyFirstModal }) => {
     !hasData && (
       <div className="rounded-md p-2 border-2 border-[#90d8e4]">
         <div className="flex items-center justify-between gap-3">
-          <span className="text-indigo-800 font-semibold relative group leading-5">
+          <span className="text-indigo-800 font-semibold relative group leading-[14px] lg:leading-4 text-xs lg:text-base">
             {name}
           </span>
           <AddDateModal
+            isFirstField
             id={id}
             setShowAddMyFirstModal={setShowAddMyFirstModal}
           />
