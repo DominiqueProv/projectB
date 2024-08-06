@@ -72,12 +72,9 @@ const FileModal = ({ file, index }) => {
                     {file && <MediasFull file={file} />}
                   </div>
                   <div
-                    className={`bg-blue-100 bg-opacity-70 rounded-lg p-2 lg:p-4 w-full lg:w-[320px] flex flex-col flex-shrink-0 justify-between ${
-                      (Object.keys(notes).length === 2 && notes.title) ||
-                      Object.keys(notes).length === 0
-                        ? "hidden lg:flex"
-                        : null
-                    }`}
+                    className={
+                      "bg-blue-100 bg-opacity-70 rounded-lg p-2 lg:p-4 w-full lg:w-[320px] flex-col flex-shrink-0 justify-between flex"
+                    }
                   >
                     <FileModalSideInfo file={file} fileIndex={index} />
                     <div className="justify-end gap-3 hidden lg:flex">
@@ -88,7 +85,7 @@ const FileModal = ({ file, index }) => {
                     </div>
                   </div>
                 </div>
-                <div className="flex justify-between gap-3 p-3 fixed bottom-0 left-0 right-0 lg:hidden bg-slate-700/20 backdrop-blur">
+                <div className="flex justify-between gap-3 p-3 fixed bottom-0 left-0 right-0 lg:hidden bg-white/30 backdrop-blur-lg">
                   <DeleteMemoryModal
                     file={file}
                     setShowFileModal={setShowModal}

@@ -37,7 +37,7 @@ const DeleteMemoryModal = ({ file, setShowFileModal }) => {
   return (
     <>
       <button
-        onClick={handleDelete}
+        onClick={handleOpenModal}
         className="text-black/50 font-medium underline underline-offset-4 text-xs"
         type="button"
       >
@@ -51,7 +51,7 @@ const DeleteMemoryModal = ({ file, setShowFileModal }) => {
           <>
             <div
               onClick={handleCloseModal}
-              className="inset-0 fixed bg-black bg-opacity-30 z-40 backdrop-blur-sm"
+              className="inset-0 fixed bg-white/30 z-40 backdrop-blur-sm"
             ></div>
             <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
               <div className="flex w-[90vw] sm:w-[420px] rounded-lg p-3 relative flex-col bg-white">
