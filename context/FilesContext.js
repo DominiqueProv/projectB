@@ -28,7 +28,7 @@ const FilesContextProvider = ({ children }) => {
   const { user } = useAuth();
   const [files, setFiles] = useState([]);
   const [filesData, setFilesData] = useState([]);
-  const [uploadTask, setUploadTask] = useState({});
+  const [uploadTask, setUploadTask] = useState(null);
   const [isUpload, setIsUpload] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [percent, setPercent] = useState(0);
@@ -90,7 +90,7 @@ const FilesContextProvider = ({ children }) => {
         return file;
       })
     );
-    compressedFiles.some((file) => {
+    compressedFiles.forEach((file) => {
       if (uploaded.findIndex((f) => f.name === file.name) === -1) {
         uploaded.push(file);
       }
@@ -138,7 +138,7 @@ const FilesContextProvider = ({ children }) => {
           percent / totalFiles + (totalPercent / totalFiles) * (totalFiles - 1);
         setTotalPercent(overallPercent);
       },
-      (err) => console.error(err.message),
+      (err) => console.error("Upload Error:", err.message),
       async () => {
         setIsSuccess(true);
         setShowModal(false);

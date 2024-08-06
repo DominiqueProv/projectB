@@ -124,9 +124,9 @@ const AddFirstTimesModal = () => {
                     setText={setText}
                     defaultText={defaultText}
                   />
-                  <div className="flex gap-3 items-center mt-4">
+                  <div className="flex gap-3 flex-col sm:flex-row sm:items-center mt-4 leading-[2.5]">
                     {!text?.startsWith("Add ") && text?.length > 0 && (
-                      <div>
+                      <div className="flex">
                         <AddCustomDateModal
                           onChange={onChange}
                           setChosenDate={setChosenDate}
@@ -143,10 +143,10 @@ const AddFirstTimesModal = () => {
                     )}
                   </div>
                   <ButtonPrimary
-                    label="Save"
+                    label="Add your custom First"
                     isInvalid={isInvalid}
                     handleClick={handleSubmit}
-                    xClass={"py-2 px-10 mt-3"}
+                    xClass={"py-2 px-10 mt-3 w-full sm:w-auto"}
                   />
                 </div>
               </div>
