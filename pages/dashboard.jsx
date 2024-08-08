@@ -9,13 +9,17 @@ const Dashboard = () => {
   const { isUpload } = useBabies();
 
   return (
-    <LayoutDefault>
-      <section className="max-w-[600px] mx-auto mt-6">
-        <h2 className="text-center _linear-wipe font-bold text-3xl">
+    <LayoutDefault isDark>
+      <section className="max-w-[600px] mx-auto pt-6">
+        <h2 className="text-center _linear-wipe font-bold text-3xl sm:text-5xl">
           Your Family Members
         </h2>
-        <div className={`grid ${useGridClasses()} mx-auto gap-2 sm:gap-6 mt-4`}>
+        <div className="flex justify-center mt-5">
           <AddBabyModal />
+        </div>
+        <div
+          className={`grid ${useGridClasses()} mx-auto gap-2 sm:gap-6 mt-12`}
+        >
           {!isUpload ? (
             <BabiesGrid />
           ) : (

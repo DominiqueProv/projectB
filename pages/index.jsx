@@ -14,25 +14,22 @@ const Home = () => {
 
   return (
     <LayoutDefault>
-      <h1 className="mb-5 text-7xl uppercase font-extrabold text-center">
+      <h1 className="my-5 text-4xl sm:text-7xl uppercase font-extrabold text-center">
         <span className="_linear-wipe inline-block">
           your private <br />
           digital journal
-        </span>{" "}
-        🥳
+        </span>
       </h1>
       <section>
         {user ? (
           <div className=" my-10 sm:my-20 flex flex-col justify-center items-center bg-slate-100 sm:bg-transparent sm:border-none sm:shadow-none sm:rounded-none border-indigo-800 border-2 shadow-lg rounded-xl p-4">
-            <h3 className="text-center font-medium text-xl">
-              Visit one of your loved one timeline.
-            </h3>
+            <h3 className="text-center font-medium text-xl">Timelines</h3>
             <div
               className={`grid ${classesGrid} mx-auto gap-6 place-items-center mt-4`}
             >
               {babiesDataList?.map((baby) => (
                 <Link href={`/timeline/${baby.id}`} key={baby.id}>
-                  <div className="relative cursor-pointer aspect-square h-20 lg:h-32 rounded-full overflow-hidden group flex items-center justify-center">
+                  <div className="relative cursor-pointer aspect-square h-32 lg:h-40 rounded-xl overflow-hidden group flex items-center justify-center">
                     {baby.url ? (
                       <>
                         <img

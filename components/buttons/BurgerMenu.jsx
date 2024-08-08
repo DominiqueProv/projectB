@@ -12,7 +12,7 @@ const BurgerMenu = ({ setShowModal, showModal }) => {
   return (
     <button
       onClick={toggleModal}
-      className="bg-blue-200 z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
+      className="bg-blue-200 z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none w-12 h-12 flex justify-center items-center"
       type="button"
     >
       {showModal ? (

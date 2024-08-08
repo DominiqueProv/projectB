@@ -2,12 +2,15 @@ import FileCard from "./cards/FileCard";
 
 const MemberTimeline = ({ babyData, filesData }) => {
   return (
-    <section className="mt-10">
-      <h2 className="mb-5 text-6xl leading-[65px] lg:leading-[100px] _linear-wipe">
+    <section>
+      <h2
+        id="timeline-heading"
+        className="mb-5 text-6xl leading-[65px] lg:leading-[100px] _linear-wipe"
+      >
         {babyData && `${babyData?.name}'s timeline`}
       </h2>
       <div className="flex lg:mt-10 gap-6">
-        <div className="grid lg:grid-cols-3 xl:grid-cols-4 w-full gap-5 auto-rows-max">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full gap-5 auto-rows-max">
           {filesData.length > 0 ? (
             filesData
               .sort(

@@ -24,6 +24,7 @@
     "react-intersection-observer": "^9.4.1",
     "react-lottie": "^1.2.3",
     "react-parallax-mouse": "^2.0.1",
+    "react-responsive": "^10.0.0",
     "react-toastify": "^9.1.1",
     "recharts": "^2.1.16",
     "uuid": "^8.3.2"

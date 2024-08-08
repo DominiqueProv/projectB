@@ -12,7 +12,7 @@ import NavLinkPrimary from "../buttons/NavLinkPrimary";
 import ModalTitle from "../text/ModalTitle";
 import SubTitle from "../text/SubTitle";
 
-const MenuModal = () => {
+const MenuModal = ({ isScrolledPast, isDesktop }) => {
   const [showModal, setShowModal] = useState(false);
   const { user, logout } = useAuth();
   const { babiesDataList } = useBabies();
@@ -40,10 +40,22 @@ const MenuModal = () => {
   return (
     <>
       <BurgerMenu setShowModal={setShowModal} showModal={showModal} />
-      <BackDrop setShowModal={setShowModal} showModal={showModal} />
+      {!isScrolledPast && (
+        <BackDrop setShowModal={setShowModal} showModal={showModal} />
+      )}
       <aside
-        className={`flex justify-end p-2 duration-500 ease-out-expo absolute z-20 right-0 top-0 w-full sm:w-auto ${
-          showModal ? "translate-y-0" : "-translate-y-[108%]"
+        className={`flex justify-end p-2 duration-700 ease-out-expo absolute z-20 right-0 top-0 min-w-[calc(100vw-24px)] lg:min-w-0 sm:w-auto ${
+          showModal
+            ? isScrolledPast
+              ? "-translate-y-[108%]"
+              : "translate-y-0"
+            : isScrolledPast
+            ? "translate-y-[108%]"
+            : "-translate-y-[108%]"
+        } ${
+          isScrolledPast && isDesktop
+            ? "left-[50%] translate-x-[-50%] right-auto"
+            : "right-0"
         }`}
       >
         <div className="flex w-full sm:w-420 border-0 rounded-lg p-3 shadow-lg relative flex-col bg-white outline-none focus:outline-none">

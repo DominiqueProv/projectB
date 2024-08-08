@@ -87,15 +87,13 @@ const AddBabyModal = () => {
           }
         }}
         className={
-          "border-2 p-3 group aspect-square w-full rounded-lg border-indigo-800 flex justify-center items-center duration-300 ease-out-expo relative space-x-2"
+          "p-3 group aspect-square h-16 rounded-full flex justify-center items-center duration-300 ease-out-expo relative space-x-2 bg-indigo-800"
         }
         type="button"
       >
         <Icon
           icon={"add"}
-          xClass={
-            "text-indigo-800 scale-75 group-hover:scale-100 duration-300 "
-          }
+          xClass={"text-white scale-75 group-hover:scale-100 duration-300 "}
           size={50}
         />
       </button>

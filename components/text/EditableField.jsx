@@ -107,7 +107,7 @@ const EditableField = ({
             <input
               className={`p-2 border-none bg-black/05 focus:ring-transparent w-full ${
                 isTitle
-                  ? "text-indigo-800 text-2xl lg:text-3xl font-semibold"
+                  ? "text-indigo-800 text-xl lg:text-3xl font-semibold"
                   : "text-md"
               }`}
               type="text"
@@ -148,7 +148,7 @@ const EditableField = ({
           <span
             className={`py-2 ${
               text && !text.startsWith("Add ") ? "text-black" : "text-black/15"
-            } ${isTitle ? "text-2xl lg:text-3xl font-semibold" : "text-md"}`}
+            } ${isTitle ? "text-xl lg:text-3xl font-semibold" : "text-md"}`}
             onClick={handleEditClick}
           >
             {text}

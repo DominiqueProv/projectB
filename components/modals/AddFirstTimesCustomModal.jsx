@@ -77,7 +77,7 @@ const AddFirstTimesModal = () => {
         type="button"
       >
         <span className="font-medium text-blue-500">Create your own</span>
-        <div className="border-2 group h-10 aspect-square rounded-lg bg-blue-50 border-blue-500 flex justify-center items-center duration-300 ease-out-expo relative">
+        <div className="border-2 group h-9 sm:h-10 aspect-square rounded-lg bg-blue-50 border-blue-500 flex justify-center items-center duration-300 ease-out-expo relative">
           <Icon
             icon={"add"}
             xClass={"text-blue-500 scale-75 group-hover:scale-90 duration-300 "}

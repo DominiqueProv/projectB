@@ -31,7 +31,7 @@ const AddFirstTimesModal = ({ myFirstfields }) => {
         type="button"
       >
         <span className="font-medium text-violet-500">Suggestions</span>
-        <div className="border-2 bg-violet-50 group h-10 aspect-square rounded-lg border-violet-500 flex justify-center items-center duration-300 ease-out-expo relative">
+        <div className="border-2 bg-violet-50 group h-9 sm:h-10 aspect-square rounded-lg border-violet-500 flex justify-center items-center duration-300 ease-out-expo relative">
           <Icon
             icon={"add"}
             xClass={
