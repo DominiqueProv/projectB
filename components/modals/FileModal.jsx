@@ -85,7 +85,7 @@ const FileModal = ({ file, index }) => {
                     </div>
                   </div>
                 </div>
-                <div className="flex justify-between gap-3 p-3 fixed bottom-0 left-0 right-0 lg:hidden bg-white/30 backdrop-blur-lg">
+                <div className="flex justify-between gap-3 p-3 fixed bottom-0 left-0 right-0 lg:hidden bg-white/30 backdrop-blur-lg overflow-hidden rounded-b-md">
                   <DeleteMemoryModal
                     file={file}
                     setShowFileModal={setShowModal}

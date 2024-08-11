@@ -31,6 +31,25 @@ const MyFirstTime = () => {
     return () => window.removeEventListener("keydown", close);
   }, []);
 
+  // Dynamic height calculation to avoid 100vh issue on mobile
+  useEffect(() => {
+    const setCorrectHeight = () => {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    };
+
+    window.addEventListener("resize", setCorrectHeight);
+    window.addEventListener("orientationchange", setCorrectHeight);
+
+    // Initial call
+    setCorrectHeight();
+
+    return () => {
+      window.removeEventListener("resize", setCorrectHeight);
+      window.removeEventListener("orientationchange", setCorrectHeight);
+    };
+  }, []);
+
   // Convert formDataFromDb object to array of objects
   const formDataArray = Object.keys(formDataFromDb).map((key) => ({
     ...formDataFromDb[key],
@@ -94,7 +113,7 @@ const MyFirstTime = () => {
             <aside
               className={`flex justify-end p-2 duration-500 ease-out-expo fixed z-20 inset-0`}
             >
-              <div className="flex flex-col w-full lg:w-[70vw] h-[calc(100vh-15px)] border-0 rounded-lg shadow-lg relative bg-white outline-none focus:outline-none">
+              <div className="flex flex-col w-full lg:w-[70vw] h-[calc(var(--vh, 1vh)*100-15px)] border-0 rounded-lg shadow-lg relative bg-white outline-none focus:outline-none">
                 <div className="flex justify-between p-3 border-b border-gray-200">
                   <ModalTitle title="First times" />
                   <CloseButton
