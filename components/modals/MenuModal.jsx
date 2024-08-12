@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "../../context/AuthContext";
 import { useBabies } from "../../context/BabiesContext";
@@ -11,41 +10,33 @@ import Icon from "../buttons/Icon";
 import NavLinkPrimary from "../buttons/NavLinkPrimary";
 import ModalTitle from "../text/ModalTitle";
 import SubTitle from "../text/SubTitle";
+import useModal from "../../hooks/useModal";
 
 const MenuModal = ({ isScrolledPast, isDesktop }) => {
-  const [showModal, setShowModal] = useState(false);
   const { user, logout } = useAuth();
   const { babiesDataList } = useBabies();
   const router = useRouter();
-
-  useEffect(() => {
-    const closeOnEscapeKey = (e) => {
-      if (e.keyCode === 27) setShowModal(false);
-    };
-    window.addEventListener("keydown", closeOnEscapeKey);
-    return () => window.removeEventListener("keydown", closeOnEscapeKey);
-  }, []);
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-    document.body.style.overflow = "unset";
-  };
+  const { isOpen, openModal, closeModal, modalRef } = useModal();
 
   const handleLogout = () => {
     logout();
-    handleCloseModal();
+    closeModal();
     router.push("/");
   };
 
   return (
     <>
-      <BurgerMenu setShowModal={setShowModal} showModal={showModal} />
+      <BurgerMenu
+        openModal={openModal}
+        isOpen={isOpen}
+        closeModal={closeModal}
+      />
       {!isScrolledPast && (
-        <BackDrop setShowModal={setShowModal} showModal={showModal} />
+        <BackDrop setShowModal={closeModal} showModal={isOpen} />
       )}
       <aside
         className={`flex justify-end p-2 duration-700 ease-out-expo absolute z-20 right-0 top-0 min-w-[calc(100vw-24px)] lg:min-w-0 sm:w-auto ${
-          showModal
+          isOpen
             ? isScrolledPast
               ? "-translate-y-[108%]"
               : "translate-y-0"
@@ -57,13 +48,14 @@ const MenuModal = ({ isScrolledPast, isDesktop }) => {
             ? "left-[50%] translate-x-[-50%] right-auto"
             : "right-0"
         }`}
+        ref={modalRef}
       >
         <div className="flex w-full sm:w-420 border-0 rounded-lg p-3 shadow-lg relative flex-col bg-white outline-none focus:outline-none">
           <ModalTitle title="Menu" />
           <nav className="space-x-2 flex items-center pt-3">
             {user ? (
               <div className="flex flex-col gap-y-3 w-full">
-                <UserButton setShowModal={setShowModal} />
+                <UserButton setShowModal={closeModal} />
                 <div className="flex gap-2">
                   <NavLinkPrimary
                     exact
@@ -90,7 +82,7 @@ const MenuModal = ({ isScrolledPast, isDesktop }) => {
                   url="/signup"
                   label="Signup"
                   xClass="px-2 sm:px-4 rounded-md"
-                  handleClick={handleCloseModal}
+                  handleClick={closeModal}
                 >
                   <Icon icon="signup" />
                 </NavLinkPrimary>
@@ -99,7 +91,7 @@ const MenuModal = ({ isScrolledPast, isDesktop }) => {
                   url="/login"
                   label="Login"
                   xClass="px-2 sm:px-4 rounded-md"
-                  handleClick={handleCloseModal}
+                  handleClick={closeModal}
                 >
                   <Icon icon="login" />
                 </NavLinkPrimary>
@@ -114,7 +106,7 @@ const MenuModal = ({ isScrolledPast, isDesktop }) => {
                   <Link key={i} href={`/timeline/${baby.id}`}>
                     <a
                       className="bg-slate-100 rounded-md p-2 flex items-center justify-between group"
-                      onClick={handleCloseModal}
+                      onClick={closeModal}
                     >
                       <div className="flex gap-3 items-center">
                         <img

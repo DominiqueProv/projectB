@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { BiCameraMovie } from "react-icons/bi";
@@ -7,6 +7,7 @@ import ModalTitle from "../text/ModalTitle";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import Loader from "../Loader";
 import { useFiles } from "../../context/FilesContext";
+import useModal from "../../hooks/useModal";
 
 const AddMediasModal = () => {
   const {
@@ -17,13 +18,14 @@ const AddMediasModal = () => {
     handleCancelUpload,
     sources,
     setSources,
-  } = useFiles({ setShowModal });
-  const [showModal, setShowModal] = useState(false);
+  } = useFiles();
+
+  const { isOpen, openModal, closeModal, modalRef } = useModal();
 
   const handleUploadFiles = async () => {
     try {
       await Promise.all(
-        files.map((item) => putStorageItem(item, setShowModal, files.length))
+        files.map((item) => putStorageItem(item, closeModal, files.length))
       );
       setSources([]);
     } catch (error) {
@@ -32,35 +34,28 @@ const AddMediasModal = () => {
   };
 
   useEffect(() => {
-    const close = (e) => {
-      if (e.keyCode === 27) {
-        setShowModal(false);
-      }
-    };
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
-  }, []);
-
-  useEffect(() => {
     if (sources.length > 0) {
-      setShowModal(true);
+      openModal();
     }
   }, [sources]);
 
   return (
     <>
       <Modal>
-        {showModal && (
+        {isOpen && (
           <>
             <div
-              onClick={() => setShowModal(false)}
+              onClick={closeModal}
               className="fixed inset-0 bg-black bg-opacity-30 z-40 backdrop-blur-sm"
             />
-            <div className="fixed z-40 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90vw] sm:w-[420px] rounded-lg p-3 bg-white flex flex-col">
+            <div
+              className="fixed z-40 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90vw] sm:w-[420px] rounded-lg p-3 bg-white flex flex-col"
+              ref={modalRef}
+            >
               <div className="flex justify-between items-center">
                 <ModalTitle title="Add medias" />
                 <button
-                  onClick={() => handleCancelUpload(setShowModal)}
+                  onClick={() => handleCancelUpload(closeModal)}
                   className="bg-blue-200 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
                   type="button"
                 >
@@ -113,7 +108,7 @@ const AddMediasModal = () => {
                       xClass="px-4 bg-red-500 flex-grow w-1/2"
                       type="button"
                       label="Cancel"
-                      handleClick={() => handleCancelUpload(setShowModal)}
+                      handleClick={() => handleCancelUpload(closeModal)}
                     />
                   </div>
                   <Loader percent={totalPercent} />

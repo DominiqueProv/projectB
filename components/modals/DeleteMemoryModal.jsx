@@ -1,43 +1,23 @@
-import { useState, useEffect } from "react";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import Modal from "./Portal";
 import { useFiles } from "../../context/FilesContext";
 import Icon from "../buttons/Icon";
+import useModal from "../../hooks/useModal";
 
 const DeleteMemoryModal = ({ file, setShowFileModal }) => {
-  const [showModal, setShowModal] = useState(false);
   const { deleteFile } = useFiles();
-
-  useEffect(() => {
-    const closeOnEscapeKey = (e) => {
-      if (e.keyCode === 27) setShowModal(false);
-    };
-    window.addEventListener("keydown", closeOnEscapeKey);
-    return () => window.removeEventListener("keydown", closeOnEscapeKey);
-  }, []);
-
-  const handleOpenModal = () => {
-    setShowModal(true);
-    if (typeof window !== "undefined" && window.document) {
-      document.body.style.overflow = "hidden";
-    }
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-    document.body.style.overflow = "unset";
-  };
+  const { isOpen, openModal, closeModal, modalRef } = useModal();
 
   const handleDelete = () => {
     deleteFile(file);
-    handleCloseModal();
+    closeModal();
     setShowFileModal(false);
   };
 
   return (
     <>
       <button
-        onClick={handleOpenModal}
+        onClick={openModal}
         className="text-black/50 font-medium underline underline-offset-4 text-xs"
         type="button"
       >
@@ -47,20 +27,23 @@ const DeleteMemoryModal = ({ file, setShowFileModal }) => {
         </div>
       </button>
       <Modal>
-        {showModal && (
+        {isOpen && (
           <>
             <div
-              onClick={handleCloseModal}
+              onClick={closeModal}
               className="inset-0 fixed bg-black bg-opacity-30 z-40 backdrop-blur-sm"
             ></div>
-            <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
+            <div
+              className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]"
+              ref={modalRef}
+            >
               <div className="flex w-[90vw] sm:w-[420px] rounded-lg p-3 relative flex-col bg-white">
                 <h3 className="text-xl font-semibold">
                   Are you sure you want to delete this file?
                 </h3>
                 <div className="flex space-x-2 pt-3">
                   <ButtonPrimary
-                    handleClick={handleCloseModal}
+                    handleClick={closeModal}
                     xClass="px-4 flex-grow"
                     type="button"
                     label="Cancel"

@@ -2,7 +2,7 @@ import React from "react";
 import { TbFileDescription, TbMoodHappy } from "react-icons/tb";
 import { MdOutlinePlace, MdOutlineMonitorWeight } from "react-icons/md";
 import { AiOutlineColumnHeight } from "react-icons/ai";
-import EditableField from "../text/EditableField";
+import EditableField from "./text/EditableField";
 
 const FileModalSideInfo = ({ file, fileIndex }) => {
   const { notes } = file;

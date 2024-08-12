@@ -1,14 +1,14 @@
-import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useAuth } from "../../context/AuthContext";
 import Modal from "./Portal";
 import ButtonForm from "../buttons/ButtonForm";
 import ModalTitle from "../text/ModalTitle";
 import { useFormik } from "formik";
+import useModal from "../../hooks/useModal";
 
 const ResetPasswordModal = () => {
   const { resetPassword } = useAuth();
-  const [showModal, setShowModal] = useState(false);
+  const { isOpen, openModal, closeModal, modalRef } = useModal();
 
   const errorLabelClass = "text-xs text-indigo-500 pt-2";
 
@@ -35,47 +35,36 @@ const ResetPasswordModal = () => {
     validate,
     onSubmit: (values) => {
       resetPassword(values.email);
-      setShowModal(false);
+      closeModal();
       formik.resetForm();
-      document.body.style.overflow = "unset";
     },
   });
-
-  const handleOpenModal = () => {
-    setShowModal(true);
-    if (typeof window !== "undefined" && window.document) {
-      document.body.style.overflow = "hidden";
-    }
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-    formik.resetForm();
-    document.body.style.overflow = "unset";
-  };
 
   return (
     <>
       <button
-        onClick={handleOpenModal}
+        onClick={openModal}
         className="text-indigo-900 self-start font-medium underline underline-offset-4 text-xs"
         type="button"
       >
         Forgot password?
       </button>
       <Modal>
-        {showModal && (
+        {isOpen && (
           <>
             <div
-              onClick={handleCloseModal}
+              onClick={closeModal}
               className="inset-0 fixed bg-black bg-opacity-30 z-40 backdrop-blur-sm"
             ></div>
-            <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
+            <div
+              className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]"
+              ref={modalRef}
+            >
               <div className="flex w-[90vw] sm:w-[420px] rounded-lg p-3 relative flex-col bg-white">
                 <div className="flex justify-between items-center">
                   <ModalTitle title="Reset password" />
                   <button
-                    onClick={handleCloseModal}
+                    onClick={closeModal}
                     className="bg-blue-200 self-end z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
                     type="button"
                   >

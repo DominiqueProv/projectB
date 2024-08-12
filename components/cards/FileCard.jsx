@@ -43,7 +43,7 @@ const FileCard = ({ file, index, dob }) => {
               className={`cursor-pointer bg-blue-100 font-medium text-xs text-blue-500 self-start flex items-center px-2 rounded-md hover:bg-indigo-800 hover:text-white duration-300 ease-out-expo flex-shrink-0`}
             >
               <div className={`flex space-x-2 items-center`}>
-                <span>Add Notes</span>
+                <span>New</span>
               </div>
             </div>
           </div>

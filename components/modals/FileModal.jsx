@@ -1,52 +1,35 @@
-import { useState, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
 import MediasFull from "../MediasFull";
 import Modal from "./Portal";
 import DeleteMemoryModal from "./DeleteMemoryModal";
-import FileModalSideInfo from "./FileModalSideInfo";
+import FileModalSideInfo from "../FileModalSideInfo";
 import EditableField from "../text/EditableField";
 import Medias from "../Medias";
+import useModal from "../../hooks/useModal";
 
 const FileModal = ({ file, index }) => {
-  const [showModal, setShowModal] = useState(false);
+  const { isOpen, openModal, closeModal, modalRef } = useModal();
   const notes = file?.notes || [];
-
-  useEffect(() => {
-    const closeOnEscapeKey = (e) => {
-      if (e.keyCode === 27) setShowModal(false);
-    };
-    window.addEventListener("keydown", closeOnEscapeKey);
-    return () => window.removeEventListener("keydown", closeOnEscapeKey);
-  }, []);
-
-  const handleOpenModal = () => {
-    setShowModal(true);
-    if (typeof window !== "undefined" && window.document) {
-      document.body.style.overflow = "hidden";
-    }
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-    document.body.style.overflow = "unset";
-  };
 
   return (
     <>
       <button
-        onClick={handleOpenModal}
+        onClick={openModal}
         className="absolute inset-0 z-10"
         type="button"
       />
       {file && <Medias file={file} />}
       <Modal>
-        {showModal && (
+        {isOpen && (
           <>
             <div
-              onClick={handleCloseModal}
+              onClick={closeModal}
               className="inset-0 fixed bg-black bg-opacity-30 z-40 backdrop-blur-sm"
             ></div>
-            <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
+            <div
+              className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]"
+              ref={modalRef}
+            >
               <div className="flex w-[90vw] h-[90vh] sm:w-[80vw] rounded-lg p-3 relative flex-col bg-white overflow-auto lg:overflow-hidden pb-[85px]">
                 <div className="flex justify-between items-center">
                   <EditableField
@@ -57,7 +40,7 @@ const FileModal = ({ file, index }) => {
                     noteType="title"
                   />
                   <button
-                    onClick={handleCloseModal}
+                    onClick={closeModal}
                     className="bg-blue-200 self-start flex-shrink-0 z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
                     type="button"
                   >
@@ -80,7 +63,7 @@ const FileModal = ({ file, index }) => {
                     <div className="justify-end gap-3 hidden lg:flex">
                       <DeleteMemoryModal
                         file={file}
-                        setShowFileModal={setShowModal}
+                        setShowFileModal={closeModal}
                       />
                     </div>
                   </div>
@@ -88,7 +71,7 @@ const FileModal = ({ file, index }) => {
                 <div className="flex justify-between gap-3 p-3 fixed bottom-0 left-0 right-0 lg:hidden bg-white/30 backdrop-blur-lg overflow-hidden rounded-b-md">
                   <DeleteMemoryModal
                     file={file}
-                    setShowFileModal={setShowModal}
+                    setShowFileModal={closeModal}
                   />
                 </div>
               </div>

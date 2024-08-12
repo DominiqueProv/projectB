@@ -11,16 +11,17 @@ import Calendar from "react-calendar";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import ModalTitle from "../text/ModalTitle";
 import imageCompression from "browser-image-compression";
+import useModal from "../../hooks/useModal";
 
 const AddBabyModal = () => {
   const { setIsUpload, reload, setReload } = useBabies();
   const { user } = useAuth();
   const [babiesData, setBabiesData] = useState({});
-  const [showModal, setShowModal] = useState(false);
   const [date, onChange] = useState(new Date());
   const [file, setFile] = useState([]);
   const inputFileRef = useRef();
   const babyId = `${babiesData.name}-${user.uid}`;
+  const { isOpen, openModal, closeModal, modalRef } = useModal();
 
   const uploadBabyAvatar = async () => {
     const ext = file[0].name.split(".").pop();
@@ -69,7 +70,7 @@ const AddBabyModal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setShowModal(false);
+    closeModal();
     babiesData.date = date;
     await uploadBabyAvatar();
     saveBabyData();
@@ -80,12 +81,7 @@ const AddBabyModal = () => {
   return (
     <>
       <button
-        onClick={() => {
-          setShowModal(true);
-          if (typeof window != "undefined" && window.document) {
-            document.body.style.overflow = "hidden";
-          }
-        }}
+        onClick={() => openModal()}
         className={
           "p-3 group aspect-square h-16 rounded-full flex justify-center items-center duration-300 ease-out-expo relative space-x-2 bg-indigo-800"
         }
@@ -98,26 +94,23 @@ const AddBabyModal = () => {
         />
       </button>
       <Modal>
-        {showModal && (
+        {isOpen && (
           <>
             <div
-              onClick={() => {
-                setShowModal(false);
-                document.body.style.overflow = "unset";
-              }}
+              onClick={closeModal}
               className={`inset-0 fixed bg-black bg-opacity-30 z-40 backdrop-blur-sm ${
-                showModal ? "block" : "hidden"
+                isOpen ? "block" : "hidden"
               }`}
             ></div>
-            <div className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
+            <div
+              className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]"
+              ref={modalRef}
+            >
               <div className="flex w-[90vw] sm:w-[420px] rounded-lg p-3 relative flex-col bg-white">
                 <div className="flex justify-between items-center">
                   <ModalTitle title="Add a loved one" />
                   <button
-                    onClick={() => {
-                      setShowModal(false);
-                      document.body.style.overflow = "unset";
-                    }}
+                    onClick={closeModal}
                     className="bg-blue-200 self-end z-30 p-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none"
                     type="button"
                   >
