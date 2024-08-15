@@ -5,7 +5,7 @@ import { MdOutlineBedroomBaby } from "react-icons/md";
 const Navbar = ({ isDark }) => {
   return (
     <nav
-      className={`p-4 flex justify-between items-center w-full ${
+      className={`p-2.5 sm:p-4 flex justify-between items-center w-full ${
         isDark ? "bg-indigo-950" : ""
       }`}
     >

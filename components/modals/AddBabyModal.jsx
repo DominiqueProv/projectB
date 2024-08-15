@@ -71,6 +71,7 @@ const AddBabyModal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     closeModal();
+    document.body.style.overflow = "unset";
     babiesData.date = date;
     await uploadBabyAvatar();
     saveBabyData();

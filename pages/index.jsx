@@ -6,6 +6,7 @@ import { CgSpinner } from "react-icons/cg";
 import Link from "next/link";
 import { useBabies } from "../context/BabiesContext";
 import useGridClasses from "../utils/gridClasses";
+import ClothesDetection from "../components/ClothesDetection/ClothesDetection";
 
 const Home = () => {
   const { user } = useAuth();
@@ -14,22 +15,26 @@ const Home = () => {
 
   return (
     <LayoutDefault>
-      <h1 className="my-5 text-4xl sm:text-7xl uppercase font-extrabold text-center">
-        <span className="_linear-wipe inline-block">
-          your private <br />
-          digital journal
-        </span>
-      </h1>
+      <div className="p-5">
+        <h1 className="text-4xl sm:text-7xl uppercase font-extrabold text-center">
+          <span className="_linear-wipe inline-block">
+            your private <br />
+            digital journal
+          </span>
+        </h1>
+      </div>
       <section>
         {user ? (
-          <div className=" my-10 sm:my-20 flex flex-col justify-center items-center bg-slate-100 sm:bg-transparent sm:border-none sm:shadow-none sm:rounded-none border-indigo-800 border-2 shadow-lg rounded-xl p-4">
-            <h3 className="text-center font-medium text-xl">Timelines</h3>
+          <div className="sm:mx-10 lg:mx-20 mt-2.5 sm:mt-10 flex flex-col justify-center  items-center">
+            <h3 className="text-center px-7 p-1.5 text-indigo-800 bg-slate-100 rounded-full font-medium mx-5 text-xl">
+              Timelines
+            </h3>
             <div
-              className={`grid ${classesGrid} mx-auto gap-6 place-items-center mt-4`}
+              className={`grid ${classesGrid} mx-auto gap-2.5 sm:gap-6 place-items-center p-2.5 sm:p-4`}
             >
               {babiesDataList?.map((baby) => (
                 <Link href={`/timeline/${baby.id}`} key={baby.id}>
-                  <div className="relative cursor-pointer aspect-square h-32 lg:h-40 rounded-xl overflow-hidden group flex items-center justify-center">
+                  <div className="relative cursor-pointer aspect-square h-auto sm:h-32 lg:h-40 rounded-xl overflow-hidden group flex items-center justify-center">
                     {baby.url ? (
                       <>
                         <img
@@ -38,7 +43,7 @@ const Home = () => {
                           className="object-cover w-full h-full"
                         />
                         <div className="absolute inset-0 bg-indigo-800/50 duration-300 opacity-0 group-hover:opacity-100"></div>
-                        <span className="opacity-0 font-semibold text-slate-100 group-hover:opacity-100 duration-300 absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
+                        <span className="flex items-center justify-center w-full text-center lg:opacity-0 font-semibold bg-gradient-to-t lg:from-transparent from-black/30 text-slate-100 lg:group-hover:opacity-100 lg:duration-300 absolute bottom-0 lg:top-[50%] lg:left-[50%] lg:-translate-x-[50%] lg:-translate-y-[50%]">
                           {baby.name}
                         </span>
                       </>
@@ -77,11 +82,13 @@ const Home = () => {
           </div>
         )}
 
-        <div className="grid sm:grid-cols-3 gap-8 my-8">
+        <div className="grid sm:grid-cols-3 gap-8 mt-2.5 sm:mt-5">
           <div className="aspect-square bg-slate-100 border-indigo-800 border-2 shadow-lg rounded-xl overflow-hidden">
             <GraphBanner />
           </div>
-          <div className="aspect-square bg-slate-100 rounded-xl"></div>
+          <div className="aspect-square bg-slate-100 rounded-xl">
+            <ClothesDetection />
+          </div>
           <div className="aspect-square bg-slate-100 rounded-xl"></div>
         </div>
       </section>
