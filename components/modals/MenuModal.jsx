@@ -52,7 +52,7 @@ const MenuModal = ({ isScrolledPast, isDesktop }) => {
       >
         <div className="flex w-full sm:w-420 border-0 rounded-lg p-3 shadow-lg relative flex-col bg-white outline-none focus:outline-none">
           <ModalTitle title="Menu" />
-          <nav className="space-x-2 flex items-center pt-3">
+          <nav className="space-x-2 flex items-center pt-5">
             {user ? (
               <div className="flex flex-col gap-y-3 w-full">
                 <UserButton setShowModal={closeModal} />

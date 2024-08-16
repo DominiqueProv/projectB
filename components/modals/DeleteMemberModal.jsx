@@ -14,9 +14,11 @@ const DeleteMemberModal = ({ baby }) => {
     <>
       <ButtonPrimary
         handleClick={openModal}
-        xClass={"p-3 bg-slate-300 hover:bg-slate-400 aspect-square"}
+        xClass={
+          "p-3 bg-slate-200 !rounded-full hover:bg-slate-300 aspect-square"
+        }
       >
-        <Icon icon={"delete"} size={20} />
+        <Icon icon={"minus"} xClass={"text-slate-400"} size={20} />
       </ButtonPrimary>
       <Modal>
         {isOpen && (

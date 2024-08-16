@@ -1,12 +1,10 @@
 import LayoutDefault from "../components/layouts/LayoutDefault";
 import NavLinkPrimary from "../components/buttons/NavLinkPrimary";
-import GraphBanner from "../components/lottie/graph/GraphBanner";
 import { useAuth } from "../context/AuthContext";
 import { CgSpinner } from "react-icons/cg";
 import Link from "next/link";
 import { useBabies } from "../context/BabiesContext";
 import useGridClasses from "../utils/gridClasses";
-import ClothesDetection from "../components/ClothesDetection/ClothesDetection";
 
 const Home = () => {
   const { user } = useAuth();
@@ -83,12 +81,8 @@ const Home = () => {
         )}
 
         <div className="grid sm:grid-cols-3 gap-8 mt-2.5 sm:mt-5">
-          <div className="aspect-square bg-slate-100 border-indigo-800 border-2 shadow-lg rounded-xl overflow-hidden">
-            <GraphBanner />
-          </div>
-          <div className="aspect-square bg-slate-100 rounded-xl">
-            <ClothesDetection />
-          </div>
+          <div className="aspect-square bg-slate-100 border-indigo-800 border-2 shadow-lg rounded-xl overflow-hidden"></div>
+          <div className="aspect-square bg-slate-100 rounded-xl"></div>
           <div className="aspect-square bg-slate-100 rounded-xl"></div>
         </div>
       </section>

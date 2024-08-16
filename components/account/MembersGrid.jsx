@@ -50,7 +50,7 @@ const MembersGrid = () => {
             exact
             url="/dashboard"
             label="Add a family member"
-            xClass="px-2 sm:px-4 rounded-md justify-center self-start"
+            xClass="px-5 lg:px-10 rounded-md justify-center self-start"
           >
             <Icon icon="members" />
           </NavLinkPrimary>

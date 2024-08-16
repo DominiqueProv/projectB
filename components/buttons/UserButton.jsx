@@ -36,7 +36,7 @@ const UserButton = ({ setShowModal }) => {
             <div>
               Welcome{" "}
               <span className="font-semibold">
-                {user.userName || user.email}
+                {user.displayName || user.email}
               </span>
             </div>
             <RiSettings3Line size={25} className="text-indigo-500 md:hidden" />

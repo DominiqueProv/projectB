@@ -1,9 +1,8 @@
 import LayoutDefault from "../components/layouts/LayoutDefault";
-import UpdateUser from "../components/user/UpdateUser";
+import UpdateUser from "../components/account/UpdateUser";
 import PageTitle from "../components/text/PageTitle";
-import UserInfo from "../components/user/UserInfo";
-import MembersGrid from "../components/user/MembersGrid";
-import AccountWidget from "../components/user/AccountWidget";
+import UserInfo from "../components/account/UserInfo";
+import MembersGrid from "../components/account/MembersGrid";
 import { useAuth } from "../context/AuthContext";
 
 const Account = () => {
@@ -14,13 +13,14 @@ const Account = () => {
       <PageTitle
         title={`${user.displayName ? user.displayName + "'s" : "Your"} account`}
       />
-      <section className="flex flex-col-reverse sm:flex-row gap-3 mt-4">
-        <UserInfo />
-        <UpdateUser />
-      </section>
-      <section className="flex flex-col md:flex-col-reverse lg:flex-row gap-3 mt-4">
-        <MembersGrid />
-        <AccountWidget />
+      <section className="flex flex-col lg:flex-row gap-3 mt-4">
+        <div className="lg:w-1/2">
+          <UserInfo />
+          <UpdateUser />
+        </div>
+        <div className="lg:w-1/2">
+          <MembersGrid />
+        </div>
       </section>
     </LayoutDefault>
   );

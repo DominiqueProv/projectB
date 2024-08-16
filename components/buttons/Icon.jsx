@@ -17,7 +17,6 @@ import { FiHeart } from "react-icons/fi";
 import { IoMdRemove } from "react-icons/io";
 import { BsCheck2 } from "react-icons/bs";
 
-
 const iconComponents = {
   title: MdTitle,
   signout: VscSignOut,
