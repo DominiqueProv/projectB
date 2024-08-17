@@ -15,7 +15,7 @@ const DeleteMemberModal = ({ baby }) => {
       <ButtonPrimary
         handleClick={openModal}
         xClass={
-          "p-3 bg-slate-200 !rounded-full hover:bg-slate-300 aspect-square"
+          "p-2 bg-slate-200 !rounded-full hover:bg-slate-300 aspect-square"
         }
       >
         <Icon icon={"minus"} xClass={"text-slate-400"} size={20} />

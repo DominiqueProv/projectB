@@ -54,7 +54,7 @@ const UpdateMemberButton = ({ index }) => {
     <div
       className={`border group ${
         file.length ? "p-[2px]" : "p-2"
-      } h-full rounded-lg border-indigo-800 flex justify-center items-center ease-out-expo relative space-x-[2px] ${
+      } h-full rounded-lg border-indigo-800 text-sm bg-indigo-100 flex justify-center items-center ease-out-expo relative space-x-[2px] ${
         !file.length ? "lg:hover:bg-blue-100" : ""
       }`}
     >
@@ -83,12 +83,10 @@ const UpdateMemberButton = ({ index }) => {
             role="upload"
             className="w-full h-full flex justify-center items-center cursor-pointer gap-2"
           >
-            <span className="flex-shrink-0 text-indigo-800 font-semibold">
-              Update Avatar
-            </span>
+            <span className="flex-shrink-0 text-indigo-800">Update Avatar</span>
             <Icon
               icon="add"
-              size={25}
+              size={20}
               xClass="text-indigo-800 group-hover:scale-125 duration-200"
             />
           </label>

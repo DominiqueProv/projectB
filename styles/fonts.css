@@ -1,5 +1,5 @@
 ._title-xl {
-  @apply font-bold text-3xl;
+  @apply font-bold text-xl lg:text-3xl;
 }
 
 ._title-md {

@@ -22,24 +22,26 @@ const MembersGrid = () => {
             return (
               <div
                 key={i}
-                className="bg-slate-100 rounded-md p-3 flex flex-col md:flex-row md:items-center gap-3 md:gap-0 justify-between"
+                className="sm:bg-slate-100 sm:rounded-md sm:p-3 flex flex-col md:flex-row md:items-center gap-3 md:gap-0 justify-between"
               >
                 <Link href={`/timeline/${baby.id}`} key={i}>
-                  <a className="flex gap-3 items-center group">
+                  <a className="flex justify-between gap-3 bg-slate-100 rounded-md p-3 items-center group sm:bg-transparent sm:rounded-none sm:p-0">
                     <img
                       src={baby.url + "?" + Math.random()}
                       className={`rounded-full overflow-hidden object-cover flex-shrink-0 w-12 h-12`}
                       alt={"user avatar"}
                     />
-                    <span className="text-xl font-semibold">{baby.name}</span>
-                    <Icon
-                      icon={"arrow"}
-                      size={25}
-                      xClass="text-indigo-800 group-hover:translate-x-1 duration-100"
-                    />
+                    <div className="flex gap-3 items-center">
+                      <span className="text-xl font-semibold">{baby.name}</span>
+                      <Icon
+                        icon={"arrow"}
+                        size={25}
+                        xClass="text-indigo-800 group-hover:translate-x-1 duration-100"
+                      />
+                    </div>
                   </a>
                 </Link>
-                <div className="flex gap-3 justify-between md:justify-end">
+                <div className="flex gap-3 sm:justify-between md:justify-end">
                   <UpdateMemberButton index={i} />
                   <DeleteMemberModal baby={baby} />
                 </div>
