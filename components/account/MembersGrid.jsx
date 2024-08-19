@@ -14,7 +14,7 @@ const MembersGrid = () => {
       {babiesDataList.length > 0 && (
         <section
           className={
-            "w-full rounded-md bg-slate-100/30 flex-grow flex flex-col gap-y-5 p-3 md:p-5"
+            "w-full rounded-md bg-slate-100/30 flex-grow flex flex-col gap-y-5 p-3 sm:p-5"
           }
         >
           <SectionTitle title="Babies List" />
@@ -22,7 +22,7 @@ const MembersGrid = () => {
             return (
               <div
                 key={i}
-                className="sm:bg-slate-100 sm:rounded-md sm:p-3 flex flex-col md:flex-row md:items-center gap-3 md:gap-0 justify-between"
+                className="sm:bg-slate-100 sm:rounded-md sm:p-3 flex flex-col sm:flex-row sm:items-center justify-between relative"
               >
                 <Link href={`/timeline/${baby.id}`} key={i}>
                   <a className="flex justify-between gap-3 bg-slate-100 rounded-md p-3 items-center group sm:bg-transparent sm:rounded-none sm:p-0">
@@ -41,7 +41,7 @@ const MembersGrid = () => {
                     </div>
                   </a>
                 </Link>
-                <div className="flex gap-3 sm:justify-between md:justify-end">
+                <div className="flex gap-3 sm:justify-end">
                   <UpdateMemberButton index={i} />
                   <DeleteMemberModal baby={baby} />
                 </div>

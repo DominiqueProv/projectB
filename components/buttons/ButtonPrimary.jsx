@@ -10,7 +10,7 @@ const ButtonPrimary = ({
   return (
     <button
       onClick={handleClick}
-      className={`text-white rounded-lg py-2 ${xClass} hover:bg-indigo-600 duration-300 ease-out-expo bg-indigo-800 disabled:bg-gray-300 disabled:cursor-not-allowed`}
+      className={`text-white rounded-lg py-2 ${xClass} sm:hover:bg-indigo-600 duration-300 ease-out-expo bg-indigo-800 disabled:bg-gray-300 disabled:cursor-not-allowed`}
       type={type}
       disabled={isUpload || isInvalid}
     >

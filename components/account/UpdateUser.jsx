@@ -7,50 +7,80 @@ import SectionTitle from "../text/SectionTitle";
 import { CgSpinner } from "react-icons/cg";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import Icon from "../buttons/Icon";
+import imageCompression from "browser-image-compression";
 
 const UpdateUser = () => {
   const inputFileRef = useRef();
   const inputUserNameRef = useRef();
   const { user, updateUser, setUser } = useAuth();
-  const [file, setFile] = useState(null);
-  const [isUpload, setIsUpload] = useState(false);
-  const isDisabled = isUpload || !file;
+  const [state, setState] = useState({
+    file: null,
+    isUpload: false,
+  });
+
+  const isDisabled =
+    state.isUpload || (!state.file && !inputUserNameRef.current?.value);
 
   const handleChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setState((prevState) => ({ ...prevState, file: selectedFile }));
     }
   };
 
-  const upload = async (file) => {
-    const ext = file.name.split(".").pop();
+  const compressAndUploadFile = async (file) => {
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 100,
+      useWebWorker: true,
+    };
+
+    const compressedFile = await imageCompression(file, options);
+    const ext = compressedFile.name.split(".").pop();
     const fileRef = ref(storage, `${user.uid}/userAvatar/${user.uid}.${ext}`);
-    setIsUpload(true);
+
+    setState((prevState) => ({ ...prevState, isUpload: true }));
+
     try {
-      await uploadBytes(fileRef, file);
+      await uploadBytes(fileRef, compressedFile);
       const photoURL = await getDownloadURL(fileRef);
-      await updateUser(user.displayName, photoURL);
-      setUser((prevUser) => ({ ...prevUser, photoURL }));
+      return photoURL;
     } catch (error) {
-      console.error("Failed to upload file:", error.message);
+      console.error("File upload error:", error.message);
     } finally {
-      setIsUpload(false);
+      setState((prevState) => ({ ...prevState, isUpload: false }));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (file) {
-      await upload(file);
-    } else {
-      await updateUser(inputUserNameRef.current.value);
+    const userName = inputUserNameRef.current.value;
+    let updatedPhotoURL = user.photoURL;
+
+    if (state.file) {
+      updatedPhotoURL = await compressAndUploadFile(state.file);
     }
+
+    if (userName || state.file) {
+      await updateUser(userName || user.displayName, updatedPhotoURL);
+      setUser((prevUser) => ({
+        ...prevUser,
+        displayName: userName || prevUser.displayName,
+        photoURL: updatedPhotoURL,
+      }));
+    }
+
+    resetForm();
+  };
+
+  const resetForm = () => {
+    setState({ file: null, isUpload: false });
     inputFileRef.current.value = "";
     inputUserNameRef.current.value = "";
   };
 
-  const handleDelete = async () => {
-    await updateUser(user.userName, "");
+  const handleDeleteAvatar = async () => {
+    await updateUser(user.displayName, "");
     setUser((prevUser) => ({ ...prevUser, photoURL: "" }));
   };
 
@@ -60,6 +90,7 @@ const UpdateUser = () => {
       onSubmit={handleSubmit}
     >
       <SectionTitle title="Manage" />
+
       <div className="flex flex-col">
         <label htmlFor="updateUserName">
           {user.displayName ? "Change your username" : "Create a username"}
@@ -73,6 +104,7 @@ const UpdateUser = () => {
           placeholder="John Smith"
         />
       </div>
+
       <div className="flex gap-3 relative">
         <div className="flex flex-col w-full">
           <label htmlFor="updateUserAvatar">Update your avatar</label>
@@ -84,7 +116,8 @@ const UpdateUser = () => {
             accept=".png, .jpeg"
           />
         </div>
-        {!isUpload ? (
+
+        {!state.isUpload ? (
           user.photoURL ? (
             <div className="relative flex-shrink-0 group">
               <img
@@ -94,7 +127,7 @@ const UpdateUser = () => {
               />
               <div
                 className="absolute top-0 right-0 bg-blue-200 text-blue-500 rounded-full p-1 cursor-pointer"
-                onClick={handleDelete}
+                onClick={handleDeleteAvatar}
               >
                 <Icon icon="delete" xClass="w-3 h-3" />
               </div>
@@ -108,6 +141,7 @@ const UpdateUser = () => {
           </div>
         )}
       </div>
+
       <ButtonPrimary
         xClass="w-full lg:w-auto lg:self-start lg:px-10"
         label="Update your profile"

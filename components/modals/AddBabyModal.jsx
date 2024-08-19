@@ -16,93 +16,102 @@ import useModal from "../../hooks/useModal";
 const AddBabyModal = () => {
   const { setIsUpload, reload, setReload } = useBabies();
   const { user } = useAuth();
-  const [babiesData, setBabiesData] = useState({});
-  const [date, onChange] = useState(new Date());
-  const [file, setFile] = useState([]);
+  const [babiesData, setBabiesData] = useState({ date: new Date() });
+  const [file, setFile] = useState(null);
   const inputFileRef = useRef();
   const babyId = `${babiesData.name}-${user.uid}`;
   const { isOpen, openModal, closeModal, modalRef } = useModal();
 
-  const uploadBabyAvatar = async () => {
-    const ext = file[0].name.split(".").pop();
+  const handleFileUpload = async (file) => {
+    const ext = file.name.split(".").pop();
     const fileRef = ref(storage, `${user.uid}/babiesAvatar/${babyId}.${ext}`);
     setIsUpload(true);
-    let processedFile = file[0];
+
     const options = {
       maxSizeMB: 1,
       useWebWorker: true,
+      maxWidthOrHeight: 160,
     };
 
     try {
-      if (processedFile.size > 1048576) {
-        processedFile = await imageCompression(processedFile, options);
-      }
+      const processedFile =
+        file.size > 1048576 ? await imageCompression(file, options) : file;
 
       const snapshot = await uploadBytes(fileRef, processedFile);
       const photoURL = await getDownloadURL(fileRef);
-      babiesData.url = photoURL;
+      return photoURL;
     } catch (error) {
-      console.error("Error compressing the image", error);
+      console.error("Error uploading the image:", error);
+      return null;
     } finally {
       setIsUpload(false);
     }
   };
 
-  const saveBabyData = async () => {
-    const docRef = doc(database, `${user.uid}/${babyId}`);
-    await setDoc(docRef, babiesData, {
-      merge: true,
-    });
-  };
-
-  const handleChangeAvatar = (e) => {
-    if (e.target.files) {
-      setFile(e.target.files);
-    }
-  };
-
-  const handleChangeFile = (e) => {
-    setBabiesData({
-      ...babiesData,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setBabiesData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsUpload(true); // Start showing the spinner when uploading begins
+
+    if (file) {
+      const photoURL = await handleFileUpload(file);
+      if (photoURL) {
+        setBabiesData((prevData) => ({ ...prevData, url: photoURL }));
+      }
+    }
+
+    // Save baby data to Firestore
+    const docRef = doc(database, `${user.uid}/${babyId}`);
+    await setDoc(docRef, babiesData, { merge: true });
+
+    // Close modal and reset state
     closeModal();
     document.body.style.overflow = "unset";
-    babiesData.date = date;
-    await uploadBabyAvatar();
-    saveBabyData();
-    setIsUpload(false);
     setReload(!reload);
+    resetForm();
+
+    setIsUpload(false); // Ensure the spinner is hidden after the upload process
+  };
+
+  const resetForm = () => {
+    setBabiesData({ date: new Date() });
+    setFile(null);
+    inputFileRef.current.value = "";
+  };
+
+  const handleAvatarChange = (e) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+    }
   };
 
   return (
     <>
       <button
-        onClick={() => openModal()}
-        className={
-          "p-3 group aspect-square h-16 rounded-full flex justify-center items-center duration-300 ease-out-expo relative space-x-2 bg-indigo-800"
-        }
+        onClick={openModal}
+        className="p-3 group aspect-square h-16 rounded-full flex justify-center items-center duration-300 ease-out-expo relative space-x-2 bg-indigo-800"
         type="button"
       >
         <Icon
-          icon={"add"}
-          xClass={"text-white scale-75 group-hover:scale-100 duration-300 "}
+          icon="add"
+          xClass="text-white scale-75 group-hover:scale-100 duration-300"
           size={50}
         />
       </button>
+
       <Modal>
         {isOpen && (
           <>
             <div
               onClick={closeModal}
-              className={`inset-0 fixed bg-black bg-opacity-30 z-40 backdrop-blur-sm ${
-                isOpen ? "block" : "hidden"
-              }`}
+              className="inset-0 fixed bg-black bg-opacity-30 z-40 backdrop-blur-sm"
             ></div>
+
             <div
               className="fixed z-40 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]"
               ref={modalRef}
@@ -121,43 +130,50 @@ const AddBabyModal = () => {
                     />
                   </button>
                 </div>
+
                 <form
-                  action=""
                   className="space-y-3 flex flex-col mt-5"
                   onSubmit={handleSubmit}
                 >
                   <input
                     type="text"
                     name="name"
-                    placeholder={"Baby's name"}
-                    onChange={handleChangeFile}
+                    placeholder="Baby's name"
+                    onChange={handleChange}
                     required
                   />
 
                   <div className="flex gap-3">
                     <div className="flex flex-col w-full">
-                      <label htmlFor="signUpPassword">Add baby avatar</label>
+                      <label htmlFor="babyAvatar">Add baby avatar</label>
                       <input
                         className="rounded-md w-full"
                         type="file"
                         ref={inputFileRef}
-                        onChange={handleChangeAvatar}
+                        onChange={handleAvatarChange}
                         accept=".png, .jpeg"
                         required
                       />
                     </div>
                   </div>
+
                   <div className="rounded-lg border-indigo-800 border-[1px] overflow-hidden">
-                    <div className="text-slate-100 bg-indigo-800  uppercase font-semibold text-xs px-2 py-3">
+                    <div className="text-slate-100 bg-indigo-800 uppercase font-semibold text-xs px-2 py-3">
                       Date of birth
                     </div>
-                    <Calendar onChange={onChange} value={date} />
+                    <Calendar
+                      onChange={(date) =>
+                        setBabiesData((prevData) => ({ ...prevData, date }))
+                      }
+                      value={babiesData.date}
+                    />
                   </div>
+
                   <ButtonPrimary
-                    xClass={"w-full"}
-                    label={"Add to the family"}
-                    type={"submit"}
-                  ></ButtonPrimary>
+                    xClass="w-full"
+                    label="Add to the family"
+                    type="submit"
+                  />
                 </form>
               </div>
             </div>
