@@ -4,20 +4,16 @@ import { CgSpinner } from "react-icons/cg";
 import Link from "next/link";
 
 const BabiesGrid = () => {
-  const { babiesDataList, isUpload } = useBabies();
+  const { babiesDataList } = useBabies();
   const [isLoading, setIsLoading] = useState(true);
 
-  // Effect to toggle loading state based on the babiesDataList
   useEffect(() => {
-    if (babiesDataList && babiesDataList.length > 0) {
-      setIsLoading(false); // Stop loading once we have babies data
-    } else if (!isUpload && babiesDataList.length === 0) {
-      setIsLoading(false); // Stop loading even if there are no babies, but the upload is done
+    if (babiesDataList) {
+      setIsLoading(false);
     }
-  }, [babiesDataList, isUpload]);
+  }, [babiesDataList]);
 
-  // Show spinner if data is still being fetched or uploaded
-  if (isLoading || isUpload) {
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center">
         <CgSpinner className="animate-spin" color={"dodgerblue"} size={40} />
@@ -57,6 +53,6 @@ const BabiesGrid = () => {
       ))}
     </>
   );
-};;
+};
 
 export default BabiesGrid;
