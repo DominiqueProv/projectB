@@ -15,11 +15,11 @@ const DeleteMemberModal = ({ baby }) => {
       <ButtonPrimary
         handleClick={openModal}
         xClass={
-          "bg-transparent pt-0 sm:p-2 sm:bg-slate-200 sm:!rounded-full sm:hover:bg-slate-300 sm:aspect-square"
+          "bg-transparent pt-0 sm:p-2 sm:bg-slate-200 sm:!rounded-full sm:hover:bg-slate-300 sm:aspect-square self-center"
         }
       >
         <span className="sm:hidden text-black/30 font-medium underline underline-offset-4 text-xs">
-          Delete
+          Delete member
         </span>
         <Icon
           icon={"minus"}

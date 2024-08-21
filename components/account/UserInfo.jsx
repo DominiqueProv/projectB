@@ -39,10 +39,15 @@ const UserInfo = () => {
 
       <div className="flex items-center space-x-3">
         <span className="font-semibold">Account confirmation: </span>
-        <span>{emailVerified ? " email Verified" : "not verified"}</span>
         {emailVerified ? (
-          <MdVerified className="text-blue-500" />
+          <div className="flex flex-shrink-0 text-blue-500 text-sm font-medium px-3 py-1 items-center gap-2 border border-blue-500 bg-blue-50 rounded-full">
+            <span>Email Verified</span>
+            <MdVerified className="" />
+          </div>
         ) : (
+          <span className="">not verified</span>
+        )}
+        {!emailVerified && (
           <ButtonSecondary
             label="Verify with email"
             xClass="py-1 px-2 rounded-md flex-shrink-0"

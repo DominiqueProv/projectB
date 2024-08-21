@@ -79,10 +79,10 @@ const UpdateMemberButton = ({ index }) => {
       {file ? (
         <>
           <ButtonPrimary
-            xClass="px-4 flex-shrink-0 bg-transparent !text-indigo-800"
+            xClass="px-4 flex-shrink-0 bg-transparent !text-indigo-800 sm:hover:bg-indigo-200"
             handleClick={handleUploadFiles}
             type="button"
-            label="Upload"
+            label="Update"
           >
             <IoCloudUploadOutline size={18} />
           </ButtonPrimary>
