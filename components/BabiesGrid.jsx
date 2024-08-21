@@ -21,7 +21,6 @@ const BabiesGrid = () => {
     );
   }
 
-  // Display grid of babies if the list exists
   return (
     <>
       {babiesDataList?.map((baby) => (
@@ -36,7 +35,7 @@ const BabiesGrid = () => {
                     className="object-cover w-full h-full"
                   />
                   <div className="absolute inset-0 bg-indigo-800/50 duration-300 opacity-0 group-hover:opacity-100"></div>
-                  <span className="opacity-0 font-semibold text-slate-100 group-hover:opacity-100 duration-300 absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
+                  <span className="flex items-center justify-center w-full text-center lg:opacity-0 font-semibold bg-gradient-to-t lg:from-transparent from-black/30 text-slate-100 lg:group-hover:opacity-100 lg:duration-300 absolute bottom-0 lg:top-[50%] lg:left-[50%] lg:-translate-x-[50%] lg:-translate-y-[50%]">
                     {baby.name}
                   </span>
                 </>

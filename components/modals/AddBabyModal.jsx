@@ -31,7 +31,7 @@ const AddBabyModal = () => {
     const options = {
       maxSizeMB: 1,
       useWebWorker: true,
-      maxWidthOrHeight: 160,
+      maxWidthOrHeight: 300,
     };
 
     try {

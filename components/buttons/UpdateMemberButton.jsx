@@ -19,7 +19,7 @@ const UpdateMemberButton = ({ index }) => {
 
     const options = {
       maxSizeMB: 1,
-      maxWidthOrHeight: 160,
+      maxWidthOrHeight: 300,
       useWebWorker: true,
     };
     try {

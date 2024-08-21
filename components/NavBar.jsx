@@ -1,6 +1,6 @@
 import Link from "next/link";
 import MenuModal from "../components/modals/MenuModal";
-import { MdOutlineBedroomBaby } from "react-icons/md";
+import { LuBaby } from "react-icons/lu";
 
 const Navbar = ({ isDark }) => {
   return (
@@ -10,17 +10,18 @@ const Navbar = ({ isDark }) => {
       }`}
     >
       <Link href="/" passHref>
-        <a className="gap-3 flex items-center">
-          <MdOutlineBedroomBaby
-            size={45}
-            className={`${isDark ? "text-white" : "text-indigo-800"}`}
+        <a className="gap-2 flex items-center">
+          <LuBaby
+            className={`text-[30px] ${
+              isDark ? "text-white" : "text-indigo-800"
+            }`}
           />
           <span
             className={`${
               isDark ? "text-white" : "text-indigo-800"
-            } font-bold text-3xl`}
+            } font-bold text-xl sm:text-3xl`}
           >
-            Family Story
+            BabyPath
           </span>
           <div
             className={`hidden sm:block border-b ml-6 ${

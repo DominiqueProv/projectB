@@ -18,7 +18,7 @@ const Dashboard = () => {
           <AddBabyModal />
         </div>
         <div
-          className={`grid ${useGridClasses()} w-3/5 mx-auto gap-2 sm:gap-6 mt-12`}
+          className={`grid ${useGridClasses()} sm:w-3/5 mx-auto gap-3 sm:gap-6 mt-12`}
         >
           {!isUpload ? (
             <BabiesGrid />
