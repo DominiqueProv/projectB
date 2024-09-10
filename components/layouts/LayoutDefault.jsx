@@ -7,8 +7,8 @@ const LayoutDefault = (props) => {
     <>
       <Navbar isDark={isDark} />
       <main
-        className={`max-w-[1920px] min-h-[calc(100vh-255px)] mx-auto px-2.5 md:px-4 sm:pt-8 ${
-          isDark ? "bg-indigo-900" : ""
+        className={`min-h-[calc(100vh-255px)] mx-auto px-2.5 md:px-4 sm:pt-8 ${
+          isDark ? "bg-indigo-900" : "max-w-[1920px]"
         }`}
       >
         {props.children}
