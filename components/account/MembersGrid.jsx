@@ -24,22 +24,24 @@ const MembersGrid = () => {
                 key={i}
                 className="sm:bg-slate-100 sm:rounded-md sm:p-3 flex flex-col sm:flex-row sm:items-center justify-between relative"
               >
-                <Link href={`/timeline/${baby.id}`} key={i}>
-                  <a className="flex justify-between gap-3 bg-slate-100 rounded-md p-3 items-center group sm:bg-transparent sm:rounded-none sm:p-0">
-                    <img
-                      src={baby.url + "?" + Math.random()}
-                      className={`rounded-full overflow-hidden object-cover flex-shrink-0 w-12 h-12`}
-                      alt={"user avatar"}
+                <Link
+                  href={`/timeline/${baby.id}`}
+                  key={i}
+                  className="flex justify-between gap-3 bg-slate-100 rounded-md p-3 items-center group sm:bg-transparent sm:rounded-none sm:p-0"
+                >
+                  <img
+                    src={baby.url + "?" + Math.random()}
+                    className={`rounded-full overflow-hidden object-cover flex-shrink-0 w-12 h-12`}
+                    alt={"user avatar"}
+                  />
+                  <div className="flex gap-3 items-center">
+                    <span className="text-xl font-semibold">{baby.name}</span>
+                    <Icon
+                      icon={"arrow"}
+                      size={25}
+                      xClass="text-indigo-800 group-hover:translate-x-1 duration-100"
                     />
-                    <div className="flex gap-3 items-center">
-                      <span className="text-xl font-semibold">{baby.name}</span>
-                      <Icon
-                        icon={"arrow"}
-                        size={25}
-                        xClass="text-indigo-800 group-hover:translate-x-1 duration-100"
-                      />
-                    </div>
-                  </a>
+                  </div>
                 </Link>
                 <div className="flex gap-3 sm:justify-end">
                   <UpdateMemberButton index={i} />

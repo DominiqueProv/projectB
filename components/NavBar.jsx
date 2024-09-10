@@ -9,26 +9,22 @@ const Navbar = ({ isDark }) => {
         isDark ? "bg-indigo-950" : ""
       }`}
     >
-      <Link href="/" passHref>
-        <a className="gap-2 flex items-center">
-          <LuBaby
-            className={`text-[30px] ${
-              isDark ? "text-white" : "text-indigo-800"
-            }`}
-          />
-          <span
-            className={`${
-              isDark ? "text-white" : "text-indigo-800"
-            } font-bold text-xl sm:text-3xl`}
-          >
-            BabyPath
-          </span>
-          <div
-            className={`hidden sm:block border-b ml-6 ${
-              isDark ? "border-white" : "border-indigo-800"
-            } w-[60px]`}
-          />
-        </a>
+      <Link href="/" passHref className="gap-2 flex items-center">
+        <LuBaby
+          className={`text-[30px] ${isDark ? "text-white" : "text-indigo-800"}`}
+        />
+        <span
+          className={`${
+            isDark ? "text-white" : "text-indigo-800"
+          } font-bold text-xl sm:text-3xl`}
+        >
+          BabyPath
+        </span>
+        <div
+          className={`hidden sm:block border-b ml-6 ${
+            isDark ? "border-white" : "border-indigo-800"
+          } w-[60px]`}
+        />
       </Link>
       <MenuModal />
     </nav>

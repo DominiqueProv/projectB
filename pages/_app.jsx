@@ -4,7 +4,7 @@ import FilesContextProvider from "../context/FilesContext";
 import BabiesContextProvider from "../context/BabiesContext";
 import { useRouter } from "next/router";
 import NProgress from "nprogress";
-import Head from "next/head";
+import { Rubik } from "next/font/google";
 
 import "../styles/globals.css";
 import ProtectedRoute from "../components/ProtectedRoute";
@@ -23,6 +23,11 @@ const contextClass = {
   default: "bg-indigo-600",
   dark: "bg-white-600 font-gray-300",
 };
+
+const rubik = Rubik({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -45,7 +50,7 @@ function MyApp({ Component, pageProps }) {
   }, [router]);
 
   return (
-    <>
+    <main className={rubik.className}>
       <ToastContainer
         toastClassName={({ type }) =>
           contextClass[type || "default"] +
@@ -74,7 +79,7 @@ function MyApp({ Component, pageProps }) {
           )}
         </BabiesContextProvider>
       </AuthContextProvider>
-    </>
+    </main>
   );
 }
 

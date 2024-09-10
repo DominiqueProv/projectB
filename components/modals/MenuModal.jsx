@@ -103,27 +103,25 @@ const MenuModal = ({ isScrolledPast, isDesktop }) => {
               <SubTitle title="Your family members timelines" />
               <div className="space-y-2">
                 {babiesDataList.map((baby, i) => (
-                  <Link key={i} href={`/timeline/${baby.id}`}>
-                    <a
-                      className="bg-slate-100 rounded-md p-2 flex items-center justify-between group"
-                      onClick={closeModal}
-                    >
-                      <div className="flex gap-3 items-center">
-                        <img
-                          src={`${baby.url}?${Math.random()}`}
-                          className="rounded-full overflow-hidden object-cover flex-shrink-0 w-12 h-12"
-                          alt="user avatar"
-                        />
-                        <span className="text-xl font-semibold">
-                          {baby.name}
-                        </span>
-                      </div>
-                      <Icon
-                        icon="arrow"
-                        size={25}
-                        xClass="text-indigo-800 group-hover:translate-x-1 duration-100"
+                  <Link
+                    key={i}
+                    href={`/timeline/${baby.id}`}
+                    className="bg-slate-100 rounded-md p-2 flex items-center justify-between group"
+                    onClick={closeModal}
+                  >
+                    <div className="flex gap-3 items-center">
+                      <img
+                        src={`${baby.url}?${Math.random()}`}
+                        className="rounded-full overflow-hidden object-cover flex-shrink-0 w-12 h-12"
+                        alt="user avatar"
                       />
-                    </a>
+                      <span className="text-xl font-semibold">{baby.name}</span>
+                    </div>
+                    <Icon
+                      icon="arrow"
+                      size={25}
+                      xClass="text-indigo-800 group-hover:translate-x-1 duration-100"
+                    />
                   </Link>
                 ))}
               </div>
